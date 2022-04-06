@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 13:22:41 by hubretec          #+#    #+#             */
+/*   Updated: 2021/11/25 15:25:41 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+t_list	*ft_lstlast(t_list *lst)
 {
-	char	*line;
+	t_list	*tmp;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
-	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
-	}
-	return (0);
+	tmp = lst;
+	if (!tmp)
+		return (0);
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
 }

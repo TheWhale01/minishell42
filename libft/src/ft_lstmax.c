@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmax.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2022/01/25 15:38:12 by hubretec          #+#    #+#             */
+/*   Updated: 2022/01/25 15:38:56 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+t_list	*ft_lstmax(t_list *lst)
 {
-	char	*line;
+	t_list	*max;
+	t_list	*tmp;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
+	max = NULL;
+	tmp = lst;
+	while (tmp)
 	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
+		if (!max || (*(int *)max->content < *(int *)tmp->content))
+			max = tmp;
+		tmp = tmp->next;
 	}
-	return (0);
+	return (max);
 }

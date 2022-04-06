@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 15:12:41 by hubretec          #+#    #+#             */
+/*   Updated: 2021/12/19 18:41:28 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <unistd.h>
 
-int	main(int ac, char **av, char **env)
+int	ft_putstr_fd(char const *s, int fd)
 {
-	char	*line;
+	int	len;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
-	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
-	}
-	return (0);
+	len = 0;
+	while (*s)
+		len += write(fd, s++, 1);
+	return (len);
+}
+
+int	ft_putstr(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (*str)
+		len += write(1, str++, 1);
+	return (len);
 }

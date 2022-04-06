@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 16:38:37 by hubretec          #+#    #+#             */
+/*   Updated: 2022/01/12 16:09:58 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdlib.h>
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	char	*line;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
-	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
-	}
-	return (0);
+	if (lst == NULL)
+		return ;
+	if (*lst == NULL)
+		return ;
+	ft_lstclear(&((*lst)->next), del);
+	ft_lstdelone(*lst, del);
+	*lst = NULL;
 }

@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstindex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2022/01/25 15:45:47 by hubretec          #+#    #+#             */
+/*   Updated: 2022/01/25 15:46:16 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+int	ft_lstindex(t_list *node, t_list *lst)
 {
-	char	*line;
+	int		index;
+	t_list	*tmp;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
+	index = 0;
+	tmp = lst;
+	while (tmp)
 	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
+		if (*(int *)tmp->content == *(int *)node->content)
+			return (index);
+		index++;
+		tmp = tmp->next;
 	}
-	return (0);
+	return (-1);
 }

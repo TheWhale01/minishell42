@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 15:10:52 by hubretec          #+#    #+#             */
+/*   Updated: 2021/12/19 19:55:55 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <string.h>
 
-int	main(int ac, char **av, char **env)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	*line;
+	size_t			i;
+	unsigned char	to_find;
+	unsigned char	*tab;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
-	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
-	}
+	i = 0;
+	tab = (unsigned char *)s;
+	to_find = (unsigned char)c;
+	while (i < n)
+		if (tab[i++] == to_find)
+			return (&tab[i - 1]);
 	return (0);
 }

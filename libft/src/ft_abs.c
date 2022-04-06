@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:35:00 by hubretec         ###   ########.fr       */
+/*   Created: 2022/01/30 20:09:28 by hubretec          #+#    #+#             */
+/*   Updated: 2022/01/30 20:09:47 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include "libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-
-enum	e_token
+int	abs(int n)
 {
-	CMD,
-	VAR,
-	PIPE,
-};
-
-typedef struct s_token
-{
-	int		token;
-	char	*str;
-}	t_token;
-
-#endif
+	if (n < 0)
+		return (n * -1);
+	return (n);
+}

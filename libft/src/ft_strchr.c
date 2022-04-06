@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 15:14:09 by hubretec          #+#    #+#             */
+/*   Updated: 2021/12/19 19:57:45 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <string.h>
+#include <stdio.h>
 
-int	main(int ac, char **av, char **env)
+char	*ft_strchr(const char *s, int c)
 {
-	char	*line;
+	int				i;
+	unsigned char	x;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
-	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
-	}
+	i = -1;
+	x = c;
+	while (s && s[++i])
+		if (s[i] == x)
+			return ((char *)&s[i]);
+	if (s && s[i] == x)
+		return ((char *)&s[i]);
 	return (0);
 }

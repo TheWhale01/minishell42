@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:35:00 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 15:09:21 by hubretec          #+#    #+#             */
+/*   Updated: 2021/12/19 19:56:06 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include "libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-
-enum	e_token
+int	ft_isascii(int c)
 {
-	CMD,
-	VAR,
-	PIPE,
-};
-
-typedef struct s_token
-{
-	int		token;
-	char	*str;
-}	t_token;
-
-#endif
+	return (c >= 0 && c <= 127);
+}

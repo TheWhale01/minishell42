@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:35:00 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 15:27:54 by hubretec          #+#    #+#             */
+/*   Updated: 2021/11/25 12:11:15 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include "libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-
-enum	e_token
+int	ft_tolower(int c)
 {
-	CMD,
-	VAR,
-	PIPE,
-};
-
-typedef struct s_token
-{
-	int		token;
-	char	*str;
-}	t_token;
-
-#endif
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
+}

@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 15:26:30 by hubretec          #+#    #+#             */
+/*   Updated: 2021/12/19 19:58:17 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stddef.h>
 
-int	main(int ac, char **av, char **env)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*line;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
+	if (n == 0)
+		return (0);
+	while (--n > 0 && *s1 && (*s1 == *s2))
 	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
+		s1++;
+		s2++;
 	}
-	return (0);
+	return (*(const unsigned char *)s1 - *(const unsigned char *)s2);
 }

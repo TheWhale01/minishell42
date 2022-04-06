@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2021/11/23 15:08:39 by hubretec          #+#    #+#             */
+/*   Updated: 2021/11/27 18:16:50 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdlib.h>
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char	*line;
+	void	*ptr;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
+	if (!size || !nmemb)
 	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
+		size = 1;
+		nmemb = 1;
 	}
-	return (0);
+	ptr = malloc(size * nmemb);
+	if (!ptr)
+		return (0);
+	ft_bzero(ptr, size * nmemb);
+	return (ptr);
 }

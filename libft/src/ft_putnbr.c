@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   .c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by hubretec         ###   ########.fr       */
+/*   Created: 2021/12/19 18:13:24 by hubretec          #+#    #+#             */
+/*   Updated: 2022/03/15 17:40:29 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+#include <unistd.h>
 
-int	main(int ac, char **av, char **env)
+void	ft_putnbr(int nb)
 {
-	char	*line;
+	unsigned int	nbr;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	while (1)
+	if (nb < 0)
 	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
-		free(line);
+		nbr = nb * -1;
+		write(1, "-", 1);
 	}
-	return (0);
+	else
+		nbr = nb;
+	if (nbr / 10)
+		ft_putnbr(nbr / 10);
+	ft_putchar(nbr % 10 + 48);
 }

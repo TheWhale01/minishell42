@@ -15,23 +15,26 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 $(NAME): $(OBJS)
 	@if [ ! -d "./$(BIN_DIR)" ]; then mkdir $(dir $@); fi
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(MAKE) -C libft/
+	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a -o $(NAME)
 
 all: $(NAME)
 
-debug: CFLAGS=-pthread -Wall -Wextra -Werror -I $(INCLUDES) -g
+debug: CFLAGS= -Wall -Wextra -Werror -I $(INCLUDES) -g
 debug: $(NAME)
 
-debug_sanitize: CFLAGS=-pthread -Wall -Wextra -Werror -fsanitize=address -g -I $(INCLUDES)
+debug_sanitize: CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g -I $(INCLUDES)
 debug_sanitize: $(NAME)
 
 clean:
+	$(MAKE) clean -C libft/
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
+	rm -rf libft/bin/libft.a
 	rm -rf $(BIN_DIR)
 
-sanitize:CFLAGS=-pthread -Wall -Wextra -Werror -I $(INCLUDES) -fsanitize=address
+sanitize:CFLAGS= -Wall -Wextra -Werror -I $(INCLUDES) -fsanitize=address
 sanitize: $(NAME)
 
 re: fclean all
