@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/06 22:35:00 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/04/08 09:09:11 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -22,6 +23,8 @@ enum	e_token
 	CMD,
 	VAR,
 	PIPE,
+	WORDS,
+	D_PIPE,
 };
 
 typedef struct s_token
@@ -29,5 +32,13 @@ typedef struct s_token
 	int		token;
 	char	*str;
 }	t_token;
+
+void	print_tokens(t_token *tokens);
+
+size_t	tablen(char **ptr);
+
+t_token	*tokenize(char **str, char **env);
+
+char	**get_path_env(char **env);
 
 #endif

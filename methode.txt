@@ -1,0 +1,6 @@
+Lexer :
+	split avec ' '
+	Si il y a " considerer comme un seul mot
+	jusqu'a l'autre "
+	Par contre si il y a $... prendre en compte la variable
+	sauf si il y a uniquement $ afficher $

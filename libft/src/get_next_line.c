@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 09:03:22 by hubretec          #+#    #+#             */
-/*   Updated: 2021/12/19 18:46:12 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/04/08 08:33:20 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*get_memory(int fd, int *bytes, char *memory)
 		if (!*bytes && !*tmp)
 			break ;
 		tmp[*bytes] = '\0';
-		memory = ft_strjoin(memory, tmp);
+		memory = ft_strjoin_free_s1(memory, tmp);
 	}
 	free(tmp);
 	return (memory);

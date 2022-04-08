@@ -1,4 +1,6 @@
 bin/
 obj/
+*.pdf
+vgcore*
 libft/bin/
 libft/obj/
