@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 22:18:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/08 09:24:14 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/04/09 18:35:18 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 int	is_cmd(char *str, char **path)
 {
+	char	*full_path;
+
 	if (!access(str, F_OK))
 		return (1);	
 	while (*path)
-		if (!access(ft_strjoin(*(path++), str), F_OK))
+	{
+		full_path = ft_strjoin(*path, str);
+		if (!access(full_path, F_OK))
 			return (1);
+		path++;
+	}
 	return (0);
 }
 
@@ -28,12 +34,14 @@ void	choose_token(char *str, char **path, t_token *tokens)
 	free(str);
 	if (is_cmd(tokens->str, path))
 		tokens->token = CMD;
-	else if (tokens->str[0] == '$')
+	else if (tokens->str[0] == '$' && ft_strlen(tokens->str) > 1)
 		tokens->token = VAR;
-	else if (tokens->str[0] == '|')
+	else if (!ft_strcmp(tokens->str, "|"))
 		tokens->token = PIPE;
 	else if (!ft_strcmp(tokens->str, "||"))
 		tokens->token = D_PIPE;
+	else
+		tokens->token = WORDS;
 }
 
 t_token	*tokenize(char **str, char **path)
@@ -57,7 +65,7 @@ t_token	*tokenize(char **str, char **path)
 			return (NULL);
 		}
 	}
-	printf("Je ne suis pas moi\n");
 	free(str);
+	tokens[i].str = NULL;
 	return (tokens);
 }

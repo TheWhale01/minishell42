@@ -3,7 +3,7 @@ BIN_DIR=bin/
 OBJ_DIR=obj/
 SRC_DIR=src/
 INCLUDES=includes/
-CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES)
+CFLAGS=-lreadline -Wall -Wextra -Werror -I $(INCLUDES)
 NAME=$(BIN_DIR)minishell
 
 CFILES=$(addprefix $(SRC_DIR), main.c token.c utils.c)
@@ -20,10 +20,10 @@ $(NAME): $(OBJS)
 
 all: $(NAME)
 
-debug: CFLAGS= -Wall -Wextra -Werror -I $(INCLUDES) -g
+debug: CFLAGS=-lreadline -Wall -Wextra -Werror -I $(INCLUDES) -g
 debug: $(NAME)
 
-debug_sanitize: CFLAGS= -Wall -Wextra -Werror -fsanitize=address -g -I $(INCLUDES)
+debug_sanitize:CFLAGS=-lreadline -Wall -Wextra -Werror -I $(INCLUDES) -g -fsanitize=address
 debug_sanitize: $(NAME)
 
 clean:
@@ -34,7 +34,7 @@ fclean: clean
 	rm -rf libft/bin/libft.a
 	rm -rf $(BIN_DIR)
 
-sanitize:CFLAGS= -Wall -Wextra -Werror -I $(INCLUDES) -fsanitize=address
+sanitize:CFLAGS=-lreadline -Wall -Wextra -Werror -I $(INCLUDES) -fsanitize=address
 sanitize: $(NAME)
 
 re: fclean all

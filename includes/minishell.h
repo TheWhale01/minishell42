@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/08 09:09:11 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/04/08 15:36:25 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <readline/readline.h>
 
 enum	e_token
 {

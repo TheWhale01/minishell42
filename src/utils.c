@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/08 08:57:29 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/04/08 15:46:19 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,32 @@ size_t	tablen(char **tab)
 	return (i);
 }
 
-void	*free_tab(void	**ptr)
+void	*free_tab(char	**tab)
 {
-	unsigned char	**tab;
+	int	i;
 
-	tab = (unsigned char **)ptr;
-	while (*tab)
-		free(*(tab++));
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
 	free(tab);
 	return (NULL);
 }
 
 char	**get_path_env(char **env)
 {
+	int		i;
+	char	**path;
+
 	while (*env)
 	{
 		if (!ft_strncmp(*env, "PATH", 4))
-			return (ft_split(&((*env)[5]), ':'));
+		{
+			i = -1;
+			path = ft_split(&((*env)[5]), ':');
+			while (path[++i])
+				path[i] = ft_strjoin_free_s1(path[i], "/");
+			return (path);
+		}
 		env++;
 	}
 	return (NULL);
@@ -59,7 +68,13 @@ void	print_tokens(t_token *tokens)
 			printf("PIPE ");
 		else if (tokens[i].token == D_PIPE)
 			printf("D_PIPE ");
+		else if (tokens[i].token == WORDS)
+			printf("WORDS ");
 	}
+	printf("\n");
+	i = -1;
+	while (tokens[++i].str)
+		printf("%s ", tokens[i].str);
 	printf("\n");
 }
 

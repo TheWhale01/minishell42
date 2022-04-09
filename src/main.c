@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/08 09:13:05 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/04/08 15:45:16 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,12 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	path = get_path_env(env);
-	printf("path : %s\n", *path);
 	while (1)
 	{
-		ft_putstr_fd("minishell> ", STDIN);
-		line = get_next_line(STDIN);
-		if (!line)
-			break ;
+		line = readline("minishell> ");
 		tokens = tokenize(ft_split(line, ' '), path);
 		if (!tokens)
-			printf("Error in cmd\n");
+			printf("Error\n");
 		else
 			print_tokens(tokens);
 		free(line);
