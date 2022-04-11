@@ -12,16 +12,24 @@
 
 #include "minishell.h"
 
+int	check_dir(char *str)
+{
+	struct stat	path_stat;
+
+	stat(str, &path_stat);
+	return (S_ISREG(path_stat.st_mode));
+}
+
 int	is_cmd(char *str, char **path)
 {
-	char	*full_path;
+	char		*full_path;
 
-	if (!access(str, F_OK))
-		return (1);	
+	if (check_dir(str) && !access(str, F_OK | X_OK))
+		return (1);
 	while (*path)
 	{
 		full_path = ft_strjoin(*path, str);
-		if (!access(full_path, F_OK))
+		if (!access(full_path, F_OK | X_OK))
 			return (1);
 		path++;
 	}

@@ -3,7 +3,7 @@ BIN_DIR=bin/
 OBJ_DIR=obj/
 SRC_DIR=src/
 INCLUDES=includes/
-CFLAGS=-lreadline -Wall -Wextra -Werror -I $(INCLUDES)
+CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES)
 NAME=$(BIN_DIR)minishell
 
 CFILES=$(addprefix $(SRC_DIR), main.c token.c utils.c)
@@ -11,19 +11,19 @@ OBJS=$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(CFILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -lreadline -o $@
 
 $(NAME): $(OBJS)
 	@if [ ! -d "./$(BIN_DIR)" ]; then mkdir $(dir $@); fi
 	$(MAKE) -C libft/
-	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a -lreadline -o $(NAME)
 
 all: $(NAME)
 
-debug: CFLAGS=-lreadline -Wall -Wextra -Werror -I $(INCLUDES) -g
+debug: CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES) -g
 debug: $(NAME)
 
-debug_sanitize:CFLAGS=-lreadline -Wall -Wextra -Werror -I $(INCLUDES) -g -fsanitize=address
+debug_sanitize:CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES) -g -fsanitize=address
 debug_sanitize: $(NAME)
 
 clean:
