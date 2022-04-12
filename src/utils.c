@@ -72,16 +72,4 @@ void	print_tokens(t_token *tokens)
 			printf("WORDS ");
 	}
 	printf("\n");
-	i = -1;
-	while (tokens[++i].str)
-		printf("%s ", tokens[i].str);
-	printf("\n");
 }
-
-// void	exit_msg(int exit_code, char *str, t_data *data)
-// {
-// 		grosse fonction pour free une potentielle structure data
-// 		dans laquelle il y aura tout ce qu'on aura malloc comme ca
-// 		on aura juste a check si les pointeurs ne sont pas null pour
-// 		les free
-// }

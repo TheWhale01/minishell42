@@ -37,7 +37,17 @@ typedef struct s_token
 	char	*str;
 }	t_token;
 
+typedef struct s_data
+{
+	char	*line;
+	char	**path;
+	t_token	*tokens;
+}	t_data;
+
 void	print_tokens(t_token *tokens);
+void    exit_cmd(int exit_code, t_data *data);
+
+void	*free_tab(char	**tab);
 
 size_t	tablen(char **ptr);
 

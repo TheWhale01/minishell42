@@ -14,22 +14,23 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char	*line;
-	char	**path;
-	t_token	*tokens;
+	t_data	data;
 
 	(void)ac;
 	(void)av;
-	path = get_path_env(env);
+	data.path = get_path_env(env);
 	while (1)
 	{
-		line = readline("minishell> ");
-		tokens = tokenize(ft_split(line, ' '), path);
-		if (!tokens)
+		ft_putstr_fd("minishell> ", STDIN);
+		data.line = get_next_line(STDIN);
+		data.tokens = tokenize(ft_split(data.line, ' '), data.path);
+		if (!data.tokens)
 			printf("Error\n");
 		else
-			print_tokens(tokens);
-		free(line);
+			print_tokens(data.tokens);
+		if (!ft_strcmp(data.line, "exit\n"))
+			exit_cmd(EXIT_SUCCESS, &data);
+		free(data.line);
 	}
 	return (0);
 }

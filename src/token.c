@@ -30,8 +30,12 @@ int	is_cmd(char *str, char **path)
 	{
 		full_path = ft_strjoin(*path, str);
 		if (!access(full_path, F_OK | X_OK))
+		{
+			free(full_path);
 			return (1);
+		}
 		path++;
+		free(full_path);
 	}
 	return (0);
 }
@@ -39,7 +43,6 @@ int	is_cmd(char *str, char **path)
 void	choose_token(char *str, char **path, t_token *tokens)
 {
 	tokens->str = ft_strdup(str);
-	free(str);
 	if (is_cmd(tokens->str, path))
 		tokens->token = CMD;
 	else if (tokens->str[0] == '$' && ft_strlen(tokens->str) > 1)
@@ -69,11 +72,12 @@ t_token	*tokenize(char **str, char **path)
 		choose_token(str[i], path, &tokens[i]);
 		if (tokens[i].token == -1)
 		{
+			free_tab(str);
 			free(tokens);
 			return (NULL);
 		}
 	}
-	free(str);
+	free_tab(str);
 	tokens[i].str = NULL;
 	return (tokens);
 }
