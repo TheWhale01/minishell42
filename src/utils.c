@@ -6,21 +6,11 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/08 15:46:19 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:16:34 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-size_t	tablen(char **tab)
-{
-	size_t	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
 
 void	*free_tab(char	**tab)
 {
@@ -68,6 +58,8 @@ void	print_tokens(t_token *tokens)
 			printf("PIPE ");
 		else if (tokens[i].token == D_PIPE)
 			printf("D_PIPE ");
+		else if (tokens[i].token == REDIR_OUT)
+			printf("REDIR_OUT ");
 		else if (tokens[i].token == WORDS)
 			printf("WORDS ");
 	}

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/08 08:31:51 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:59:28 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,11 @@ char		*ft_strdup(char *src);
 char		*get_next_line(int fd);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
+char		*ft_strcpy(char *dest, char *src);
 char		*ft_strmap(char const *s, char (*f)(char));
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
+char		*ft_strncpy(char *dest, char *src, unsigned int n);
 char		*ft_strjoin_free_s1(char const *s1, char const *s2);
 char		*ft_strjoin_free_s2(char const *s1, char const *s2);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
