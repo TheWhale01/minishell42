@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/03 20:26:30 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:50:38 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ int	wordlen(char *str)
 	return (i);
 }
 
-char	*cut_word(char *str)
+char	*cut_word(char *str, int *quote)
 {
 	int		len;
 	char	*word;
 
 	len = 0;
-	if (*str == '\"')
+	if (*quote && str[len] != '$')
 	{
-		str++;
 		while (str[len] && str[len] != '\"' && str[len] != '$')
 			len++;
-		printf("%d\n", str[len]);
+		if (str[len]== '\"')
+			*quote = 0;
 	}
-	else if (*str != '\0')
+	else
 	{
 		len = wordlen(str);
 		while (str[len] == ' ')
@@ -51,14 +51,30 @@ char	*cut_word(char *str)
 
 t_list	*format(char *str)
 {
+	int		quote;
 	char	*word;
 	t_list	*lst;
+	t_list	*node;
 
+	quote = 0;
 	lst = NULL;
 	while (*str)
 	{
-		word = cut_word(str);
-		//printf("%s\t%ld\n", word, ft_strlen(word));
+		if (*str == '\"')
+		{
+			quote = 1;
+			str++;
+		}
+		word = cut_word(str, &quote);
+		if (!*word)
+		{
+			free(word);
+			break ;
+		}
+		node = create_node(word);
+		if (!node)
+			return (NULL);
+		ft_lstadd_back(&lst, node);
 		str += ft_strlen(word);
 	}
 	return (lst);

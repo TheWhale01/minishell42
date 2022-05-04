@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/03 19:46:06 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/04 12:31:58 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ typedef struct s_data
 
 int		is_cmd(char *str, char **path);
 
-void	tokenize(t_data *data);
+void	print_lst(t_list *lst);
 void	print_tokens(t_token *tokens);
 void	exit_cmd(int exit_code, t_data *data);
 
 void	*free_tab(char	**tab);
 
 t_list	*format(char *str);
+t_list	*create_node(void *ptr);
 
 size_t	tablen(char **ptr);
 
