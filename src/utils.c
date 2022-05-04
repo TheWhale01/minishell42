@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/04 12:31:38 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:01:05 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_lst(t_list *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		printf("%s\n", (char *)tmp->content);
+		printf("%s$\n", (char *)tmp->content);
 		tmp = tmp->next;
 	}
 }

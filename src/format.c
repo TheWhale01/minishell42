@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/04 13:50:38 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/04 14:00:35 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,7 @@ char	*cut_word(char *str, int *quote)
 			*quote = 0;
 	}
 	else
-	{
 		len = wordlen(str);
-		while (str[len] == ' ')
-			len++;
-	}
 	word = malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
@@ -66,16 +62,13 @@ t_list	*format(char *str)
 			str++;
 		}
 		word = cut_word(str, &quote);
-		if (!*word)
-		{
-			free(word);
-			break ;
-		}
 		node = create_node(word);
 		if (!node)
 			return (NULL);
 		ft_lstadd_back(&lst, node);
 		str += ft_strlen(word);
+		while (*str == ' ')
+			str++;
 	}
 	return (lst);
 }
