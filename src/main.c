@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/04 13:49:28 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:42:22 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char **av, char **env)
 		lst = format(data.line);
 		print_lst(lst);
 		free(data.line);
+		ft_lstclear(&lst, free);
 	}
 	return (0);
 }
