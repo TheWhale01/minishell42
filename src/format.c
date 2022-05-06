@@ -6,37 +6,48 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/04 14:00:35 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/06 12:16:57 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	wordlen(char *str)
+int	is_in(char c, char *charset)
+{
+	while (*charset)
+		if (*(charset++) == c)
+			return (1);
+	return (0);
+}
+
+int	wordlen(char *str, char *charset)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\"')
+	while (str[i] && !is_in(str[i], charset))
 		i++;
 	return (i);
 }
 
 char	*cut_word(char *str, int *quote)
 {
-	int		len;
-	char	*word;
+	int			len;
+	char		*word;
 
-	len = 0;
-	if (*quote && str[len] != '$')
+	if (*str != '$' && *quote)
 	{
-		while (str[len] && str[len] != '\"' && str[len] != '$')
+		len = wordlen(str + 1, "$\"") + 1;
+		if (str[len] == '\"')
+		{
 			len++;
-		if (str[len]== '\"')
 			*quote = 0;
+		}
 	}
 	else
-		len = wordlen(str);
+		len = wordlen(str, " ");
+	while (str[len] == ' ')
+		len++;
 	word = malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
@@ -57,18 +68,13 @@ t_list	*format(char *str)
 	while (*str)
 	{
 		if (*str == '\"')
-		{
 			quote = 1;
-			str++;
-		}
 		word = cut_word(str, &quote);
 		node = create_node(word);
 		if (!node)
 			return (NULL);
 		ft_lstadd_back(&lst, node);
 		str += ft_strlen(word);
-		while (*str == ' ')
-			str++;
 	}
 	return (lst);
 }
