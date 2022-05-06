@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/06 12:16:57 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/06 12:58:11 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ char	*cut_word(char *str, int *quote)
 		}
 	}
 	else
-		len = wordlen(str, " ");
+		len = wordlen(str, " |<>");
+	if (!len)
+		while (is_in(str[len], "|<>") && len < 2)
+			len++;
 	while (str[len] == ' ')
 		len++;
 	word = malloc(sizeof(char) * (len + 1));
