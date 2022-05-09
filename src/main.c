@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/08 15:45:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:50:53 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,20 @@
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
+	t_list	*lst;
 
 	(void)ac;
 	(void)av;
 	data.path = get_path_env(env);
 	while (1)
 	{
-		ft_putstr_fd("minishell> ", STDIN);
-		data.line = get_next_line(STDIN);
-		data.tokens = tokenize(ft_split(data.line, ' '), data.path);
-		if (!data.tokens)
-			printf("Error\n");
-		else
-			print_tokens(data.tokens);
-		if (!ft_strcmp(data.line, "exit\n"))
+		data.line = readline("minishell> ");
+		if (!ft_strcmp(data.line, "exit"))
 			exit_cmd(EXIT_SUCCESS, &data);
+		lst = format(data.line);
+		print_lst(lst);
 		free(data.line);
+		ft_lstclear(&lst, free);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/04/08 15:36:25 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/04 12:31:58 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ enum	e_token
 	PIPE,
 	WORDS,
 	D_PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	D_REDIR_IN,
+	D_REDIR_OUT,
 };
 
 typedef struct s_token
@@ -44,14 +48,18 @@ typedef struct s_data
 	t_token	*tokens;
 }	t_data;
 
+int		is_cmd(char *str, char **path);
+
+void	print_lst(t_list *lst);
 void	print_tokens(t_token *tokens);
-void    exit_cmd(int exit_code, t_data *data);
+void	exit_cmd(int exit_code, t_data *data);
 
 void	*free_tab(char	**tab);
 
-size_t	tablen(char **ptr);
+t_list	*format(char *str);
+t_list	*create_node(void *ptr);
 
-t_token	*tokenize(char **str, char **env);
+size_t	tablen(char **ptr);
 
 char	**get_path_env(char **env);
 
