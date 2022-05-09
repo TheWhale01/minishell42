@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 16:50:02 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:58:22 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,17 @@ char	**get_path_env(char **env);
 
 // -----------------------------BUILTINS-----------------------------
 
+int		ft_len(t_list **list);
 int		ft_export(t_list *list, char c);
 
-void	ft_env(t_list **list);
+char	*ft_first(t_list **list);
+char	*ft_min_lst(char *str, t_list **list);
+
+void	ft_list(t_list **list);
+void	free_list(t_list *list);
+void	ft_list_sort(t_list **list);
 void	exit_cmd(int exit_code, t_data *data);
+
+t_list	*create_list(char **envp);
 
 #endif
