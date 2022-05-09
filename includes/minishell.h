@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 16:58:22 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 21:37:46 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ enum	e_token
 {
 	CMD,
 	VAR,
+	AND,
 	PIPE,
 	WORD,
 	D_PIPE,

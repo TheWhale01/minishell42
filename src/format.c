@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 16:14:38 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 21:38:12 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,23 @@ int	wordlen(char *str, char *charset)
 	return (i);
 }
 
-int	get_ops(char *str)
+int	get_sep(char *str)
 {
+	int	i;
+
+	i = 0;
 	if (!ft_strncmp(str, "||", 2) || !ft_strncmp(str, "<<", 2)
 		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2))
 		return (2);
 	else if (*str == '|' || *str == '>' || *str == '<'
 		|| *str == '*' || *str == '&')
 		return (1);
+	else
+	{
+		while (str[i] && str[i] != ' ')
+			i++;
+		return (i);
+	}
 	return (0);
 }
 
@@ -48,7 +57,9 @@ char	*cut_word(char *str, int *quote)
 
 	if (*str != '$' && *str != '*' && *quote)
 	{
-		len = wordlen(str + 1, "$\"*") + 1;
+		len = wordlen(str + 1, " \"") + 1;
+		if (*(str + 1) && *(str + 1) != '$' && *(str + 1) != '*')
+			len = wordlen(str + 1, "$\"*") + 1;
 		if (str[len] == '\"')
 		{
 			len++;
@@ -56,16 +67,15 @@ char	*cut_word(char *str, int *quote)
 		}
 	}
 	else
-		len = wordlen(str, " |<>&*");
+		len = wordlen(str, " |<>&$*");
 	if (!len)
-		len = get_ops(str);
+		len = get_sep(str);
 	while (str[len] == ' ')
 		len++;
 	word = malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
 	word = ft_strncpy(word, str, len);
-	word[len] = '\0';
 	return (word);
 }
 

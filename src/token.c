@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 16:54:03 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 21:36:05 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 int	is_cmd(char *cmd, char **path)
 {
+	int		len;
 	char	*str;
 
 	while (*path)
 	{
 		str = ft_strjoin(*path, cmd);
-		printf("%s\n", str);
+		len = ft_strlen(str);
+		if (str[len - 1] == ' ')
+			str[len - 1] = '\0';
 		if (!access(str, F_OK | X_OK))
 		{
 			free(str);
@@ -31,17 +34,38 @@ int	is_cmd(char *cmd, char **path)
 	return (0);
 }
 
+void	choose_op(t_token *token, char *str)
+{
+	if (!ft_strncmp(str, "||", 2))
+		token->token = D_PIPE;
+	else if (!ft_strncmp(str, ">>", 2))
+		token->token = D_REDIR_OUT;
+	else if (!ft_strncmp(str, "<<", 2))
+		token->token = D_REDIR_IN;
+	else if (!ft_strncmp(str, "&&", 2))
+		token->token = AND;
+	else if (*str == '|')
+		token->token = PIPE;
+	else if (*str == '>')
+		token->token = REDIR_OUT;
+	else if (*str == '<')
+		token->token = REDIR_IN;
+}
+
 t_list	*choose_token(t_list *node, char **path)
 {
 	t_list	*new;
-	t_token	token;
+	t_token	*token;
 
-	token.str = (char *)node->content;
-	if (is_cmd(token.str, path))
-		token.token = CMD;
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->str = (char *)node->content;
+	if (is_cmd(token->str, path))
+		token->token = CMD;
 	else
-		token.token = WORD;
-	new = ft_lstnew(&token);
+		token->token = WORD;
+	new = ft_lstnew(token);
 	return (new);
 }
 
