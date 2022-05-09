@@ -2,5 +2,6 @@ bin/
 obj/
 *.pdf
 vgcore*
+readline
 libft/bin/
 libft/obj/

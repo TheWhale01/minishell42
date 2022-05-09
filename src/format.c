@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 11:45:19 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 13:10:06 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int	wordlen(char *str, char *charset)
 int	get_ops(char *str)
 {
 	if (!ft_strncmp(str, "||", 2) || !ft_strncmp(str, "<<", 2)
-		|| !ft_strncmp(str, ">>", 2))
+		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2))
 		return (2);
-	else if (*str == '|' || *str == '>' || *str == '<')
+	else if (*str == '|' || *str == '>' || *str == '<'
+		|| *str == '*' || *str == '&')
 		return (1);
 	return (0);
 }
@@ -45,9 +46,9 @@ char	*cut_word(char *str, int *quote)
 	int			len;
 	char		*word;
 
-	if (*str != '$' && *quote)
+	if (*str != '$' && *str != '*' && *quote)
 	{
-		len = wordlen(str + 1, "$\"") + 1;
+		len = wordlen(str + 1, "$\"*") + 1;
 		if (str[len] == '\"')
 		{
 			len++;
@@ -55,7 +56,7 @@ char	*cut_word(char *str, int *quote)
 		}
 	}
 	else
-		len = wordlen(str, " |<>");
+		len = wordlen(str, " |<>&*");
 	if (!len)
 		len = get_ops(str);
 	while (str[len] == ' ')
