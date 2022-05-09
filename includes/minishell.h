@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 15:35:13 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:50:02 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ enum	e_token
 	CMD,
 	VAR,
 	PIPE,
-	WORDS,
+	WORD,
 	D_PIPE,
 	WILDCARD,
 	REDIR_IN,
@@ -49,10 +49,9 @@ typedef struct s_data
 	t_list	*tokens;
 }	t_data;
 
-int		is_cmd(char *str, char **path);
-
 void	print_lst(t_list *lst);
-void	print_tokens(t_token *tokens);
+void	print_tokens(t_list *tokens);
+void	tokenize(t_data *data, t_list *lst);
 
 void	*free_tab(char	**tab);
 

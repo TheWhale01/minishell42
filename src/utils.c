@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 15:20:37 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:51:57 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,28 @@ void	print_lst(t_list *lst)
 	}
 }
 
-void	print_tokens(t_token *tokens)
+void	print_tokens(t_list *tokens)
 {
-	int	i;
+	t_list	*tmp;
+	t_token	*tmp_token;
 
-	i = -1;
-	while (tokens[++i].str)
+	tmp = tokens;
+	while (tmp)
 	{
-		if (tokens[i].token == CMD)
+		tmp_token = (t_token *)tmp->content;
+		if (tmp_token->token == CMD)
 			printf("CMD ");
-		else if (tokens[i].token == VAR)
+		else if (tmp_token->token == VAR)
 			printf("VAR ");
-		else if (tokens[i].token == PIPE)
+		else if (tmp_token->token == PIPE)
 			printf("PIPE ");
-		else if (tokens[i].token == D_PIPE)
+		else if (tmp_token->token == D_PIPE)
 			printf("D_PIPE ");
-		else if (tokens[i].token == REDIR_OUT)
+		else if (tmp_token->token == REDIR_OUT)
 			printf("REDIR_OUT ");
-		else if (tokens[i].token == WORDS)
-			printf("WORDS ");
+		else if (tmp_token->token == WORD)
+			printf("WORD ");
+		tmp = tmp->next;
 	}
 	printf("\n");
 }
