@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 13:10:06 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:22:44 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_list	*format(char *str)
 		if (*str == '\"')
 			quote = 1;
 		word = cut_word(str, &quote);
-		node = create_node(word);
+		node = ft_lstnew(word);
 		if (!node)
 		{
 			free(word);

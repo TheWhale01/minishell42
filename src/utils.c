@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/04 14:01:05 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:20:37 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,6 @@ char	**get_path_env(char **env)
 		env++;
 	}
 	return (NULL);
-}
-
-t_list	*create_node(void *ptr)
-{
-	t_list	*node;
-
-	node = malloc(sizeof(t_list));
-	if (!node)
-		return (NULL);
-	node->content = ptr;
-	node->next = NULL;
-	return (node);
 }
 
 void	print_lst(t_list *lst)

@@ -1,12 +1,11 @@
 CC=gcc
-BIN_DIR=bin/
 OBJ_DIR=obj/
 SRC_DIR=src/
 INCLUDES=includes/
 CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES)
-NAME=$(BIN_DIR)minishell
+NAME=minishell
 
-CFILES=$(addprefix $(SRC_DIR), format.c main.c utils.c builtins/exit.c)
+CFILES=$(addprefix $(SRC_DIR), format.c main.c token.c utils.c builtins/exit.c)
 OBJS=$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(CFILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -14,7 +13,6 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -lreadline -o $@
 
 $(NAME): $(OBJS)
-	@if [ ! -d "./$(BIN_DIR)" ]; then mkdir $(dir $@); fi
 	$(MAKE) -C libft/
 	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a -lreadline -o $(NAME)
 
@@ -32,7 +30,7 @@ clean:
 
 fclean: clean
 	rm -rf libft/bin/libft.a
-	rm -rf $(BIN_DIR)
+	rm -rf $(NAME)
 
 sanitize:CFLAGS=-lreadline -Wall -Wextra -Werror -I $(INCLUDES) -fsanitize=address
 sanitize: $(NAME)

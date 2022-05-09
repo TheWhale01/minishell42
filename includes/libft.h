@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/04 12:29:31 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:21:48 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ size_t		ft_strlen(char const *str);
 size_t		ft_strlcat(char *dst, char *src, size_t size);
 size_t		ft_strlcpy(char *dest, char *src, size_t size);
 
+t_list		*ft_lstnew(void *ptr);
 t_list		*ft_lstmax(t_list *lst);
 t_list		*ft_lstmin(t_list *lst);
 t_list		*ft_lstlast(t_list *lst);
