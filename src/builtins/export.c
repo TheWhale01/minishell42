@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:32:32 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/09 15:28:39 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:14:37 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ char	*ft_first(t_list **list)
 	while (tmp && tmp->next)
 	{
 		tmp = tmp->next;
-		if (strcmp(min, tmp->content) > 0)
+		if (ft_strcmp(min, tmp->content) > 0)
 			min = tmp->content;
 	}
 	printf("%s\n", min);
 	return (min);
 }
 
-char	*ft_min(char *str, t_list **list)
+char	*ft_min_lst(char *str, t_list **list)
 {
 	t_list	*tmp;
 	char	*min;
@@ -52,7 +52,7 @@ char	*ft_min(char *str, t_list **list)
 	while (tmp && tmp->next)
 	{
 		tmp = tmp->next;
-		if (strcmp(tmp->content, min) < 0 && strcmp(str, min) < 0)
+		if (ft_strcmp(tmp->content, min) < 0 && ft_strcmp(str, min) < 0)
 			min = tmp->content;
 	}
 	return (min);
@@ -76,8 +76,9 @@ void	ft_list_sort(t_list **list)
 		{
 			tmp = tmp->next;
 			if (strcmp(str, min) == 0)
-				str = ft_min(min, list);
-			else if (strcmp(tmp->content, str) < 0 && strcmp(min, tmp->content) < 0)
+				str = ft_min_lst(min, list);
+			else if (ft_strcmp(tmp->content, str) < 0
+				&& ft_strcmp(min, tmp->content) < 0)
 				str = tmp->content;
 		}
 		min = str;
