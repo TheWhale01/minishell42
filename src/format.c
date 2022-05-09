@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/06 13:44:11 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/09 11:45:19 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ int	wordlen(char *str, char *charset)
 	return (i);
 }
 
+int	get_ops(char *str)
+{
+	if (!ft_strncmp(str, "||", 2) || !ft_strncmp(str, "<<", 2)
+		|| !ft_strncmp(str, ">>", 2))
+		return (2);
+	else if (*str == '|' || *str == '>' || *str == '<')
+		return (1);
+	return (0);
+}
+
 char	*cut_word(char *str, int *quote)
 {
 	int			len;
@@ -47,8 +57,7 @@ char	*cut_word(char *str, int *quote)
 	else
 		len = wordlen(str, " |<>");
 	if (!len)
-		while (is_in(str[len], "|<>") && len < 2)
-			len++;
+		len = get_ops(str);
 	while (str[len] == ' ')
 		len++;
 	word = malloc(sizeof(char) * (len + 1));
