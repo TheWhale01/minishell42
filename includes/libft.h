@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/09 15:21:48 by hubretec         ###   ########.fr       */
+=======
+/*   Updated: 2022/05/09 15:23:52 by jrossett         ###   ########.fr       */
+>>>>>>> ccf5ebbf84091de439c02b2b1e4b41a782504676
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +54,7 @@ int			ft_putstr(char *str);
 int			ft_whitespace(int c);
 int			ft_lstsize(t_list *lst);
 int			ft_atoi(const char *nptr);
+int			ft_strlen(char const *str);
 int			ft_putchar_fd(char c, int fd);
 int			ft_printf(const char *s, ...);
 int			count_words(char const *s, char c);
@@ -66,7 +71,7 @@ void		print_addr(void *p0, int *len);
 void		ft_putendl_fd(char const *s, int fd);
 void		ft_striter(char *s, void (*f)(char *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
-void		ft_lstadd_back(t_list **alst, t_list *new);
+void		lstadd_back(t_list **list, t_list *tmp);
 void		ft_lstadd_front(t_list **alst, t_list *new);
 void		ft_putnbr_base(int nb, char *base, int *len);
 void		ft_lstdelone(t_list *lst, void (*del)(void *));
@@ -97,7 +102,6 @@ void		*ft_memchr(const void *s, int c, size_t n);
 void		*ft_memmove(void *dest, void *src, size_t n);
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 
-size_t		ft_strlen(char const *str);
 size_t		ft_strlcat(char *dst, char *src, size_t size);
 size_t		ft_strlcpy(char *dest, char *src, size_t size);
 
