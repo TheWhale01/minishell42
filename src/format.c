@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 21:38:12 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 10:17:58 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	get_sep(char *str)
 		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2))
 		return (2);
 	else if (*str == '|' || *str == '>' || *str == '<'
-		|| *str == '*' || *str == '&')
+		|| *str == '*' || *str == '&' || *str == '('
+		|| *str == ')')
 		return (1);
 	else
 	{
@@ -67,7 +68,7 @@ char	*cut_word(char *str, int *quote)
 		}
 	}
 	else
-		len = wordlen(str, " |<>&$*");
+		len = wordlen(str, " |<>&$*()");
 	if (!len)
 		len = get_sep(str);
 	while (str[len] == ' ')

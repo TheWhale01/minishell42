@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 21:37:46 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 10:20:45 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ enum	e_token
 	PIPE,
 	WORD,
 	D_PIPE,
+	OPEN_P,
+	CLOSE_P,
 	WILDCARD,
 	REDIR_IN,
 	REDIR_OUT,

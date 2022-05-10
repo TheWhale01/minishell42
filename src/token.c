@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 09:43:11 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 10:23:23 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	is_op(char *str)
 		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2))
 		return (1);
 	else if (*str == '|' || *str == '>' || *str == '<'
-		|| *str == '*' || *str == '&')
+		|| *str == '*' || *str == '&' || *str == '('
+		|| *str == ')')
 		return (1);
 	return (0);
 }
@@ -63,6 +64,10 @@ void	choose_op(t_token *token, char *str)
 		token->token = REDIR_OUT;
 	else if (*str == '<')
 		token->token = REDIR_IN;
+	else if (*str == '(')
+		token->token = OPEN_P;
+	else if (*str == ')')
+		token->token = CLOSE_P;
 }
 
 t_list	*choose_token(t_list *node, char **path)

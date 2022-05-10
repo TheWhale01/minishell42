@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 21:37:51 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 10:21:16 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ void	print_tokens(t_list *tokens)
 			printf("WILDCARD ");
 		else if (((t_token *)tmp->content)->token == VAR)
 			printf("VAR ");
+		else if (((t_token *)tmp->content)->token == OPEN_P)
+			printf("OPEN_P ");
+		else if (((t_token *)tmp->content)->token == CLOSE_P)
+			printf("CLOSE_P ");
 		else
 			printf("WORD ");
 		tmp = tmp->next;
