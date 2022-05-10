@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 10:17:58 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 10:43:50 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ char	*cut_word(char *str, int *quote)
 	int			len;
 	char		*word;
 
-	if (*str != '$' && *str != '*' && *quote)
+	if ((*str != '$' && *str != '*' && *quote == 1) || *quote == 2)
 	{
-		len = wordlen(str + 1, " \"") + 1;
-		if (*(str + 1) && *(str + 1) != '$' && *(str + 1) != '*')
-			len = wordlen(str + 1, "$\"*") + 1;
-		if (str[len] == '\"')
+		len = wordlen(str + 1, "\"\'") + 1;
+		if (*(str + 1) && *(str + 1) != '$' && *quote == 1)
+			len = wordlen(str + 1, "$\"\'") + 1;
+		if (str[len] == '\"' || str[len] == '\'')
 		{
 			len++;
 			*quote = 0;
@@ -93,6 +93,8 @@ t_list	*format(char *str)
 	{
 		if (*str == '\"')
 			quote = 1;
+		else if (*str == '\'')
+			quote = 2;
 		word = cut_word(str, &quote);
 		node = ft_lstnew(word);
 		if (!node)
