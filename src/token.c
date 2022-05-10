@@ -6,11 +6,22 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 21:36:05 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 09:26:19 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_op(char *str)
+{
+	if (!ft_strncmp(str, "||", 2) || !ft_strncmp(str, "<<", 2)
+		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2))
+		return (1);
+	else if (*str == '|' || *str == '>' || *str == '<'
+		|| *str == '*' || *str == '&')
+		return (1);
+	return (0);
+}
 
 int	is_cmd(char *cmd, char **path)
 {
@@ -63,6 +74,8 @@ t_list	*choose_token(t_list *node, char **path)
 	token->str = (char *)node->content;
 	if (is_cmd(token->str, path))
 		token->token = CMD;
+	else if (is_op(node->content))
+		choose_op(token, node->content);
 	else
 		token->token = WORD;
 	new = ft_lstnew(token);

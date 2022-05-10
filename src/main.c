@@ -6,11 +6,18 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 20:42:30 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 09:20:00 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init(t_data *data)
+{
+	data->line = NULL;
+	data->path = NULL;
+	data->tokens = NULL;
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -19,6 +26,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	init(&data);
 	data.path = get_path_env(envp);
 	while (1)
 	{
