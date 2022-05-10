@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 10:20:45 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:21:48 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <readline/history.h>
 # include <readline/readline.h>
 
 enum	e_token
@@ -52,7 +53,7 @@ typedef struct s_data
 	t_list	*tokens;
 }	t_data;
 
-void	print_lst(t_list *lst);
+void	free_tokens(t_list *tokens);
 void	print_tokens(t_list *tokens);
 void	tokenize(t_data *data, t_list *lst);
 

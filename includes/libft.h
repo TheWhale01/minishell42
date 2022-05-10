@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 15:39:42 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:57:22 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void		ft_lstreplace_index(t_list *stack, t_list *new, int index);
 char		*ft_itoa(int n);
 char		*ft_strdup(char *src);
 char		*get_next_line(int fd);
+char		*ft_strndup(char *src, size_t n);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strcpy(char *dest, char *src);
