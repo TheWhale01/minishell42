@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 09:26:19 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/10 09:43:11 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	choose_op(t_token *token, char *str)
 		token->token = D_REDIR_IN;
 	else if (!ft_strncmp(str, "&&", 2))
 		token->token = AND;
+	else if (!ft_strncmp(str, "\"*", 2) || *str == '*')
+		token->token = WILDCARD;
 	else if (*str == '|')
 		token->token = PIPE;
 	else if (*str == '>')
@@ -76,6 +78,9 @@ t_list	*choose_token(t_list *node, char **path)
 		token->token = CMD;
 	else if (is_op(node->content))
 		choose_op(token, node->content);
+	else if (*(char *)(node->content) == '$'
+		|| !ft_strncmp(node->content, "\"$", 2))
+		token->token = VAR;
 	else
 		token->token = WORD;
 	new = ft_lstnew(token);
