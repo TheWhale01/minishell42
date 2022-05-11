@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/11 13:32:11 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:09:04 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ char	**get_path_env(char **env);
 
 // -----------------------------BUILTINS-----------------------------
 
-int		ft_len(t_list **list);
-int		ft_export(t_list *list, char c);
+int		ft_export(t_list *list, char *str);
 
 void	ft_env(t_list **list);
 void	free_list(t_list *list);

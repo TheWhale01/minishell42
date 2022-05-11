@@ -15,12 +15,13 @@ ft_lstindex.c ft_putnbr_fd.c ft_toupper.c ft_lstiter.c ft_putstr.c get_next_line
 ft_lstnew.c)
 OBJS=$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(CFILES))
 NAME=$(BIN_DIR)libft.a
+HEADER=../includes/libft.h
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@if [ ! -d "./$(OBJ_DIR)" ]; then mkdir $(dir $@); fi
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(HEADER)
 	@if [ ! -d "./$(BIN_DIR)" ]; then mkdir $(dir $@); fi
 	ar rc $(NAME) $(OBJS)
 
