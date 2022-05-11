@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:32:32 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/09 16:14:37 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/11 13:41:53 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,19 @@ int	ft_len(t_list **list)
 	return (i);
 }
 
-char	*ft_first(t_list **list)
+void	ft_put_export(char *str)
 {
-	t_list	*tmp;
-	char	*min;
+	int	i;
 
-	tmp = *list;
-	while (tmp && tmp->next)
-	{
-		tmp = tmp->next;
-		if (ft_strcmp(min, tmp->content) > 0)
-			min = tmp->content;
-	}
-	printf("%s\n", min);
-	return (min);
-}
-
-char	*ft_min_lst(char *str, t_list **list)
-{
-	t_list	*tmp;
-	char	*min;
-
-	tmp = *list;
-	while (tmp && tmp->next)
-	{
-		tmp = tmp->next;
-		if (ft_strcmp(tmp->content, min) < 0 && ft_strcmp(str, min) < 0)
-			min = tmp->content;
-	}
-	return (min);
+	i = 0;
+	ft_putstr("declare -x ");
+	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_'))
+		ft_putchar(str[i++]);
+	ft_putchar(str[i++]);
+	ft_putchar('\"');
+	while (str[i])
+		ft_putchar(str[i++]);
+	ft_putstr("\"\n");
 }
 
 void	ft_list_sort(t_list **list)
@@ -65,57 +49,25 @@ void	ft_list_sort(t_list **list)
 	char	*min;
 	int		i;
 
-	i = -1;
+	i = 0;
 	tmp = *list;
-	min = ft_first(list);
+	min = "\0";
+	str = "~";
 	while (++i < ft_len(list))
 	{
 		tmp = *list;
-		str = tmp->content;
 		while (tmp->next)
 		{
-			tmp = tmp->next;
-			if (strcmp(str, min) == 0)
-				str = ft_min_lst(min, list);
-			else if (ft_strcmp(tmp->content, str) < 0
-				&& ft_strcmp(min, tmp->content) < 0)
+			if (ft_strcmp(tmp->content, str) < 0
+				&& ft_strcmp(tmp->content, min) > 0)
 				str = tmp->content;
+			tmp = tmp->next;
 		}
 		min = str;
-		printf("%s\n", str);
+		ft_put_export(str);
+		str = "~";
 	}
 }
-
-// }
-
-// 	t_list	*tmp;
-// 	char	*str;
-// 	char	*min;
-// 	int		i;
-
-// 	i = -1;
-// 	tmp = *list;
-// 	min = NULL;
-// 	while (++i < ft_len(list))
-// 	{
-// 		str = tmp->content;
-// 		while (tmp && tmp->next)
-// 		{
-// 			tmp = tmp->next;
-// 			if (ft_strcmp(str, tmp->content) > 0)
-// 			{
-// 				if (min)
-// 				{
-// 					if (ft_strcmp(str, min) > 0)
-// 						str = tmp->content;
-// 				}
-// 				else
-// 					str = tmp->content;
-// 			}	
-// 		}
-// 		min = str;
-// 		printf("%s\n", str);
-// 	}
 
 int	ft_export(t_list *list, char c)
 {

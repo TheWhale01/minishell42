@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/11 11:12:54 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:02:13 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_env(t_list **list)
 	}
 }
 
-void	free_env(t_list *list)
+void	free_list(t_list *list)
 {
 	t_list	*tmp;
 	t_list	*v;

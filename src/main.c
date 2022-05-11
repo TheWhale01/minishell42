@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/11 11:11:56 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:07:47 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 	list = create_list(envp);
-	ft_env(&list);
-	free_env(list);
-	//ft_export(list, 's');
+	//ft_env(&list);
+	//free_list(list);
+	ft_export(list, 's');
 	return (0);
 }
