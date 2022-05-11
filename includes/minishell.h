@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 10:20:45 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:11:29 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int		ft_export(t_list *list, char c);
 char	*ft_first(t_list **list);
 char	*ft_min_lst(char *str, t_list **list);
 
-void	ft_list(t_list **list);
-void	free_list(t_list *list);
+void	ft_env(t_list **list);
+void	free_env(t_list *list);
 void	ft_list_sort(t_list **list);
 void	exit_cmd(int exit_code, t_data *data);
 
