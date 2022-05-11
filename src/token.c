@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 12:16:11 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:07:20 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,25 +93,4 @@ t_list	*choose_token(t_list *node, char **path)
 		token->token = WORD;
 	new = ft_lstnew(token);
 	return (new);
-}
-
-void	tokenize(t_data *data, t_list *lst)
-{
-	t_list	*tmp;
-	t_list	*node;
-
-	tmp = lst;
-	data->tokens = NULL;
-	while (tmp)
-	{
-		node = choose_token(tmp, data->path);
-		if (!node)
-		{
-			free_tokens(data->tokens);
-			return ;
-		}
-		ft_lstadd_back(&data->tokens, node);
-		tmp = tmp->next;
-	}
-	ft_lstclear(&lst, NULL);
 }

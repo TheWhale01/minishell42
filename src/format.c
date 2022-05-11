@@ -6,26 +6,32 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 11:48:17 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:11:50 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_in(char c, char *charset)
+int	is_in(char c, char *charset, int *quote)
 {
 	while (*charset)
+	{
+		if (c == '\"' || c == '\'')
+			*quote = 1;
+		if ((*charset == ' ' || *charset == '$') && *quote)
+			charset++;
 		if (*(charset++) == c)
 			return (1);
+	}
 	return (0);
 }
 
-int	wordlen(char *str, char *charset)
+int	wordlen(char *str, char *charset, int *quote)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] && !is_in(str[i], charset))
+	while (str[i] && !is_in(str[i], charset, quote))
 		i++;
 	return (i);
 }
@@ -58,11 +64,9 @@ char	*cut_word(char *str, int *quote)
 	int			len;
 	char		*word;
 
-	if ((*str != '$' && *str != '*' && *quote == 2) || *quote == 1)
+	if (*quote)
 	{
-		len = wordlen(str + 1, "\"\'") + 1;
-		if (*(str + 1) && *(str + 1) != '$' && *quote == 2)
-			len = wordlen(str + 1, "$\"\'") + 1;
+		len = wordlen(str + 1, "\"\'", quote) + 1;
 		if (str[len] == '\"' || str[len] == '\'')
 		{
 			len++;
@@ -70,7 +74,7 @@ char	*cut_word(char *str, int *quote)
 		}
 	}
 	else
-		len = wordlen(str, " |<>&$*()");
+		len = wordlen(str, " |<>&$*()", quote);
 	if (!len)
 		len = get_sep(str);
 	while (str[len] == ' ')
@@ -93,10 +97,8 @@ t_list	*format(char *str)
 	lst = NULL;
 	while (*str)
 	{
-		if (*str == '\'')
+		if (*str == '\'' || *str == '\"')
 			quote = 1;
-		else if (*str == '\"')
-			quote = 2;
 		word = cut_word(str, &quote);
 		node = ft_lstnew(word);
 		if (!node)
