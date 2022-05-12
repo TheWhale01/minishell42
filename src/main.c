@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/11 11:11:56 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:47:41 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 // 		print_lst(lst);
 // 		tokenize(&data, lst);
 // 		print_tokens(data.tokens);
+// 		// expander(&data);
 // 		free(data.line);
 // 	}
 // 	return (0);
