@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 12:17:23 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:43:24 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av, char **envp)
 		lst = format(data.line);
 		print_lst(lst);
 		tokenize(&data, lst);
-		// print_tokens(data.tokens);
+		print_tokens(data.tokens);
 		// expander(&data);
 		free(data.line);
 	}
