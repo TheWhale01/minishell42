@@ -28,10 +28,13 @@ int	is_cmd(char *cmd, char **path)
 {
 	int			len;
 	char		*str;
-	struct stat	path_stat;
+	struct stat	*path_stat;
 
-	stat(cmd, &path_stat);
-	if (!access(cmd, X_OK) && !S_ISDIR(path_stat.st_mode))
+	path_stat = malloc(sizeof(struct stat));
+	if (!path_stat)
+		return (0);
+	stat(cmd, path_stat);
+	if (!access(cmd, X_OK) && !S_ISDIR(path_stat->st_mode))
 		return (1);
 	while (*path)
 	{
@@ -39,13 +42,14 @@ int	is_cmd(char *cmd, char **path)
 		len = ft_strlen(str);
 		if (str[len - 1] == ' ')
 			str[len - 1] = '\0';
-		if (!access(str, X_OK) && !S_ISDIR(path_stat.st_mode))
+		if (!access(str, X_OK) && !S_ISDIR(path_stat->st_mode))
 		{
 			free(str);
 			return (1);
 		}
 		free(str);
 	}
+	free(path_stat);
 	return (0);
 }
 
@@ -75,23 +79,18 @@ void	choose_op(t_token *token, char *str)
 
 t_list	*choose_token(t_list *node, char **path)
 {
-	int		i;
 	t_list	*new;
 	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	i = 0;
-	while (((char *)node->content)[i] == ' ')
-		i++;
 	token->str = (char *)node->content;
-	if (is_cmd(&(((char *)node->content)[i]), path))
+	if (is_cmd(skip_spaces(node->content), path))
 		token->token = CMD;
-	else if (is_op(&(((char *)node->content)[i])))
-		choose_op(token, &(((char *)node->content)[i]));
-	else if (*(char *)(&(((char *)node->content)[i])) == '$'
-		|| !ft_strncmp(&(((char *)node->content)[i]), "\"$", 2))
+	else if (is_op(skip_spaces((char *)node->content)))
+		choose_op(token, skip_spaces((char *)node->content));
+	else if (*(skip_spaces(node->content)) == '$' || !ft_strncmp(skip_spaces(node->content), "\"$", 2))
 		token->token = VAR;
 	else
 		token->token = WORD;

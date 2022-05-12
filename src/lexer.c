@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 11:20:47 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:12:36 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,28 @@ void	tokenize(t_data *data, t_list *lst)
 		ft_lstadd_back(&data->tokens, node);
 		tmp = tmp->next;
 	}
-	ft_lstclear(&lst, NULL);
+	lst = ft_lstclear(&lst, NULL);
+}
+
+void	expander(t_data *data)
+{
+	t_list	*found;
+	t_list	*tmp;
+	t_token	*token;
+
+	tmp = data->tokens;
+	while (tmp)
+	{
+		token = ((t_token *)tmp->content);
+		if (token->token == VAR
+			|| (token->token == WORD && ft_strchr(token->str, '$')))
+		{
+			found = search_env(skip_spaces(token->str) + 1, data->envp);
+			if (found)
+			{
+				token->str = ft_strdup(ft_strchr((char *)found->content, '=') + 1);
+			}
+		}
+		tmp = tmp->next;
+	}
 }

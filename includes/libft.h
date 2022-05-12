@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 11:12:09 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:59:40 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void		*ft_lstclear(t_list **lst, void (*del)(void *));
 char		*ft_strncpy(char *dest, char *src, unsigned int n);
 char		*ft_strjoin_free_s1(char const *s1, char const *s2);
 char		*ft_strjoin_free_s2(char const *s1, char const *s2);
+char		*ft_strstr(const char *haystack, const char *needle);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t n);

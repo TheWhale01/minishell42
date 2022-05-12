@@ -71,7 +71,7 @@ int	get_sep(char *str)
 	else
 	{
 		i = 0;
-		while (str[i] && str[i] != ' ' && isalpha(str[i + 1]))
+		while (str[i] && str[i] != ' ' && (isalnum(str[i + 1]) || str[i + 1] == '_'))
 			i++;
 		return (i + 1);
 	}
