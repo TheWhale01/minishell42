@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/11 16:07:20 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:07:24 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,23 @@ void	choose_op(t_token *token, char *str)
 
 t_list	*choose_token(t_list *node, char **path)
 {
+	int		i;
 	t_list	*new;
 	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
+	i = 0;
+	while (((char *)node->content)[i] == ' ')
+		i++;
 	token->str = (char *)node->content;
-	if (is_cmd(token->str, path))
+	if (is_cmd(&(((char *)node->content)[i]), path))
 		token->token = CMD;
-	else if (is_op(node->content))
-		choose_op(token, node->content);
-	else if (*(char *)(node->content) == '$'
-		|| !ft_strncmp(node->content, "\"$", 2))
+	else if (is_op(&(((char *)node->content)[i])))
+		choose_op(token, &(((char *)node->content)[i]));
+	else if (*(char *)(&(((char *)node->content)[i])) == '$'
+		|| !ft_strncmp(&(((char *)node->content)[i]), "\"$", 2))
 		token->token = VAR;
 	else
 		token->token = WORD;

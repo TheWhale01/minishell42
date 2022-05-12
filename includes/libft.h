@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/11 16:23:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:12:09 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ void		ft_lstiter(t_list *lst, void (*f)(void *));
 void		ft_lstadd_back(t_list **list, t_list *tmp);
 void		ft_lstadd_front(t_list **alst, t_list *new);
 void		ft_putnbr_base(int nb, char *base, int *len);
-void		ft_lstdelone(t_list *lst, void (*del)(void *));
-void		ft_lstclear(t_list **lst, void (*del)(void *));
+
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 void		ft_putnbr_base_u(unsigned int nb, char *base, int *len);
 void		ft_lstreplace_index(t_list *stack, t_list *new, int index);
@@ -86,6 +85,8 @@ char		*ft_strcpy(char *dest, char *src);
 char		*ft_strmap(char const *s, char (*f)(char));
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
+void		*ft_lstdelone(t_list *lst, void (*del)(void *));
+void		*ft_lstclear(t_list **lst, void (*del)(void *));
 char		*ft_strncpy(char *dest, char *src, unsigned int n);
 char		*ft_strjoin_free_s1(char const *s1, char const *s2);
 char		*ft_strjoin_free_s2(char const *s1, char const *s2);

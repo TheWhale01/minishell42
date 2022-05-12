@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/11 16:30:56 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:16:25 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ typedef struct s_data
 	t_list	*tokens;
 }	t_data;
 
-void	expander(t_data *data);
+int		only_spaces(char *str, int len);
+
 void	free_tokens(t_list *tokens);
 void	tokenize(t_data *data, t_list *lst);
 
 void	*free_tab(char	**tab);
+
+char	*cut_word(char *str, int *quote);
 
 t_list	*format(char *str);
 t_list	*choose_token(t_list *node, char **path);
