@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 14:33:24 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 20:32:26 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	get_sep(char *str)
 	else
 	{
 		i = 0;
-		while (str[i] && str[i] != ' ' && (isalnum(str[i + 1]) || str[i + 1] == '_'))
+		while (str[i] && str[i] != ' '
+			&& (isalnum(str[i + 1]) || str[i + 1] == '_'))
 			i++;
 		return (i + 1);
 	}

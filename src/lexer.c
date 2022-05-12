@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 15:12:36 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 21:58:38 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	tokenize(t_data *data, t_list *lst)
 
 void	expander(t_data *data)
 {
-	t_list	*found;
+	char	*found;
 	t_list	*tmp;
 	t_token	*token;
 
@@ -69,13 +69,15 @@ void	expander(t_data *data)
 	while (tmp)
 	{
 		token = ((t_token *)tmp->content);
-		if (token->token == VAR
-			|| (token->token == WORD && ft_strchr(token->str, '$')))
+		found = search_env(token->str, data->envp);
+		while (ft_strchr(token->str, '$'))
 		{
-			found = search_env(skip_spaces(token->str) + 1, data->envp);
+			found = search_env(token, data->envp);
 			if (found)
 			{
-				token->str = ft_strdup(ft_strchr((char *)found->content, '=') + 1);
+				found = ft_strjoin_free_s1(
+						copy_chars_before(token->str), found);
+				printf("found :%s\n", found);
 			}
 		}
 		tmp = tmp->next;

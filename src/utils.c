@@ -6,15 +6,15 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 15:04:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 21:33:12 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *skip_spaces(char *str)
+char	*skip_spaces(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] == ' ')
@@ -22,19 +22,28 @@ char *skip_spaces(char *str)
 	return (&str[i]);
 }
 
-t_list	*search_env(char *str, t_list *envp)
+char	*search_env(char *str, t_list *envp)
 {
 	int		len;
+	char	*new;
 	t_list	*tmp;
 
+	new = skip_spaces(str);
+	if (*new == '\'')
+		return (NULL);
+	while (*new && *new != '$')
+		new++;
+	if (*new == '$')
+		new++;
 	tmp = envp;
 	while (tmp)
 	{
 		len = 0;
-		while (((char *)tmp->content)[len] && ((char *)tmp->content)[len] != '=')
+		while (((char *)tmp->content)[len]
+			&& ((char *)tmp->content)[len] != '=')
 			len++;
-		if (!ft_strncmp(str, (char *)tmp->content, len))
-			return (tmp);
+		if (!ft_strncmp(new, (char *)tmp->content, len))
+			return (ft_strchr(tmp->content, '=') + 1);
 		tmp = tmp->next;
 	}
 	return (NULL);
