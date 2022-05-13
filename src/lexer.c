@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 21:58:38 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/13 10:37:13 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	expander(t_data *data)
 		found = search_env(token->str, data->envp);
 		while (ft_strchr(token->str, '$'))
 		{
-			found = search_env(token, data->envp);
+			found = search_env(token->str, data->envp);
 			if (found)
 			{
 				found = ft_strjoin_free_s1(
