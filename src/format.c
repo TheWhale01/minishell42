@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/13 10:38:41 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/13 12:21:51 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	wordlen(char *str, char *charset, int *quote)
 		while (str[i] && ((*quote == 2 && str[i] != '\"')
 				|| (*quote == 1 && str[i] != '\'')))
 			i++;
-		if (*quote && ((*quote == 2 && str[i] == '\"')
-				|| (*quote == 1 && str[i] == '\'')))
+		if ((*quote == 2 && str[i] == '\"') || (*quote == 1 && str[i] == '\''))
 		{
 			*quote = 0;
 			return (i + 1);

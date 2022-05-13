@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/13 10:37:13 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/13 12:22:25 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,17 @@ void	expander(t_data *data)
 	while (tmp)
 	{
 		token = ((t_token *)tmp->content);
-		found = search_env(token->str, data->envp);
-		while (ft_strchr(token->str, '$'))
+		while (ft_strchr(token->str, '$') && *(token->str) != '\'')
 		{
 			found = search_env(token->str, data->envp);
 			if (found)
 			{
 				found = ft_strjoin_free_s1(
 						copy_chars_before(token->str), found);
-				printf("found :%s\n", found);
+				found = ft_strjoin_free_s1(found, copy_chars_after(token->str));
+				free(token->str);
+				token->str = found;
+				printf("%s\n", token->str);
 			}
 		}
 		tmp = tmp->next;
