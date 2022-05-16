@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/13 12:22:25 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:05:45 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	expander(t_data *data)
 		token = ((t_token *)tmp->content);
 		while (ft_strchr(token->str, '$') && *(token->str) != '\'')
 		{
-			found = search_env(token->str, data->envp);
+			found = search_env(token->str, data->env);
 			if (found)
 			{
 				found = ft_strjoin_free_s1(

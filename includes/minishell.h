@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/11 16:09:04 by jrossett         ###   ########.fr       */
-=======
-/*   Updated: 2022/05/13 11:04:03 by hubretec         ###   ########.fr       */
->>>>>>> 6785dee8e7b5d753dfee3092bbcd123b3a99010f
+/*   Updated: 2022/05/16 11:14:00 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +50,7 @@ typedef struct s_data
 {
 	char	*line;
 	char	**path;
-	t_list	*envp;
+	t_list	*env;
 	t_list	*tokens;
 }	t_data;
 
@@ -65,6 +61,7 @@ void	free_tokens(t_list *tokens);
 void	tokenize(t_data *data, t_list *lst);
 
 void	*free_tab(char	**tab);
+void	free_list(t_list *list);
 
 char	*skip_spaces(char *str);
 char	*copy_chars_after(char *str);
@@ -81,7 +78,7 @@ char	**get_path_env(char **env);
 
 // -----------------------------BUILTINS-----------------------------
 
-int		ft_export(t_list *list, char *str);
+int		ft_export(t_data *data);
 
 void	ft_env(t_list **list);
 void	free_list(t_list *list);

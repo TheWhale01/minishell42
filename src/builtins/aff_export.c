@@ -6,11 +6,22 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:32:32 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/11 16:13:04 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:02:57 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_equal(char *str)
+{
+	if (!strchr(str, '='))
+	{
+		ft_putstr(str);
+		ft_putchar('\n');
+		return (1);
+	}
+	return (0);
+}
 
 int	ft_len(t_list **list)
 {
@@ -33,6 +44,8 @@ void	ft_put_export(char *str)
 
 	i = 0;
 	ft_putstr("declare -x ");
+	if (ft_equal(str))
+		return ;
 	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_'))
 		ft_putchar(str[i++]);
 	ft_putchar(str[i++]);

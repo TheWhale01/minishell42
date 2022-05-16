@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/11 16:24:51 by jrossett         ###   ########.fr       */
-=======
-/*   Updated: 2022/05/13 11:56:48 by hubretec         ###   ########.fr       */
->>>>>>> 6785dee8e7b5d753dfee3092bbcd123b3a99010f
+/*   Updated: 2022/05/16 15:03:41 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +16,7 @@ void	init(t_data *data)
 {
 	data->line = NULL;
 	data->path = NULL;
-	data->envp = NULL;
+	data->env = NULL;
 	data->tokens = NULL;
 }
 
@@ -29,19 +25,10 @@ int	main(int ac, char **av, char **envp)
 	t_data	data;
 	t_list	*lst;
 
-<<<<<<< HEAD
-	(void) envp;
-	(void) ac;
-	(void) av;
-	list = create_list(envp);
-	//ft_env(&list);
-	//free_list(list);
-	ft_export(list, "export e=edwed dewed  dewde dewded   ");
-=======
 	(void)ac;
 	(void)av;
 	init(&data);
-	data.envp = create_list(envp);
+	data.env = create_list(envp);
 	data.path = get_path_env(envp);
 	while (1)
 	{
@@ -52,10 +39,11 @@ int	main(int ac, char **av, char **envp)
 		print_lst(lst);
 		tokenize(&data, lst);
 		expander(&data);
+		//ft_env(&data.env);
+		ft_export(&data);
 		print_tokens(data.tokens, 0);
 		free(data.line);
 	}
->>>>>>> 6785dee8e7b5d753dfee3092bbcd123b3a99010f
 	return (0);
 }
 
@@ -67,8 +55,8 @@ int	main(int ac, char **av, char **envp)
 // 	(void) ac;
 // 	(void) av;
 // 	list = create_list(envp);
-// 	ft_env(&list);
-// 	free_env(list);
-// 	//ft_export(list, 's');
+// 	//ft_env(&list);
+// 	//free_list(list);
+// 	ft_export(list, av[1]);
 // 	return (0);
 // }

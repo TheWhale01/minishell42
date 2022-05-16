@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 09:23:21 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 11:36:22 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_tokens(t_list *tokens)
 void	exit_cmd(int exit_code, t_data *data)
 {
 	free(data->line);
-	free(data->envp);
+	free(data->env);
 	free_tab(data->path);
 	free_tokens(data->tokens);
 	exit(exit_code);

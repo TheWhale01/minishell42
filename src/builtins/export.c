@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 14:12:46 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/11 16:24:16 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:26:34 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,50 @@
 
 int	ft_verif(char *str)
 {
-	while (*str && *str == ' ')
-		str++;
-	if (ft_strncmp(str, "export", 6) != 0)
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (ft_isdigit(str[i]))
 		return (1);
-	str += 6;
-	while (*str == ' ')
-		str++;
-	while (*str && *str != '=')
+	while (str[i] && str[i] != '=')
 	{
-		if (!ft_isalnum(*str) && *str != '_')
+		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (1);
-		str++;
+		i++;
 	}
-	if (!*str)
-		return (1);
-	str++;
-	while (*str && *str != ' ')
-		str++;
-	while (*str)
-	{
-		if (!ft_isalpha(*str) && *str != ' ')
-			return (1);
-		str++;
-	}
+	if (str[i] == '\0')
+		return (0);
+	i++;
+	while (str[i] && str[i] != ' ')
+		i++;
 	return (0);
 }
 
-int	ft_export(t_list *list, char *str)
+int	ft_export(t_data *data)
 {
-	if (ft_strcmp(str, "export") == 0)
-		ft_list_sort(&list);
-	if (ft_verif(str))
+	t_list	*tmp;
+	t_token	*token;
+
+	tmp = data->tokens;
+	token = (t_token *)tmp->content;
+	if (ft_lstsize(tmp) == 1)
+		return (ft_list_sort(&data->env), 0);
+	tmp = tmp->next;
+	while (tmp)
 	{
-		printf("error\n");
-		return (1);
+		token = (t_token *)tmp->content;
+		printf("PRINTF: %s\n", token->str);
+		if (ft_verif(token->str))
+			printf("ERROR\n");
+		else if (ft_double)
+		{
+			ft_lstadd_back(&data->env, ft_lstnew(token->str));
+			ft_env(&data->env);
+			printf("VALIDE\n");
+		}
+		tmp = tmp->next;
 	}
-	else
-		printf("VALIDE\n");
 	return (0);
 }
