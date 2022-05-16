@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 01:24:32 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 01:48:09 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	varlen(char *str)
 
 int	get_quote(char *str)
 {
-	while (str && *str && *str != '\'' && *str != '\"')
+	while (*str && *str != '\'' && *str != '\"')
 		str++;
 	return (*str);
 }
@@ -70,4 +70,20 @@ char	*copy_chars_after(char *str)
 		return (NULL);
 	ft_strncpy(new, str, len);
 	return (new);
+}
+
+char	*replace_var(t_data *data, t_list *token, char *str)
+{
+	char	*found;
+	char	*start;
+
+	found = search_env(str, data->envp);
+	found = ft_strjoin_free_s1(copy_chars_before(
+				((t_token *)token->content)->str, str), found);
+	start = ft_strdup(found);
+	found = ft_strjoin_free_s1(found, copy_chars_after(str));
+	free(((t_token *)token->content)->str);
+	((t_token *)token->content)->str = found;
+	str = ft_rstrstr(found, start);
+	return (str);
 }

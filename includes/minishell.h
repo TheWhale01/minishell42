@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 22:20:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 01:38:53 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,9 @@ void	tokenize(t_data *data, t_list *lst);
 void	*free_tab(char	**tab);
 
 char	*skip_spaces(char *str);
-char	*copy_chars_after(char *str);
 char	*cut_word(char *str, int *quote);
 char	*search_env(char *str, t_list *envp);
-char	*copy_chars_before(char *str, char *end);
+char	*replace_var(t_data *data, t_list *token, char *str);
 
 t_list	*format(char *str);
 t_list	*choose_token(t_list *node, char **path);

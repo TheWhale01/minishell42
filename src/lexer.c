@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 01:23:12 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 01:47:46 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,33 +65,22 @@ void	tokenize(t_data *data, t_list *lst)
 void	expander(t_data *data)
 {
 	char	*str;
-	char	*start;
-	char	*found;
 	t_list	*tmp;
 
 	tmp = data->tokens;
 	while (tmp)
 	{
 		str = ((t_token *)tmp->content)->str;
-		if (ft_strchr(str, '$'))
+		while (*str && ft_strchr(str, '$')
+			&& get_quote(((t_token *)tmp->content)->str) != '\'')
 		{
-			while (*str)
-			{
-				while (*str && (*str != '$' || (*str == '$' && *(str + 1)
-							&& *(str + 1) != '_' && *(str + 1) != '?'
-							&& !ft_isalnum(*(str + 1)))))
-					str++;
-				if (!*str)
-					break ;
-				found = search_env(str, data->envp);
-				found = ft_strjoin_free_s1(copy_chars_before(
-							((t_token *)tmp->content)->str, str), found);
-				start = ft_strdup(found);
-				found = ft_strjoin_free_s1(found, copy_chars_after(str));
-				free(((t_token *)tmp->content)->str);
-				((t_token *)tmp->content)->str = found;
-				str = ft_rstrstr(found, start);
-			}
+			while (*str && (*str != '$' || (*str == '$' && *(str + 1)
+						&& *(str + 1) != '_' && *(str + 1) != '?'
+						&& !ft_isalnum(*(str + 1)))))
+				str++;
+			if (!*str)
+				break ;
+			str = replace_var(data, tmp, str);
 		}
 		tmp = tmp->next;
 	}
