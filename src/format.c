@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 15:03:17 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:59:33 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ char	*cut_word(char *str, int *quote)
 	int			len;
 	char		*word;
 
+	if (!*str)
+		return (NULL);
 	len = 0;
-	while (str[len] == ' ')
-		len++;
 	len += wordlen(&str[len], " |<>()*$&", quote);
 	if (!len || only_spaces(str, len))
 		len += get_sep(&str[len]);

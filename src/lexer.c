@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 15:09:12 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:59:08 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_list	*format(char *str)
 	lst = NULL;
 	while (*str && !only_spaces(str, ft_strlen(str)))
 	{
+		while (*str == ' ')
+			str++;
 		word = cut_word(str, &quote);
 		if (!word)
 			return (ft_lstclear(&lst, free));
