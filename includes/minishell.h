@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/13 11:04:03 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:25:42 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ typedef struct s_data
 	t_list	*tokens;
 }	t_data;
 
+int		varlen(char *str);
+int		get_quote(char *str);
+int		check_quotes(char *str);
 int		only_spaces(char *str, int len);
 
 void	expander(t_data *data);
@@ -86,7 +89,7 @@ char	*ft_min_lst(char *str, t_list **list);
 void	ft_env(t_list **list);
 void	free_env(t_list *list);
 void	ft_list_sort(t_list **list);
-void	exit_cmd(int exit_code, t_data *data);
+void	exit_cmd(int exit_code, t_data *data, char *str);
 
 t_list	*create_list(char **envp);
 

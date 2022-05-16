@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/13 12:21:51 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:03:17 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,10 @@ int	wordlen(char *str, char *charset, int *quote)
 	{
 		if (!*quote && (str[i] == '\"' || str[i] == '\''))
 		{
-			if (str[i] == '\'')
+			if (str[i++] == '\'')
 				*quote = 1;
 			else
 				*quote = 2;
-			i++;
 		}
 		while (str[i] && ((*quote == 2 && str[i] != '\"')
 				|| (*quote == 1 && str[i] != '\'')))
@@ -64,7 +63,8 @@ int	get_sep(char *str)
 	int	i;
 
 	if (!ft_strncmp(str, "||", 2) || !ft_strncmp(str, "<<", 2)
-		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2))
+		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2)
+		|| !ft_strncmp(str, "$?", 2))
 		return (2);
 	else if (*str == '|' || *str == '>' || *str == '<'
 		|| *str == '*' || *str == '&' || *str == '('

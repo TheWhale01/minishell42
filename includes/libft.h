@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 21:36:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:55:27 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_list		*ft_lstmin(t_list *lst);
 t_list		*ft_lstlast(t_list *lst);
 t_list		*ft_lstpop(t_list **lst, t_list *node);
 t_list		*ft_lst_find_at_index(t_list *lst, int index);
-t_list		*ft_lstsearch(t_list *lst, void *data, size_t size);
+t_list		*ft_lstsearch(t_list **lst, void *data, size_t size);
 
 char		**ft_split(char const *s, char c);
 

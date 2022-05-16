@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/13 11:56:48 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:25:47 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	main(int ac, char **av, char **envp)
 	{
 		data.line = readline("minishell> ");
 		if (!ft_strcmp(data.line, "exit"))
-			exit_cmd(EXIT_SUCCESS, &data);
+			exit_cmd(EXIT_SUCCESS, &data, NULL);
 		lst = format(data.line);
 		print_lst(lst);
 		tokenize(&data, lst);
 		expander(&data);
-		print_tokens(data.tokens, 0);
+		print_tokens(data.tokens, 1);
 		free(data.line);
 	}
 	return (0);
