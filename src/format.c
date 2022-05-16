@@ -6,21 +6,34 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 15:59:33 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:36:40 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	only_spaces(char *str, int len)
+int	check_quotes(char *str)
 {
-	int	i;
+	int	quote;
 
-	i = 0;
-	while (str[i] && i < len)
-		if (str[i++] != ' ')
-			return (0);
-	return (1);
+	quote = 0;
+	while (*str)
+	{
+		if (!quote && (*str == '\"' || *str == '\''))
+		{
+			if (*(str++) == '\'')
+				quote = 1;
+			else
+				quote = 2;
+		}
+		while (*str && ((quote == 2 && *str != '\"')
+				|| (quote == 1 && *str != '\'')))
+			str++;
+		if ((quote == 1 && *str == '\'') || (quote == 2 && *str == '\"'))
+			quote = 0;
+		str++;
+	}
+	return (!quote);
 }
 
 int	is_in(char c, char *charset)
@@ -73,8 +86,10 @@ int	get_sep(char *str)
 	else
 	{
 		i = 0;
+		if (ft_isdigit(str[i + 1]))
+			return (2);
 		while (str[i] && str[i] != ' '
-			&& (isalnum(str[i + 1]) || str[i + 1] == '_'))
+			&& (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
 			i++;
 		return (i + 1);
 	}
@@ -90,7 +105,7 @@ char	*cut_word(char *str, int *quote)
 		return (NULL);
 	len = 0;
 	len += wordlen(&str[len], " |<>()*$&", quote);
-	if (!len || only_spaces(str, len))
+	if (!len)
 		len += get_sep(&str[len]);
 	word = malloc(sizeof(char) * (len + 1));
 	if (!word)

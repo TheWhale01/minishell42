@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 15:59:08 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 01:23:12 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ t_list	*format(char *str)
 
 	quote = 0;
 	lst = NULL;
-	while (*str && !only_spaces(str, ft_strlen(str)))
+	while (*str)
 	{
-		while (*str == ' ')
-			str++;
+		str = skip_spaces(str);
+		if (!*str)
+			break ;
 		word = cut_word(str, &quote);
 		if (!word)
 			return (ft_lstclear(&lst, free));
@@ -63,24 +64,34 @@ void	tokenize(t_data *data, t_list *lst)
 
 void	expander(t_data *data)
 {
+	char	*str;
+	char	*start;
 	char	*found;
 	t_list	*tmp;
-	t_token	*token;
 
 	tmp = data->tokens;
 	while (tmp)
 	{
-		token = ((t_token *)tmp->content);
-		if (!check_quotes(token->str))
-			exit_cmd(EXIT_FAILURE, data, "Syntax Error: Non matching quotes.");
-		while (ft_strchr(token->str, '$') && get_quote(token->str) != '\'')
+		str = ((t_token *)tmp->content)->str;
+		if (ft_strchr(str, '$'))
 		{
-			found = search_env(token->str, data->envp);
-			found = ft_strjoin_free_s1(
-					copy_chars_before(token->str), found);
-			found = ft_strjoin_free_s1(found, copy_chars_after(token->str));
-			free(token->str);
-			token->str = found;
+			while (*str)
+			{
+				while (*str && (*str != '$' || (*str == '$' && *(str + 1)
+							&& *(str + 1) != '_' && *(str + 1) != '?'
+							&& !ft_isalnum(*(str + 1)))))
+					str++;
+				if (!*str)
+					break ;
+				found = search_env(str, data->envp);
+				found = ft_strjoin_free_s1(copy_chars_before(
+							((t_token *)tmp->content)->str, str), found);
+				start = ft_strdup(found);
+				found = ft_strjoin_free_s1(found, copy_chars_after(str));
+				free(((t_token *)tmp->content)->str);
+				((t_token *)tmp->content)->str = found;
+				str = ft_rstrstr(found, start);
+			}
 		}
 		tmp = tmp->next;
 	}

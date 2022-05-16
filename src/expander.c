@@ -6,34 +6,25 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 15:28:49 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 01:24:32 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_quotes(char *str)
+int	varlen(char *str)
 {
-	int	quote;
+	int	i;
 
-	quote = 0;
-	while (*str)
-	{
-		if (!quote && (*str == '\"' || *str == '\''))
-		{
-			if (*(str++) == '\'')
-				quote = 1;
-			else
-				quote = 2;
-		}
-		while (*str && ((quote == 2 && *str != '\"')
-				|| (quote == 1 && *str != '\'')))
-			str++;
-		if ((quote == 1 && *str == '\'') || (quote == 2 && *str == '\"'))
-			quote = 0;
-		str++;
-	}
-	return (!quote);
+	i = 0;
+	if (!str)
+		return (0);
+	str++;
+	if (ft_isdigit(*str) || *str == '?')
+		return (1);
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+		i++;
+	return (i);
 }
 
 int	get_quote(char *str)
@@ -43,17 +34,15 @@ int	get_quote(char *str)
 	return (*str);
 }
 
-char	*copy_chars_before(char *str)
+char	*copy_chars_before(char *str, char *end)
 {
 	int		i;
+	char	*stop;
 	char	*new;
 
 	i = 0;
-	while (*str == ' ')
-		str++;
-	if (*str == '\"')
-		str++;
-	while (str[i] && str[i] != '$')
+	stop = ft_strstr(str, end);
+	while (&str[i] != stop)
 		i++;
 	if (!i)
 		return (NULL);
@@ -66,24 +55,19 @@ char	*copy_chars_before(char *str)
 
 char	*copy_chars_after(char *str)
 {
-	int		i;
+	int		len;
 	char	*new;
 
-	while (*str && *str != '$')
+	if (*str == '$')
+	{
 		str++;
-	str++;
-	while (*str && (isalnum(*str) || *str == '_'))
-		str++;
-	if (*str == '?')
-		str++;
-	if (!*str)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '\"')
-		i++;
-	new = malloc(sizeof(char) * (i + 1));
+		while (*str && (*str == '_' || *str == '?' || ft_isalnum(*str)))
+			str++;
+	}
+	len = ft_strlen(str);
+	new = malloc(sizeof(char) * (len + 1));
 	if (!new)
 		return (NULL);
-	ft_strncpy(new, str, i);
+	ft_strncpy(new, str, len);
 	return (new);
 }
