@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/09 15:39:42 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 21:36:10 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ void		ft_lstiter(t_list *lst, void (*f)(void *));
 void		ft_lstadd_back(t_list **list, t_list *tmp);
 void		ft_lstadd_front(t_list **alst, t_list *new);
 void		ft_putnbr_base(int nb, char *base, int *len);
-void		ft_lstdelone(t_list *lst, void (*del)(void *));
-void		ft_lstclear(t_list **lst, void (*del)(void *));
+
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 void		ft_putnbr_base_u(unsigned int nb, char *base, int *len);
 void		ft_lstreplace_index(t_list *stack, t_list *new, int index);
@@ -79,15 +78,20 @@ void		ft_lstreplace_index(t_list *stack, t_list *new, int index);
 char		*ft_itoa(int n);
 char		*ft_strdup(char *src);
 char		*get_next_line(int fd);
+char		*ft_strndup(char *src, size_t n);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strcpy(char *dest, char *src);
 char		*ft_strmap(char const *s, char (*f)(char));
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
+void		*ft_lstdelone(t_list *lst, void (*del)(void *));
+void		*ft_lstclear(t_list **lst, void (*del)(void *));
 char		*ft_strncpy(char *dest, char *src, unsigned int n);
 char		*ft_strjoin_free_s1(char const *s1, char const *s2);
 char		*ft_strjoin_free_s2(char const *s1, char const *s2);
+char		*ft_strstr(const char *haystack, const char *needle);
+char		*ft_strjoin_free_s1_s2(char const *s1, char const *s2);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t n);
@@ -107,6 +111,7 @@ t_list		*ft_lstmin(t_list *lst);
 t_list		*ft_lstlast(t_list *lst);
 t_list		*ft_lstpop(t_list **lst, t_list *node);
 t_list		*ft_lst_find_at_index(t_list *lst, int index);
+t_list		*ft_lstsearch(t_list *lst, void *data, size_t size);
 
 char		**ft_split(char const *s, char c);
 

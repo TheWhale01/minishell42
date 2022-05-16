@@ -6,20 +6,46 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 10:21:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/12 21:33:12 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*free_tab(char	**tab)
+char	*skip_spaces(char *str)
 {
 	int	i;
 
-	i = -1;
-	while (tab[++i])
-		free(tab[i]);
-	free(tab);
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	return (&str[i]);
+}
+
+char	*search_env(char *str, t_list *envp)
+{
+	int		len;
+	char	*new;
+	t_list	*tmp;
+
+	new = skip_spaces(str);
+	if (*new == '\'')
+		return (NULL);
+	while (*new && *new != '$')
+		new++;
+	if (*new == '$')
+		new++;
+	tmp = envp;
+	while (tmp)
+	{
+		len = 0;
+		while (((char *)tmp->content)[len]
+			&& ((char *)tmp->content)[len] != '=')
+			len++;
+		if (!ft_strncmp(new, (char *)tmp->content, len))
+			return (ft_strchr(tmp->content, '=') + 1);
+		tmp = tmp->next;
+	}
 	return (NULL);
 }
 
@@ -41,54 +67,4 @@ char	**get_path_env(char **env)
 		env++;
 	}
 	return (NULL);
-}
-
-void	print_lst(t_list *lst)
-{
-	t_list	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		printf("%s\n", (char *)tmp->content);
-		tmp = tmp->next;
-	}
-}
-
-void	print_tokens(t_list *tokens)
-{
-	t_list	*tmp;
-
-	tmp = tokens;
-	while (tmp)
-	{
-		if (((t_token *)tmp->content)->token == CMD)
-			printf("CMD ");
-		else if (((t_token *)tmp->content)->token == PIPE)
-			printf("PIPE ");
-		else if (((t_token *)tmp->content)->token == D_PIPE)
-			printf("D_PIPE ");
-		else if (((t_token *)tmp->content)->token == D_REDIR_IN)
-			printf("D_REDIR_IN ");
-		else if (((t_token *)tmp->content)->token == D_REDIR_OUT)
-			printf("D_REDIR_OUT ");
-		else if (((t_token *)tmp->content)->token == REDIR_IN)
-			printf("REDIR_IN ");
-		else if (((t_token *)tmp->content)->token == REDIR_OUT)
-			printf("REDIR_OUT ");
-		else if (((t_token *)tmp->content)->token == AND)
-			printf("AND ");
-		else if (((t_token *)tmp->content)->token == WILDCARD)
-			printf("WILDCARD ");
-		else if (((t_token *)tmp->content)->token == VAR)
-			printf("VAR ");
-		else if (((t_token *)tmp->content)->token == OPEN_P)
-			printf("OPEN_P ");
-		else if (((t_token *)tmp->content)->token == CLOSE_P)
-			printf("CLOSE_P ");
-		else
-			printf("WORD ");
-		tmp = tmp->next;
-	}
-	printf("\n");
 }

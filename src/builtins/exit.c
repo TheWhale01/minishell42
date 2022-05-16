@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+void	*free_tab(char	**tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+	return (NULL);
+}
+
 void	free_tokens(t_list *tokens)
 {
 	t_list	*tmp;
@@ -28,6 +39,7 @@ void	free_tokens(t_list *tokens)
 void	exit_cmd(int exit_code, t_data *data)
 {
 	free(data->line);
+	free(data->envp);
 	free_tab(data->path);
 	free_tokens(data->tokens);
 	exit(exit_code);
