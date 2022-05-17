@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 21:03:14 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 00:22:49 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,12 @@ t_list	*choose_token(t_list *node, char **path)
 	if (!token)
 		return (NULL);
 	token->str = (char *)node->content;
-	if (is_cmd(skip_spaces(node->content), path))
+	if (is_cmd(node->content, path))
 		token->token = CMD;
-	else if (is_op(skip_spaces((char *)node->content)))
-		choose_op(token, skip_spaces((char *)node->content));
-	else if (*(skip_spaces(node->content)) == '$'
-		|| !ft_strncmp(skip_spaces(node->content), "\"$", 2))
+	else if (is_op(node->content))
+		choose_op(token, node->content);
+	else if (*(char *)(node->content) == '$'
+		|| !ft_strncmp(node->content, "\"$", 2))
 		token->token = VAR;
 	else
 		token->token = WORD;

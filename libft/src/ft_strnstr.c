@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:26:43 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 14:58:55 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 00:24:46 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,3 +47,18 @@ char	*ft_strstr(const char *haystack, const char *needle)
 	return (NULL);
 }
 
+char	*ft_rstrstr(const char *haystack, const char *needle)
+{
+	int		i;
+	int		needle_len;
+
+	needle_len = ft_strlen(needle);
+	if (!needle_len)
+		return ((char *)haystack);
+	i = -1;
+	while (haystack[++i])
+		if (haystack[i] == *needle
+			&& !ft_strncmp(&haystack[i], needle, needle_len))
+			return ((char *)&haystack[i + needle_len]);
+	return (NULL);
+}
