@@ -6,25 +6,38 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 03:15:36 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 04:29:49 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	varlen(char *str)
+char	*remove_quotes(char *str)
 {
-	int	i;
+	int		i;
+	int		len;
+	int		quote;
+	char	*new;
 
 	i = 0;
-	if (!str)
-		return (0);
-	str++;
-	if (ft_isdigit(*str) || *str == '?')
-		return (1);
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-		i++;
-	return (i);
+	quote = 0;
+	len = ft_strlen(str) - 2;
+	new = malloc(sizeof(char) * (len + 1));
+	if (!new)
+		return (NULL);
+	while (*str)
+	{
+		if (!quote && (*str == '\"' || *str == '\''))
+			quote = *(str++);
+		if ((quote == '\'' && *str == '\'') || (quote == '\"' && *str == '\"'))
+		{
+			str++;
+			quote = 0;
+		}
+		new[i++] = *str++;
+	}
+	new[i] = '\0';
+	return (new);
 }
 
 int	get_quote(char *str)
@@ -41,7 +54,6 @@ char	*copy_chars_before(char *str, char *end)
 	char	*new;
 
 	i = 0;
-	printf("end : %s\n", end);
 	stop = ft_strstr(str, end);
 	while (&str[i] != stop)
 		i++;
@@ -62,12 +74,11 @@ char	*copy_chars_after(char *str)
 	if (*str == '$')
 	{
 		str++;
-		while (*str && (*str == '_' || *str == '?' || ft_isalnum(*str)))
-		{
+		if (*str == '?' || ft_isdigit(*str))
 			str++;
-			if (*str == '?' || ft_isdigit(*str))
-				break ;
-		}
+		else
+			while (*str && (*str == '_' || *str == '?' || ft_isalnum(*str)))
+				str++;
 	}
 	len = ft_strlen(str);
 	new = malloc(sizeof(char) * (len + 1));

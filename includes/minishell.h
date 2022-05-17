@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 01:38:53 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 04:29:07 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_data
 	t_list	*tokens;
 }	t_data;
 
-int		varlen(char *str);
 int		get_quote(char *str);
 int		check_quotes(char *str);
 int		only_spaces(char *str, int len);
@@ -66,6 +65,7 @@ void	tokenize(t_data *data, t_list *lst);
 void	*free_tab(char	**tab);
 
 char	*skip_spaces(char *str);
+char	*remove_quotes(char *str);
 char	*cut_word(char *str, int *quote);
 char	*search_env(char *str, t_list *envp);
 char	*replace_var(t_data *data, t_list *token, char *str);

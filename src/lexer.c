@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 02:06:29 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 04:29:13 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,12 @@ void	expander(t_data *data)
 			while (*str && (*str != '$' || (*str == '$' && *(str + 1)
 						&& *(str + 1) != '_' && *(str + 1) != '?'
 						&& !ft_isalnum(*(str + 1)))))
-			{
-				if (ft_isdigit(*(str + 1)) || *(str + 1) == '?')
-					break ;
 				str++;
-			}
-			printf("str : %s\n", str);
-			if (!*str)
-				break ;
-			str = replace_var(data, tmp, str);
+			if (*str)
+				str = replace_var(data, tmp, str);
 		}
+		((t_token *)tmp->content)->str
+			= remove_quotes(((t_token *)tmp->content)->str);
 		tmp = tmp->next;
 	}
 }
