@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 04:23:09 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/17 04:25:58 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		data.line = readline("minishell> ");
+		if (!check_quotes(data.line))
+			exit_cmd(EXIT_FAILURE, &data,
+				"Syntax Error: mismatched opening and closing quotes.");
 		if (!ft_strcmp(data.line, "exit"))
 			exit_cmd(EXIT_SUCCESS, &data, NULL);
 		lst = format(data.line);
-		//print_lst(lst);
 		tokenize(&data, lst);
 		expander(&data);
 		//print_tokens(data.tokens, 1);

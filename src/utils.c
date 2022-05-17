@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 15:26:21 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 03:11:42 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,19 @@ char	*skip_spaces(char *str)
 	return (&str[i]);
 }
 
-
 char	*search_env(char *str, t_list *envp)
 {
 	int		len;
 	t_list	*tmp;
 
-	while (*str && *str != '$')
-		str++;
+	if (!varlen(str))
+		return ("$");
 	if (*str == '$')
 		str++;
 	if (*str == '?')
 		return ("***value of last cmd***");
+	else if (ft_isdigit(*str))
+		return (NULL);
 	tmp = envp;
 	while (tmp)
 	{

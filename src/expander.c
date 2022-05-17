@@ -6,54 +6,44 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 04:23:13 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/17 04:25:50 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_quotes(char *str)
+int	varlen(char *str)
 {
-	int	quote;
+	int	i;
 
-	quote = 0;
-	while (*str)
-	{
-		if (!quote && (*str == '\"' || *str == '\''))
-		{
-			if (*(str++) == '\'')
-				quote = 1;
-			else
-				quote = 2;
-		}
-		while (*str && ((quote == 2 && *str != '\"')
-				|| (quote == 1 && *str != '\'')))
-			str++;
-		if ((quote == 1 && *str == '\'') || (quote == 2 && *str == '\"'))
-			quote = 0;
-		str++;
-	}
-	return (!quote);
+	i = 0;
+	if (!str)
+		return (0);
+	str++;
+	if (ft_isdigit(*str) || *str == '?')
+		return (1);
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+		i++;
+	return (i);
 }
 
 int	get_quote(char *str)
 {
-	while (str && *str && *str != '\'' && *str != '\"')
+	while (*str && *str != '\'' && *str != '\"')
 		str++;
 	return (*str);
 }
 
-char	*copy_chars_before(char *str)
+char	*copy_chars_before(char *str, char *end)
 {
 	int		i;
+	char	*stop;
 	char	*new;
 
 	i = 0;
-	while (*str == ' ')
-		str++;
-	if (*str == '\"')
-		str++;
-	while (str[i] && str[i] != '$')
+	printf("end : %s\n", end);
+	stop = ft_strstr(str, end);
+	while (&str[i] != stop)
 		i++;
 	if (!i)
 		return (NULL);
@@ -66,24 +56,39 @@ char	*copy_chars_before(char *str)
 
 char	*copy_chars_after(char *str)
 {
-	int		i;
+	int		len;
 	char	*new;
 
-	while (*str && *str != '$')
+	if (*str == '$')
+	{
 		str++;
-	str++;
-	while (*str && (isalnum(*str) || *str == '_'))
-		str++;
-	if (*str == '?')
-		str++;
-	if (!*str)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '\"')
-		i++;
-	new = malloc(sizeof(char) * (i + 1));
+		while (*str && (*str == '_' || *str == '?' || ft_isalnum(*str)))
+		{
+			str++;
+			if (*str == '?' || ft_isdigit(*str))
+				break ;
+		}
+	}
+	len = ft_strlen(str);
+	new = malloc(sizeof(char) * (len + 1));
 	if (!new)
 		return (NULL);
-	ft_strncpy(new, str, i);
+	ft_strncpy(new, str, len);
 	return (new);
+}
+
+char	*replace_var(t_data *data, t_list *token, char *str)
+{
+	char	*found;
+	char	*start;
+
+	found = search_env(str, data->envp);
+	found = ft_strjoin_free_s1(copy_chars_before(
+				((t_token *)token->content)->str, str), found);
+	start = ft_strdup(found);
+	found = ft_strjoin_free_s1(found, copy_chars_after(str));
+	free(((t_token *)token->content)->str);
+	((t_token *)token->content)->str = found;
+	str = ft_rstrstr(found, start);
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 19:04:43 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/17 04:25:30 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,9 @@ void	*free_tab(char	**tab);
 void	free_list(t_list *list);
 
 char	*skip_spaces(char *str);
-char	*copy_chars_after(char *str);
-char	*copy_chars_before(char *str);
 char	*cut_word(char *str, int *quote);
 char	*search_env(char *str, t_list *envp);
+char	*replace_var(t_data *data, t_list *token, char *str);
 
 t_list	*format(char *str);
 t_list	*choose_token(t_list *node, char **path);
