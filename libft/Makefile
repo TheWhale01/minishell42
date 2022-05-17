@@ -12,7 +12,7 @@ ft_iswhitespace.c ft_min.c ft_strncmp.c ft_itoa.c ft_print_addr.c ft_strnstr.c f
 ft_printf.c ft_strrchr.c ft_lstadd_front.c ft_putchar.c ft_strtrim.c ft_lstclear.c ft_putendl_fd.c \
 ft_substr.c ft_lstdelone.c ft_putnbr_base.c ft_swap.c ft_lst_find_at_index.c ft_putnbr.c ft_tolower.c \
 ft_lstindex.c ft_putnbr_fd.c ft_toupper.c ft_lstiter.c ft_putstr.c get_next_line.c ft_lstlast.c ft_split.c \
-ft_lstnew.c)
+ft_lstnew.c ft_lstsearch.c)
 OBJS=$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(CFILES))
 NAME=$(BIN_DIR)libft.a
 HEADER=../includes/libft.h

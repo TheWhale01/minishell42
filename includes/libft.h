@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 21:36:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:18:27 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			ft_putstr(char *str);
 int			ft_whitespace(int c);
 int			ft_lstsize(t_list *lst);
 int			ft_atoi(const char *nptr);
-int			ft_strlen(char const *str);
+size_t		ft_strlen(char const *str);
 int			ft_putchar_fd(char c, int fd);
 int			ft_printf(const char *s, ...);
 int			count_words(char const *s, char c);
@@ -111,7 +111,7 @@ t_list		*ft_lstmin(t_list *lst);
 t_list		*ft_lstlast(t_list *lst);
 t_list		*ft_lstpop(t_list **lst, t_list *node);
 t_list		*ft_lst_find_at_index(t_list *lst, int index);
-t_list		*ft_lstsearch(t_list *lst, void *data, size_t size);
+t_list		*ft_lstsearch(t_list **lst, void *data, size_t size);
 
 char		**ft_split(char const *s, char c);
 

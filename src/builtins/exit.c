@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 11:36:22 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/17 04:04:30 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,14 @@ void	free_tokens(t_list *tokens)
 	ft_lstclear(&tokens, free);
 }
 
-void	exit_cmd(int exit_code, t_data *data)
+void	exit_cmd(int exit_code, t_data *data, char *str)
 {
+	if (exit_code == EXIT_FAILURE && str)
+		ft_putendl_fd(str, STDERR_FILENO);
+	else if (exit_code == EXIT_SUCCESS && str)
+		ft_putendl_fd(str, STDOUT_FILENO);
 	free(data->line);
-	free(data->env);
+	free(data->envp);
 	free_tab(data->path);
 	free_tokens(data->tokens);
 	exit(exit_code);

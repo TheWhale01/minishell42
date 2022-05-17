@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 11:14:00 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:04:43 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,13 @@ typedef struct s_data
 {
 	char	*line;
 	char	**path;
-	t_list	*env;
+	t_list	*envp;
 	t_list	*tokens;
 }	t_data;
 
+int		varlen(char *str);
+int		get_quote(char *str);
+int		check_quotes(char *str);
 int		only_spaces(char *str, int len);
 
 void	expander(t_data *data);
@@ -82,8 +85,8 @@ int		ft_export(t_data *data);
 
 void	ft_env(t_list **list);
 void	free_list(t_list *list);
-void	ft_list_sort(t_list **list);
-void	exit_cmd(int exit_code, t_data *data);
+void	ft_list_sort(t_list *list);
+void	exit_cmd(int exit_code, t_data *data, char *str);
 
 t_list	*create_list(char **envp);
 

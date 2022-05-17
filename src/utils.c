@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/12 21:33:12 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:26:21 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,18 @@ char	*skip_spaces(char *str)
 	return (&str[i]);
 }
 
+
 char	*search_env(char *str, t_list *envp)
 {
 	int		len;
-	char	*new;
 	t_list	*tmp;
 
-	new = skip_spaces(str);
-	if (*new == '\'')
-		return (NULL);
-	while (*new && *new != '$')
-		new++;
-	if (*new == '$')
-		new++;
+	while (*str && *str != '$')
+		str++;
+	if (*str == '$')
+		str++;
+	if (*str == '?')
+		return ("***value of last cmd***");
 	tmp = envp;
 	while (tmp)
 	{
@@ -42,7 +41,7 @@ char	*search_env(char *str, t_list *envp)
 		while (((char *)tmp->content)[len]
 			&& ((char *)tmp->content)[len] != '=')
 			len++;
-		if (!ft_strncmp(new, (char *)tmp->content, len))
+		if (!ft_strncmp(str, (char *)tmp->content, len))
 			return (ft_strchr(tmp->content, '=') + 1);
 		tmp = tmp->next;
 	}

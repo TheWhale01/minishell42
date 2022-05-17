@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:32:32 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/16 14:02:57 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:37:20 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,20 @@ void	ft_put_export(char *str)
 	ft_putstr("\"\n");
 }
 
-void	ft_list_sort(t_list **list)
+void	ft_list_sort(t_list *list)
 {
 	t_list	*tmp;
 	char	*str;
 	char	*min;
 	int		i;
 
-	i = 0;
-	tmp = *list;
+	i = -1;
 	min = "\0";
 	str = "~";
-	while (++i < ft_len(list))
+	while (++i < ft_len(&list))
 	{
-		tmp = *list;
-		while (tmp->next)
+		tmp = list;
+		while (tmp)
 		{
 			if (ft_strcmp(tmp->content, str) < 0
 				&& ft_strcmp(tmp->content, min) > 0)

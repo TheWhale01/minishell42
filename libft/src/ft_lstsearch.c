@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstsearch.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 13:26:49 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 19:12:33 by jrossett         ###   ########.fr       */
+/*   Created: 2022/05/16 13:51:56 by hubretec          #+#    #+#             */
+/*   Updated: 2022/05/17 04:04:25 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **list, t_list *tmp)
+t_list	*ft_lstsearch(t_list **lst, void *data, size_t size)
 {
-	t_list	*end;
+	t_list	*tmp;
 
-	if (!list)
-		return ;
-	if (!(*list))
+	if (!lst)
+		return (NULL);
+	tmp = *lst;
+	while (tmp)
 	{
-		*list = tmp;
-		return ;
+		if (!ft_memcmp(tmp->content, data, size))
+			return (tmp);
+		tmp = tmp->next;
 	}
-	end = *list;
-	while (end->next)
-		end = end->next;
-	end->next = tmp;
+	return (NULL);
 }
