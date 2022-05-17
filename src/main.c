@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 23:00:25 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 04:43:41 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -41,22 +42,9 @@ int	main(int ac, char **av, char **envp)
 		lst = format(data.line);
 		tokenize(&data, lst);
 		expander(&data);
-		print_tokens(data.tokens, 1);
+		//print_tokens(data.tokens, 1);
+		ft_export(&data);
 		free(data.line);
 	}
 	return (0);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	t_list	*list;
-
-// 	(void) envp;
-// 	(void) ac;
-// 	(void) av;
-// 	list = create_list(envp);
-// 	ft_env(&list);
-// 	free_env(list);
-// 	//ft_export(list, 's');
-// 	return (0);
-// }

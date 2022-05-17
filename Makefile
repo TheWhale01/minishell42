@@ -4,16 +4,17 @@ SRC_DIR=src/
 INCLUDES=includes/
 CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES)
 NAME=minishell
+HEADER= includes/minishell.h
 
 CFILES=$(addprefix $(SRC_DIR), expander.c format.c lexer.c main.c tmp.c token.c utils.c \
-builtins/exit.c builtins/export.c builtins/env.c)
+	builtins/exit.c builtins/export.c builtins/env.c builtins/aff_export.c)
 OBJS=$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(CFILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
 	$(CC) $(CFLAGS) -c $< -lreadline -o $@
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(HEADER)
 	$(MAKE) -C libft/
 	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a -lreadline -o $(NAME)
 

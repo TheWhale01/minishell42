@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 21:26:48 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 04:29:07 by hubretec         ###   ########.fr       */
+/*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
+/*   Updated: 2022/05/17 04:47:19 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	free_tokens(t_list *tokens);
 void	tokenize(t_data *data, t_list *lst);
 
 void	*free_tab(char	**tab);
+void	free_list(t_list *list);
 
 char	*skip_spaces(char *str);
 char	*remove_quotes(char *str);
@@ -79,15 +80,11 @@ char	**get_path_env(char **env);
 
 // -----------------------------BUILTINS-----------------------------
 
-int		ft_len(t_list **list);
-int		ft_export(t_list *list, char c);
-
-char	*ft_first(t_list **list);
-char	*ft_min_lst(char *str, t_list **list);
+int		ft_export(t_data *data);
 
 void	ft_env(t_list **list);
-void	free_env(t_list *list);
-void	ft_list_sort(t_list **list);
+void	free_list(t_list *list);
+void	ft_list_sort(t_list *list);
 void	exit_cmd(int exit_code, t_data *data, char *str);
 
 t_list	*create_list(char **envp);

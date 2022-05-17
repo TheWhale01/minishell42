@@ -5,121 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 11:32:32 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/09 16:14:37 by jrossett         ###   ########.fr       */
+/*   Created: 2022/05/11 14:12:46 by jrossett          #+#    #+#             */
+/*   Updated: 2022/05/17 04:23:16 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_len(t_list **list)
+int	ft_lstexport(t_list **lst, char *str)
 {
 	t_list	*tmp;
-	int		i;
+	size_t	size;
+	size_t	size2;
 
-	i = 0;
-	tmp = *list;
+	if (!lst)
+		return (0);
+	tmp = *lst;
 	while (tmp)
 	{
+		size = 0;
+		size2 = 0;
+		while (((char *)tmp->content)[size]
+			&& ((char *)tmp->content)[size] != '=')
+			size++;
+		while (str[size2] && str[size2] != '=')
+			size2++;
+		if (!ft_strncmp(tmp->content, str, size) && size == size2)
+		{
+			if (ft_strchr(str, '='))
+				tmp->content = str;
+			return (1);
+		}
 		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	ft_verif(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] && str[i] == '=')
+		return (1);
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (ft_isdigit(str[i]))
+		return (1);
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (1);
 		i++;
 	}
-	return (i);
+	if (str[i] == '\0')
+		return (0);
+	i++;
+	while (str[i] && str[i] != ' ')
+		i++;
+	return (0);
 }
 
-char	*ft_first(t_list **list)
+int	ft_export(t_data *data)
 {
 	t_list	*tmp;
-	char	*min;
+	t_token	*token;
 
-	tmp = *list;
-	while (tmp && tmp->next)
+	tmp = data->tokens;
+	token = (t_token *)tmp->content;
+	if (ft_lstsize(tmp) == 1)
+		return (ft_list_sort(data->envp), 0);
+	tmp = tmp->next;
+	while (tmp)
 	{
-		tmp = tmp->next;
-		if (ft_strcmp(min, tmp->content) > 0)
-			min = tmp->content;
-	}
-	printf("%s\n", min);
-	return (min);
-}
-
-char	*ft_min_lst(char *str, t_list **list)
-{
-	t_list	*tmp;
-	char	*min;
-
-	tmp = *list;
-	while (tmp && tmp->next)
-	{
-		tmp = tmp->next;
-		if (ft_strcmp(tmp->content, min) < 0 && ft_strcmp(str, min) < 0)
-			min = tmp->content;
-	}
-	return (min);
-}
-
-void	ft_list_sort(t_list **list)
-{
-	t_list	*tmp;
-	char	*str;
-	char	*min;
-	int		i;
-
-	i = -1;
-	tmp = *list;
-	min = ft_first(list);
-	while (++i < ft_len(list))
-	{
-		tmp = *list;
-		str = tmp->content;
-		while (tmp->next)
+		token = (t_token *)tmp->content;
+		if (ft_verif(token->str))
 		{
-			tmp = tmp->next;
-			if (strcmp(str, min) == 0)
-				str = ft_min_lst(min, list);
-			else if (ft_strcmp(tmp->content, str) < 0
-				&& ft_strcmp(min, tmp->content) < 0)
-				str = tmp->content;
+			ft_putstr_fd("bash: export: `", 2);
+			ft_putstr_fd(token->str, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
 		}
-		min = str;
-		printf("%s\n", str);
+		else if (!ft_lstexport(&data->envp, token->str))
+			ft_lstadd_back(&data->envp, ft_lstnew(token->str));
+		tmp = tmp->next;
 	}
-}
-
-// }
-
-// 	t_list	*tmp;
-// 	char	*str;
-// 	char	*min;
-// 	int		i;
-
-// 	i = -1;
-// 	tmp = *list;
-// 	min = NULL;
-// 	while (++i < ft_len(list))
-// 	{
-// 		str = tmp->content;
-// 		while (tmp && tmp->next)
-// 		{
-// 			tmp = tmp->next;
-// 			if (ft_strcmp(str, tmp->content) > 0)
-// 			{
-// 				if (min)
-// 				{
-// 					if (ft_strcmp(str, min) > 0)
-// 						str = tmp->content;
-// 				}
-// 				else
-// 					str = tmp->content;
-// 			}	
-// 		}
-// 		min = str;
-// 		printf("%s\n", str);
-// 	}
-
-int	ft_export(t_list *list, char c)
-{
-	if (c == 's')
-		ft_list_sort(&list);
 	return (0);
 }
