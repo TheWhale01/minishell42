@@ -1,56 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/11 14:12:46 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/17 05:31:43 by jrossett         ###   ########.fr       */
+/*   Created: 2022/05/17 04:58:04 by jrossett          #+#    #+#             */
+/*   Updated: 2022/05/17 07:39:48 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_lstexport(t_list **lst, char *str)
-{
-	t_list	*tmp;
-	size_t	size;
-	size_t	size2;
-
-	if (!lst)
-		return (0);
-	tmp = *lst;
-	while (tmp)
-	{
-		size = 0;
-		size2 = 0;
-		while (((char *)tmp->content)[size]
-			&& ((char *)tmp->content)[size] != '=')
-			size++;
-		while (str[size2] && str[size2] != '=')
-			size2++;
-		if (!ft_strncmp(tmp->content, str, size) && size == size2)
-		{
-			if (ft_strchr(str, '='))
-				tmp->content = str;
-			return (1);
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-int	ft_verif(char *str)
+int	ft_verif_unset(char	*str)
 {
 	int	i;
 
 	i = 0;
-	if (str[i] && str[i] == '=')
+	if (str[i] && ft_isdigit(str[i]))
 		return (1);
-	if (ft_isdigit(str[i]))
-		return (1);
-	while (str[i] && str[i] != '=')
+	while (str[i])
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (1);
@@ -61,7 +30,28 @@ int	ft_verif(char *str)
 	return (0);
 }
 
-int	ft_export(t_data *data)
+int	ft_lstunset(t_list **lst, char *str)
+{
+	t_list	*del;
+	t_list	*tmp;
+	size_t	size;
+
+	tmp = *lst;
+	size = ft_strlen(str);
+	while (tmp)
+	{
+		if (strncmp((char *)tmp->content, str, size) == 0)
+		{
+			del = ft_lstpop(lst, tmp);
+			free_list(del);
+			return (0);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	ft_unset(t_data *data)
 {
 	t_list	*tmp;
 	t_token	*token;
@@ -69,20 +59,21 @@ int	ft_export(t_data *data)
 	tmp = data->tokens;
 	token = (t_token *)tmp->content;
 	if (ft_lstsize(tmp) == 1)
-		return (ft_list_sort(data->envp), 0);
+		return (0);
 	tmp = tmp->next;
 	while (tmp)
 	{
 		token = (t_token *)tmp->content;
-		if (ft_verif(token->str))
+		if (ft_verif_unset(token->str))
 		{
-			ft_putstr_fd("bash: export: `", 2);
+			ft_putstr_fd("bash: unset: `", 2);
 			ft_putstr_fd(token->str, 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 		}
-		else if (!ft_lstexport(&data->envp, token->str))
-			ft_lstadd_back(&data->envp, ft_lstnew(token->str));
+		else
+			ft_lstunset(&data->envp, token->str);
 		tmp = tmp->next;
 	}
 	return (0);
 }
+
