@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 01:48:09 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 03:15:36 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*copy_chars_before(char *str, char *end)
 	char	*new;
 
 	i = 0;
+	printf("end : %s\n", end);
 	stop = ft_strstr(str, end);
 	while (&str[i] != stop)
 		i++;
@@ -62,7 +63,11 @@ char	*copy_chars_after(char *str)
 	{
 		str++;
 		while (*str && (*str == '_' || *str == '?' || ft_isalnum(*str)))
+		{
 			str++;
+			if (*str == '?' || ft_isdigit(*str))
+				break ;
+		}
 	}
 	len = ft_strlen(str);
 	new = malloc(sizeof(char) * (len + 1));
