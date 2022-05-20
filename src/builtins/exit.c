@@ -6,7 +6,7 @@
 /*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/18 16:31:23 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/20 11:19:34 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	exit_cmd(int exit_code, t_data *data, char *str)
 		ft_putendl_fd(str, STDERR_FILENO);
 	else if (exit_code == EXIT_SUCCESS && str)
 		ft_putendl_fd(str, STDOUT_FILENO);
-	free_list(data->envp);
 	free(data->line);
+	ft_lstclear(&data->envp, NULL);
 	free_tab(data->path);
 	free_tokens(data->tokens);
 	exit(exit_code);

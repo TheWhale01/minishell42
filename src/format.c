@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 18:36:40 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/20 10:02:50 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,12 @@ int	check_quotes(char *str)
 	return (!quote);
 }
 
-int	is_in(char c, char *charset)
-{
-	while (*charset)
-		if (*(charset++) == c)
-			return (1);
-	return (0);
-}
-
 int	wordlen(char *str, char *charset, int *quote)
 {
 	int		i;
 
 	i = 0;
-	while (str[i] && !is_in(str[i], charset))
+	while (str[i] && !ft_is_in(str[i], charset))
 	{
 		if (!*quote && (str[i] == '\"' || str[i] == '\''))
 		{
@@ -103,8 +95,7 @@ char	*cut_word(char *str, int *quote)
 
 	if (!*str)
 		return (NULL);
-	len = 0;
-	len += wordlen(&str[len], " |<>()*$&", quote);
+	len = wordlen(str, " |<>()*$&", quote);
 	if (!len)
 		len += get_sep(&str[len]);
 	word = malloc(sizeof(char) * (len + 1));
