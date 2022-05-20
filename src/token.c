@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 00:22:49 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 05:11:28 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,23 @@ int	is_op(char *str)
 
 int	is_cmd(char *cmd, char **path)
 {
-	int			len;
 	char		*str;
-	struct stat	*path_stat;
+	struct stat	path_stat;
 
-	path_stat = malloc(sizeof(struct stat));
-	if (!path_stat)
-		return (0);
-	stat(cmd, path_stat);
-	if (!access(cmd, X_OK) && !S_ISDIR(path_stat->st_mode))
+	stat(cmd, &path_stat);
+	if (!access(cmd, X_OK) && !S_ISDIR(path_stat.st_mode))
 		return (1);
 	while (*path)
 	{
 		str = ft_strjoin(*(path++), cmd);
-		len = ft_strlen(str);
-		if (str[len - 1] == ' ')
-			str[len - 1] = '\0';
-		if (!access(str, X_OK) && !S_ISDIR(path_stat->st_mode))
+		stat(str, &path_stat);
+		if (!access(str, X_OK) && !S_ISDIR(path_stat.st_mode))
 		{
 			free(str);
 			return (1);
 		}
 		free(str);
 	}
-	free(path_stat);
 	return (0);
 }
 

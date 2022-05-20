@@ -6,45 +6,33 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 04:47:15 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/20 10:28:25 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*remove_quotes(char *str)
-{
-	int		i;
-	int		len;
-	int		quote;
-	char	*new;
-
-	i = 0;
-	quote = 0;
-	len = ft_strlen(str) - 2;
-	new = malloc(sizeof(char) * (len + 1));
-	if (!new)
-		return (NULL);
-	while (*str)
-	{
-		if (!quote && (*str == '\"' || *str == '\''))
-			quote = *(str++);
-		if ((quote == '\'' && *str == '\'') || (quote == '\"' && *str == '\"'))
-		{
-			str++;
-			quote = 0;
-		}
-		new[i++] = *str++;
-	}
-	new[i] = '\0';
-	return (new);
-}
 
 int	get_quote(char *str)
 {
 	while (*str && *str != '\'' && *str != '\"')
 		str++;
 	return (*str);
+}
+
+char	*remove_quotes(char *str)
+{
+	int		len;
+	char	quote;
+	char	*new;
+
+	quote = get_quote(str);
+	len = ft_strlen(str);
+	new = malloc(sizeof(char) * (len + 1));
+	if (!new)
+		return (NULL);
+	new = ft_strccpy(new, str, &quote);
+	free(str);
+	return (new);
 }
 
 char	*copy_chars_before(char *str, char *end)
@@ -97,9 +85,10 @@ char	*replace_var(t_data *data, t_list *token, char *str)
 	found = ft_strjoin_free_s1(copy_chars_before(
 				((t_token *)token->content)->str, str), found);
 	start = ft_strdup(found);
-	found = ft_strjoin_free_s1(found, copy_chars_after(str));
+	found = ft_strjoin_free_s1_s2(found, copy_chars_after(str));
 	free(((t_token *)token->content)->str);
 	((t_token *)token->content)->str = found;
 	str = ft_rstrstr(found, start);
+	free(start);
 	return (str);
 }

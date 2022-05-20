@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:14:55 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/16 23:35:24 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/17 05:16:06 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ char	*ft_strjoin_free_s1_s2(char const *s1, char const *s2)
 		i++;
 	}
 	str[i] = '\0';
-	if (s1)
-		free((char *)s1);
-	if (s2)
-		free((char *)s2);
+	free((char *)s1);
+	free((char *)s2);
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 04:47:11 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/20 10:00:24 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	tokenize(t_data *data, t_list *lst)
 		ft_lstadd_back(&data->tokens, node);
 		tmp = tmp->next;
 	}
-	lst = ft_lstclear(&lst, NULL);
 }
 
 void	expander(t_data *data)

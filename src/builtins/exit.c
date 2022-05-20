@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/17 04:04:30 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/17 05:29:09 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	exit_cmd(int exit_code, t_data *data, char *str)
 	else if (exit_code == EXIT_SUCCESS && str)
 		ft_putendl_fd(str, STDOUT_FILENO);
 	free(data->line);
-	free(data->envp);
+	ft_lstclear(&data->envp, NULL);
 	free_tab(data->path);
 	free_tokens(data->tokens);
 	exit(exit_code);
