@@ -6,7 +6,7 @@
 /*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/18 16:47:43 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/20 15:56:54 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include <stdio.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/stat.h>
@@ -80,9 +81,11 @@ char	**get_path_env(char **env);
 
 // -----------------------------BUILTINS-----------------------------
 
+int		ft_cd(t_data *data);
 int		ft_pwd(t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
+int		ft_lstexport(t_list **lst, char *str);
 
 void	ft_env(t_data  *data);
 void	ft_list_sort(t_list *list);
