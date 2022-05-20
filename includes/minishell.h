@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/17 07:30:57 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:47:43 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,11 @@ char	**get_path_env(char **env);
 
 // -----------------------------BUILTINS-----------------------------
 
+int		ft_pwd(t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
 
-void	ft_env(t_list **list);
+void	ft_env(t_data  *data);
 void	ft_list_sort(t_list *list);
 void	exit_cmd(int exit_code, t_data *data, char *str);
 

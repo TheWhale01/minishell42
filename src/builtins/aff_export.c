@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aff_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:32:32 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/16 19:37:20 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/18 14:54:19 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_equal(char *str)
 {
-	if (!strchr(str, '='))
+	if (!ft_strchr(str, '='))
 	{
 		ft_putstr(str);
 		ft_putchar('\n');
@@ -70,9 +70,12 @@ void	ft_list_sort(t_list *list)
 		tmp = list;
 		while (tmp)
 		{
-			if (ft_strcmp(tmp->content, str) < 0
-				&& ft_strcmp(tmp->content, min) > 0)
-				str = tmp->content;
+			if (tmp->content)
+			{
+				if (ft_strcmp(tmp->content, str) < 0
+					&& ft_strcmp(tmp->content, min) > 0)
+					str = tmp->content;
+			}
 			tmp = tmp->next;
 		}
 		min = str;

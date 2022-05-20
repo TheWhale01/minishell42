@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/17 04:23:57 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:48:16 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ t_list	*create_list(char **envp)
 	return (list);
 }
 
-void	ft_env(t_list **list)
+void	ft_env(t_data *data)
 {
 	t_list	*tmp;
 
-	tmp = *list;
-	if ((*list)->content)
+	tmp = data->envp;
+	if (tmp->content)
 	{
 		while (tmp)
 		{

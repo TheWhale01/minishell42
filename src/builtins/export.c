@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 14:12:46 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/17 05:31:43 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/19 20:12:14 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	ft_export(t_data *data)
 	t_list	*tmp;
 	t_token	*token;
 
+	if (!data->envp)
+		return (0);
 	tmp = data->tokens;
 	token = (t_token *)tmp->content;
 	if (ft_lstsize(tmp) == 1)
