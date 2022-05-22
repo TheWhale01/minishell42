@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:14:20 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/10 11:56:36 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/20 23:24:53 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup(char *src)
 
 	string = malloc(sizeof(char) * (ft_strlen(src) + 1));
 	if (!string)
-		return (0);
+		return (NULL);
 	i = -1;
 	while (src[++i] != '\0')
 		string[i] = src[i];

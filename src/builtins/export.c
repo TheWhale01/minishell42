@@ -6,7 +6,7 @@
 /*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 14:12:46 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/19 20:12:14 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/21 00:19:41 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	ft_lstexport(t_list **lst, char *str)
 		if (!ft_strncmp(tmp->content, str, size) && size == size2)
 		{
 			if (ft_strchr(str, '='))
-				tmp->content = str;
+			{
+				free(tmp->content);
+				tmp->content = ft_strdup(str);
+			}
 			return (1);
 		}
 		tmp = tmp->next;
@@ -83,7 +86,7 @@ int	ft_export(t_data *data)
 			ft_putstr_fd("': not a valid identifier\n", 2);
 		}
 		else if (!ft_lstexport(&data->envp, token->str))
-			ft_lstadd_back(&data->envp, ft_lstnew(token->str));
+			ft_lstadd_back(&data->envp, ft_lstnew(ft_strdup(token->str)));
 		tmp = tmp->next;
 	}
 	return (0);

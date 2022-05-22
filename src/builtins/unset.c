@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:58:04 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/17 07:39:48 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:04:57 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ int	ft_lstunset(t_list **lst, char *str)
 	size = ft_strlen(str);
 	while (tmp)
 	{
-		if (strncmp((char *)tmp->content, str, size) == 0)
+		if (ft_strncmp((char *)tmp->content, str, size) == 0)
 		{
 			del = ft_lstpop(lst, tmp);
-			free_list(del);
+			ft_lstdelone(del, free);
 			return (0);
 		}
 		tmp = tmp->next;

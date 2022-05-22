@@ -6,7 +6,7 @@
 /*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/20 15:56:54 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/22 16:58:29 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char	**get_path_env(char **env);
 
 int		ft_cd(t_data *data);
 int		ft_pwd(t_data *data);
+int		ft_echo(t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
 int		ft_lstexport(t_list **lst, char *str);

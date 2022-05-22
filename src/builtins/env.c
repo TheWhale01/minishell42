@@ -6,7 +6,7 @@
 /*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/18 16:48:16 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/20 23:25:49 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_list	*create_list(char **envp)
 {
+	char	*str;
 	t_list	*list;
 	t_list	*tmp;
 	int		i;
@@ -24,10 +25,12 @@ t_list	*create_list(char **envp)
 		list = ft_lstnew(NULL);
 		return (list);
 	}
-	list = ft_lstnew(envp[0]);
+	str = ft_strdup(envp[0]);
+	list = ft_lstnew(str);
 	while (envp[i])
 	{
-		tmp = ft_lstnew(envp[i]);
+		str = ft_strdup(envp[i]);
+		tmp = ft_lstnew(str);
 		ft_lstadd_back(&list, tmp);
 		i++;
 	}
