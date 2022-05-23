@@ -6,20 +6,31 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/23 14:40:41 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/23 15:08:52 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// O_CREAT | O_WRONLY | O_TRUNC
-// O_CREAT | O_WRONLY | O_APPEND
+void	redir_in(t_data *data, char *filename)
+{
+	int	file_fd;
+
+	data->fd_in = dup(STDIN);
+	file_fd = open(filename, O_RDONLY, 0644);
+	dup2(file_fd, STDIN);
+	close(file_fd);
+}
+
 void	redir_out(t_data *data, char *filename, int mode)
 {
 	int	file_fd;
 
 	data->fd_out = dup(STDOUT);
-	file_fd = open(filename, mode, 0644);
+	if (mode == D_REDIR_OUT)
+		file_fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else
+		file_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	dup2(file_fd, STDOUT);
 	close(file_fd);
 }
@@ -33,12 +44,10 @@ void	make_redirs(t_data *data)
 	while (tmp)
 	{
 		token = (t_token *)tmp->content;
-		if (token->token == REDIR_OUT)
-			redir_out(data, ((t_token *)tmp->next->content)->str,
-				O_CREAT | O_WRONLY | O_TRUNC);
-		else if (token->token == D_REDIR_OUT)
-			redir_out(data, ((t_token *)tmp->next->content)->str,
-				O_CREAT | O_WRONLY | O_APPEND);
+		if (token->token == REDIR_OUT || token->token == D_REDIR_OUT)
+			redir_out(data, ((t_token *)tmp->next->content)->str, token->token);
+		else if (token->token == REDIR_IN)
+			redir_in(data, ((t_token *)tmp->next->content)->str);
 		tmp = tmp->next;
 	}
 }
