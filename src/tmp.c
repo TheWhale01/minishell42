@@ -63,9 +63,8 @@ void print_tokens(t_list *tokens, int mode)
     while (tmp)
     {
       token = (t_token *)tmp->content;
-      printf("%s", token->str);
+      printf("%s\n", token->str);
       tmp = tmp->next;
     }
-    printf("\n");
   }
 }

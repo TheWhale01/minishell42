@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/20 12:14:38 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:44:11 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	init(t_data *data)
 {
+	data->fd_in = STDIN;
+	data->fd_out = STDOUT;
+	data->rtn_val = 0;
 	data->line = NULL;
 	data->path = NULL;
 	data->envp = NULL;
@@ -38,9 +41,11 @@ int	main(int ac, char **av, char **envp)
 				"Syntax Error: mismatched opening and closing quotes.");
 		lst = format(data.line);
 		tokenize(&data, lst);
-		ft_lstclear(&lst, NULL);
 		expander(&data);
-		print_tokens(data.tokens, 1);
+		make_redirs(&data);
+		if (ft_strcmp(data.line, "exit"))
+			echo(data.tokens->next, 0);
+		restore_redirs(&data);
 		if (!ft_strcmp(data.line, "exit"))
 			exit_cmd(EXIT_SUCCESS, &data, NULL);
 		free_tokens(data.tokens);

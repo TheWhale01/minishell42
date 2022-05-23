@@ -1,5 +1,7 @@
 obj/
+*test*
 *.pdf
+*outfile*
 vgcore*
 readline
 minishell
