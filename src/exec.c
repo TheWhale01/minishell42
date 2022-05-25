@@ -6,7 +6,7 @@
 /*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 19:21:29 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/25 21:15:48 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	exec_builtin(t_data *data)
 		ft_unset(data);
 	else if (!ft_strcmp(token->str, "export"))
 		ft_export(data);
+	else if (!ft_strcmp(token->str, "echo"))
+		ft_echo(data);
 }
 
 void	exec_cmd(t_data *data)
