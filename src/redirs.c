@@ -6,26 +6,33 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 11:26:17 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:49:31 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	redir_in(t_data *data, char *filename)
+void	redir_in(t_data *data, t_list *file)
 {
-	int	file_fd;
+	int		file_fd;
+	char	*filename;
 
+	if (!file)
+		exit_cmd(EXIT_FAILURE, data, "Syntax Error: invalid redirection.");
+	filename = ((t_token *)file->content)->str;
 	data->fd_in = dup(STDIN);
 	file_fd = open(filename, O_RDONLY, 0644);
 	dup2(file_fd, STDIN);
 	close(file_fd);
 }
 
-void	redir_out(t_data *data, char *filename, int mode)
+void	redir_out(t_data *data, t_list *file, int mode)
 {
-	int	file_fd;
-
+	int		file_fd;
+	char	*filename;
+	
+	if (!file)
+		return ;
 	data->fd_out = dup(STDOUT);
 	if (mode == D_REDIR_OUT)
 		file_fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
@@ -45,9 +52,9 @@ void	make_redirs(t_data *data)
 	{
 		token = (t_token *)tmp->content;
 		if (token->token == REDIR_OUT || token->token == D_REDIR_OUT)
-			redir_out(data, ((t_token *)tmp->next->content)->str, token->token);
+			redir_out(data, tmp->next, token->token);
 		else if (token->token == REDIR_IN)
-			redir_in(data, ((t_token *)tmp->next->content)->str);
+			redir_in(data, tmp->next);
 		tmp = tmp->next;
 	}
 }
