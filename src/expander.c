@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/20 11:13:39 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/25 16:28:23 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*replace_var(t_data *data, t_list *token, char *str)
 	char	*found;
 	char	*start;
 
-	found = search_env(str, data->envp);
+	found = search_env(str, data);
 	found = ft_strjoin_free_s1(copy_chars_before(
 				((t_token *)token->content)->str, str), found);
 	start = ft_strdup(found);

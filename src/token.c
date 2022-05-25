@@ -6,13 +6,13 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/20 11:08:32 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 14:24:34 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_buitlin(char *str)
+int	is_builtin(char *str)
 {
 	return (!ft_strcmp(str, "echo") || !ft_strcmp(str, "cd")
 		|| !ft_strcmp(str, "pwd") || !ft_strcmp(str, "export")
@@ -87,7 +87,7 @@ t_list	*choose_token(t_list *node, char **path)
 	if (!token)
 		return (NULL);
 	token->str = (char *)node->content;
-	if (is_buitlin(node->content) || is_cmd(node->content, path))
+	if (is_builtin(node->content) || is_cmd(node->content, path))
 		token->token = CMD;
 	else if (is_op(node->content))
 		choose_op(token, node->content);

@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/25 16:24:01 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:28:18 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ typedef struct s_token
 
 typedef struct s_data
 {
+	int		fd_in;
+	int		fd_out;
+	int		rtn_val;
 	char	*line;
 	char	**path;
 	char	*pwd;
@@ -52,24 +55,29 @@ typedef struct s_data
 }	t_data;
 
 int		get_quote(char *str);
+int		is_builtin(char *str);
 int		check_quotes(char *str);
 int		only_spaces(char *str, int len);
 
 void	expander(t_data *data);
+void	exec_cmd(t_data *data);
+void	free_list(t_list *list);
+void	make_redirs(t_data *data);
 void	free_tokens(t_list *tokens);
+void	restore_redirs(t_data *data);
 void	tokenize(t_data *data, t_list *lst);
 
 void	*free_tab(char	**tab);
-void	free_list(t_list *list);
 
 char	*skip_spaces(char *str);
 char	*remove_quotes(char *str);
 char	*cut_word(char *str, int *quote);
-char	*search_env(char *str, t_list *envp);
+char	*search_env(char *str, t_data *data);
 char	*replace_var(t_data *data, t_list *token, char *str);
 
 t_list	*format(char *str);
 t_list	*choose_token(t_list *node, char **path);
+t_list	*search_token(t_list *tokens, int search);
 
 size_t	tablen(char **ptr);
 
