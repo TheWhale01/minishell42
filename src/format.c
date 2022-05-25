@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/20 10:02:50 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:16:55 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*cut_word(char *str, int *quote)
 
 	if (!*str)
 		return (NULL);
-	len = wordlen(str, " |<>()*$&", quote);
+	len = wordlen(str, " |<>$&", quote);
 	if (!len)
 		len += get_sep(&str[len]);
 	word = malloc(sizeof(char) * (len + 1));

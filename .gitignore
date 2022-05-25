@@ -1,7 +1,6 @@
 obj/
 *.pdf
 vgcore*
-readline
 minishell
 libft/bin/
 libft/obj/

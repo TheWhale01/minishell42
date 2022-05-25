@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/22 16:58:29 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/25 16:24:01 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,8 @@ enum	e_token
 {
 	CMD,
 	VAR,
-	AND,
 	PIPE,
 	WORD,
-	D_PIPE,
-	OPEN_P,
-	CLOSE_P,
-	WILDCARD,
 	REDIR_IN,
 	REDIR_OUT,
 	D_REDIR_IN,
@@ -51,6 +46,7 @@ typedef struct s_data
 {
 	char	*line;
 	char	**path;
+	char	*pwd;
 	t_list	*envp;
 	t_list	*tokens;
 }	t_data;
@@ -83,12 +79,12 @@ char	**get_path_env(char **env);
 
 int		ft_cd(t_data *data);
 int		ft_pwd(t_data *data);
-int		ft_echo(t_data *data);
+int		ft_echo(t_list *tokens ,t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
 int		ft_lstexport(t_list **lst, char *str);
 
-void	ft_env(t_data  *data);
+void	ft_env(t_data *data);
 void	ft_list_sort(t_list *list);
 void	exit_cmd(int exit_code, t_data *data, char *str);
 

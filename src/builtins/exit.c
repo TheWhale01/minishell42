@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/21 00:14:05 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/25 14:55:10 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	exit_cmd(int exit_code, t_data *data, char *str)
 	ft_lstclear(&data->envp, free);
 	free_tab(data->path);
 	free_tokens(data->tokens);
+	free(data->pwd);
 	exit(exit_code);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/22 16:53:37 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/25 13:48:08 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_cd(t_data *data)
 			ft_lstadd_back(&data->envp, ft_lstnew(str));
 		free(str);
 	}
-	else 
+	else
 		perror("cd");
 	return (0);
 }
