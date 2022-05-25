@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/23 14:41:09 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:15:16 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	*replace_var(t_data *data, t_list *token, char *str);
 
 t_list	*format(char *str);
 t_list	*choose_token(t_list *node, char **path);
+t_list	*search_token(t_list *tokens, int search);
 
 size_t	tablen(char **ptr);
 

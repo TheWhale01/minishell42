@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/23 11:55:23 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:14:57 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,22 @@ char	*search_env(char *str, t_data *data)
 			len++;
 		if (!ft_strncmp(str, (char *)tmp->content, len))
 			return (ft_strchr(tmp->content, '=') + 1);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+t_list	*search_token(t_list *tokens, int search)
+{
+	t_list	*tmp;
+	t_token	*token;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		token = (t_token *)tmp->content;
+		if (token->token == search)
+			return (tmp);
 		tmp = tmp->next;
 	}
 	return (NULL);
