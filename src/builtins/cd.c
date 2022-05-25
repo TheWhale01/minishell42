@@ -6,7 +6,7 @@
 /*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/25 19:15:43 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/25 19:31:46 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_cd(t_data *data)
 	tmp = data->tokens;
 	if (ft_path_cd(tmp, &path, data))
 		return (1);
-	str = ft_strjoin_free_s2("OLDPWD=", getcwd(NULL, 0));
+	str = ft_strjoin_free_s2("OLDPWD=", data->pwd);
 	if (!ft_lstexport(&data->envp, str))
 		ft_lstadd_back(&data->envp, ft_lstnew(str));
 	free(str);
@@ -49,10 +49,9 @@ int	ft_cd(t_data *data)
 		if (!ft_lstexport(&data->envp, str))
 			ft_lstadd_back(&data->envp, ft_lstnew(str));
 		free(str);
-		
+		data->pwd = getcwd(NULL, 0);
 	}
 	else
 		perror("cd");
-	data->pwd = getcwd(NULL, 0);
 	return (0);
 }
