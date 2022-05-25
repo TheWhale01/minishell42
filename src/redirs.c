@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/23 15:08:52 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 11:26:17 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	make_redirs(t_data *data)
 	t_token	*token;
 
 	tmp = data->tokens;
-	while (tmp)
+	while (tmp && ((t_token *)tmp->content)->token != PIPE)
 	{
 		token = (t_token *)tmp->content;
 		if (token->token == REDIR_OUT || token->token == D_REDIR_OUT)

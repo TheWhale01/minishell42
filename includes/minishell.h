@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/24 12:15:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 14:25:28 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int		check_quotes(char *str);
 int		only_spaces(char *str, int len);
 
 void	expander(t_data *data);
+void	exec_cmd(t_data *data);
 void	free_list(t_list *list);
 void	make_redirs(t_data *data);
 void	free_tokens(t_list *tokens);
 void	restore_redirs(t_data *data);
-void	echo(t_list	*tokens, int opt);
 void	tokenize(t_data *data, t_list *lst);
 
 void	*free_tab(char	**tab);
