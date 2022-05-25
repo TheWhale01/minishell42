@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/25 13:48:08 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:15:43 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_path_cd(t_list *tmp, char **path, t_list *envp)
+int	ft_path_cd(t_list *tmp, char **path, t_data *data)
 {
 	char		*paths;
 
 	if (ft_lstsize(tmp) == 1)
 	{
-		paths = search_env("HOME", envp);
+		paths = search_env("HOME", data);
 		if (paths == NULL)
 			return (1);
 	}
@@ -37,7 +37,7 @@ int	ft_cd(t_data *data)
 	t_list	*tmp;
 
 	tmp = data->tokens;
-	if (ft_path_cd(tmp, &path, data->envp))
+	if (ft_path_cd(tmp, &path, data))
 		return (1);
 	str = ft_strjoin_free_s2("OLDPWD=", getcwd(NULL, 0));
 	if (!ft_lstexport(&data->envp, str))
@@ -49,8 +49,10 @@ int	ft_cd(t_data *data)
 		if (!ft_lstexport(&data->envp, str))
 			ft_lstadd_back(&data->envp, ft_lstnew(str));
 		free(str);
+		
 	}
 	else
 		perror("cd");
+	data->pwd = getcwd(NULL, 0);
 	return (0);
 }

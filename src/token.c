@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 14:24:34 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:11:17 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,16 @@ int	is_cmd(char *cmd, char **path)
 
 void	choose_op(t_token *token, char *str)
 {
-	if (!ft_strncmp(str, "||", 2))
-		token->token = D_PIPE;
-	else if (!ft_strncmp(str, ">>", 2))
+	if (!ft_strncmp(str, ">>", 2))
 		token->token = D_REDIR_OUT;
 	else if (!ft_strncmp(str, "<<", 2))
 		token->token = D_REDIR_IN;
-	else if (!ft_strncmp(str, "&&", 2))
-		token->token = AND;
-	else if (*str == '*')
-		token->token = WILDCARD;
 	else if (*str == '|')
 		token->token = PIPE;
 	else if (*str == '>')
 		token->token = REDIR_OUT;
 	else if (*str == '<')
 		token->token = REDIR_IN;
-	else if (*str == '(')
-		token->token = OPEN_P;
-	else if (*str == ')')
-		token->token = CLOSE_P;
 }
 
 t_list	*choose_token(t_list *node, char **path)

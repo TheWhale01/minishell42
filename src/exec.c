@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 14:28:28 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:21:29 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@ void	exec_builtin(t_data *data)
 
 	token = (t_token *)data->tokens->content;
 	if (!ft_strcmp(token->str, "env"))
-		ft_env(&data->envp);
+		ft_env(data);
 	else if (!ft_strcmp(token->str, "exit"))
 		exit_cmd(EXIT_SUCCESS, data, NULL);
+	else if (!ft_strcmp(token->str, "cd"))
+		ft_cd(data);
+	else if (!ft_strcmp(token->str, "pwd"))
+		ft_pwd(data);
+	else if (!ft_strcmp(token->str, "unset"))
+		ft_unset(data);
 	else if (!ft_strcmp(token->str, "export"))
 		ft_export(data);
 }
