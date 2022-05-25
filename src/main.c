@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 16:28:26 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:51:08 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_prompt(t_data *data)
+{
+	char	*dir;
+	char	*line;
+	char	*prompt;
+
+	printf("pwd : %s\n", data->pwd);
+	dir = ft_rstrstr(data->pwd, search_env("HOME", data));
+	if (!dir)
+		dir = data->pwd;
+	else
+		dir = ft_strjoin("~", dir);
+	prompt = ft_strjoin(search_env("USER", data), "@minishell:");
+	prompt = ft_strjoin_free_s1(prompt, dir);
+	prompt = ft_strjoin_free_s1(prompt, "$ ");
+	line = readline(prompt);
+	return (line);
+}
 
 void	init(t_data *data)
 {
@@ -36,7 +55,7 @@ int	main(int ac, char **av, char **envp)
 	data.path = get_path_env(envp);
 	while (1)
 	{
-		data.line = readline("minishell> ");
+		data.line = ft_prompt(&data);
 		if (!check_quotes(data.line))
 			exit_cmd(EXIT_FAILURE, &data,
 				"Syntax Error: mismatched opening and closing quotes.");

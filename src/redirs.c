@@ -6,11 +6,22 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 16:49:31 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:09:36 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_list	*skip_redirs(t_list	*tokens)
+{
+	t_token	*token;
+
+	token = (t_token *)tokens->content;
+	if (token->token == REDIR_IN || token->token == REDIR_OUT
+		|| token->token == D_REDIR_IN || token->token == D_REDIR_OUT)
+		return (tokens->next);
+	return (tokens);
+}
 
 void	redir_in(t_data *data, t_list *file)
 {
@@ -30,9 +41,10 @@ void	redir_out(t_data *data, t_list *file, int mode)
 {
 	int		file_fd;
 	char	*filename;
-	
+
 	if (!file)
-		return ;
+		exit_cmd(EXIT_FAILURE, data, "Syntax Error: invalid redirection.");
+	filename = ((t_token *)file->content)->str;
 	data->fd_out = dup(STDOUT);
 	if (mode == D_REDIR_OUT)
 		file_fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);

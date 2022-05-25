@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/25 16:28:18 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:18:47 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*search_env(char *str, t_data *data);
 char	*replace_var(t_data *data, t_list *token, char *str);
 
 t_list	*format(char *str);
+t_list	*skip_redirs(t_list	*tokens);
 t_list	*choose_token(t_list *node, char **path);
 t_list	*search_token(t_list *tokens, int search);
 

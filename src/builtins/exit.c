@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 14:55:10 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:46:45 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ void	*free_tab(char	**tab)
 		free(tab[i]);
 	free(tab);
 	return (NULL);
+}
+
+void	free_token(t_list *token)
+{
+	free(((t_token *)token->content)->str);
+	ft_lstdelone(&token, free);
 }
 
 void	free_tokens(t_list *tokens)
