@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/25 18:18:47 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 20:51:00 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <dirent.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <readline/history.h>
@@ -59,8 +60,8 @@ int		is_builtin(char *str);
 int		check_quotes(char *str);
 int		only_spaces(char *str, int len);
 
+void	exec(t_data *data);
 void	expander(t_data *data);
-void	exec_cmd(t_data *data);
 void	free_list(t_list *list);
 void	make_redirs(t_data *data);
 void	free_tokens(t_list *tokens);
@@ -83,12 +84,13 @@ t_list	*search_token(t_list *tokens, int search);
 size_t	tablen(char **ptr);
 
 char	**get_path_env(char **env);
+char	**list_to_tab(t_list *lst);
 
 // -----------------------------BUILTINS-----------------------------
 
 int		ft_cd(t_data *data);
 int		ft_pwd(t_data *data);
-int		ft_echo(t_list *tokens ,t_data *data);
+int		ft_echo(t_list *tokens, t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
 int		ft_lstexport(t_list **lst, char *str);
@@ -99,9 +101,6 @@ void	exit_cmd(int exit_code, t_data *data, char *str);
 
 t_list	*create_list(char **envp);
 
-// -----------------------------TMP-----------------------------
-
-void	print_lst(t_list *lst);
-void	print_tokens(t_list *tokens, int mode);
+void	print_tab(char **tab);
 
 #endif

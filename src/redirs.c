@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 18:09:36 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 19:48:31 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*skip_redirs(t_list	*tokens)
 	token = (t_token *)tokens->content;
 	if (token->token == REDIR_IN || token->token == REDIR_OUT
 		|| token->token == D_REDIR_IN || token->token == D_REDIR_OUT)
-		return (tokens->next);
+		return (tokens->next->next);
 	return (tokens);
 }
 

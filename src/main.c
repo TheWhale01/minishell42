@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 18:51:08 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 20:33:20 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*ft_prompt(t_data *data)
 	char	*line;
 	char	*prompt;
 
-	printf("pwd : %s\n", data->pwd);
 	dir = ft_rstrstr(data->pwd, search_env("HOME", data));
 	if (!dir)
 		dir = data->pwd;
@@ -28,6 +27,7 @@ char	*ft_prompt(t_data *data)
 	prompt = ft_strjoin_free_s1(prompt, dir);
 	prompt = ft_strjoin_free_s1(prompt, "$ ");
 	line = readline(prompt);
+	free(prompt);
 	return (line);
 }
 
@@ -62,7 +62,7 @@ int	main(int ac, char **av, char **envp)
 		lst = format(data.line);
 		tokenize(&data, lst);
 		expander(&data);
-		exec_cmd(&data);
+		exec(&data);
 		free_tokens(data.tokens);
 	}
 	return (0);

@@ -6,34 +6,64 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 18:31:15 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/25 20:58:52 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*get_path_cmd(char *cmd, char **env)
+{
+	char	*tmp;
+	char	*path_cmd;
+
+	if (!access(cmd, F_OK))
+		return (cmd);
+	while (env && *env)
+	{
+		tmp = ft_strdup(*env);
+		path_cmd = ft_strjoin(tmp, cmd);
+		if (!access(path_cmd, F_OK))
+			return (path_cmd);
+		free(path_cmd);
+		env++;
+	}
+	return (NULL);
+}
+
 void	exec_builtin(t_list	*cmd, t_data *data)
 {
 	t_token	*token;
 
-	if (!cmd)
-		return ;
 	token = (t_token *)cmd->content;
-	if (!ft_strcmp(token->str, "cd"))
-		ft_cd(data);
-	else if (!ft_strcmp(token->str, "env"))
+	if (!ft_strcmp(token->str, "env"))
 		ft_env(data);
-	else if (!ft_strcmp(token->str, "pwd"))
-		ft_pwd(data);
 	else if (!ft_strcmp(token->str, "exit"))
 		exit_cmd(EXIT_SUCCESS, data, NULL);
+	else if (!ft_strcmp(token->str, "cd"))
+		ft_cd(data);
+	else if (!ft_strcmp(token->str, "pwd"))
+		ft_pwd(data);
 	else if (!ft_strcmp(token->str, "unset"))
 		ft_unset(data);
 	else if (!ft_strcmp(token->str, "export"))
 		ft_export(data);
 }
 
-void	exec_cmd(t_data *data)
+void	exec_cmd(t_list	*tokens, t_data *data)
+{
+	char	*path;
+	char	**env;
+
+	env = list_to_tab(data->envp);
+	path = get_path_cmd(((t_token *)tokens->content)->str, data->path);
+	printf("%s\n", path);
+	if (execve(path, args, env) == -1)
+		perror(args[0]);
+	free(env);
+}
+
+void	exec(t_data *data)
 {
 	t_list	*start;
 	t_token	*start_token;
@@ -46,9 +76,13 @@ void	exec_cmd(t_data *data)
 		|| start_token->token == D_REDIR_OUT)
 	{
 		start = skip_redirs(start);
+		if (!start)
+			return (restore_redirs(data));
 		start_token = (t_token *)start->content;
 	}
 	if (is_builtin(((t_token *)start->content)->str))
 		exec_builtin(start, data);
+	else
+		exec_cmd(start, data);
 	restore_redirs(data);
 }
