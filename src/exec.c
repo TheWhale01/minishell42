@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 15:30:44 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:04:26 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ void	exec_cmd(t_list	*tokens, t_data *data)
 		env = list_to_tab(data->envp);
 		path = get_path_cmd(((t_token *)tokens->content)->str, data->path);
 		args = get_args(tokens);
+		if (!path)
+		{
+			perror(args[0]);
+			exit(EXIT_FAILURE);
+		}
 		if (execve(path, args, env) == -1)
 			perror(args[0]);
 		free(env);
