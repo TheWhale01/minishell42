@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/25 19:37:49 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:35:54 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_path_cd(t_list *tmp, char **path, t_data *data)
 	return (0);
 }
 
-int	ft_cd(t_data *data)
+int	ft_cd(char **args, t_data *data)
 {
 	char	*str;
 	char	*path;

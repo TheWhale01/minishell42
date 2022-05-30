@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/30 10:11:06 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:35:43 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,17 @@ char	**list_to_tab(t_list *lst);
 
 // -----------------------------BUILTINS-----------------------------
 
-int		ft_cd(t_data *data);
-int		ft_pwd(t_data *data);
-int		ft_echo(t_data *data);
-int		ft_unset(t_data *data);
-int		ft_export(t_data *data);
+int		ft_cd(char **args, t_data *data);
+int		ft_pwd(char **args, t_data *data);
+int		ft_echo(char **args, t_data *data);
+int		ft_unset(char **args, t_data *data);
+int		ft_export(char **args, t_data *data);
 int		ft_lstexport(t_list **lst, char *str);
 
-void	ft_env(t_data *data);
+void	ft_env(char **args, t_data *data);
 void	ft_list_sort(t_list *list);
 void	exit_cmd(int exit_code, t_data *data, char *str);
 
 t_list	*create_list(char **envp);
-
-void	print_tab(char **tab);
 
 #endif

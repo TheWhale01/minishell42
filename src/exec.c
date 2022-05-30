@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 10:15:14 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:35:45 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,25 @@ char	*get_path_cmd(char *cmd, char **env)
 
 void	exec_builtin(t_list	*cmd, t_data *data)
 {
+	char	*args;
 	t_token	*token;
 
+	args = get_args(cmd);
 	token = (t_token *)cmd->content;
 	if (!ft_strcmp(token->str, "env"))
-		ft_env(data);
+		ft_env(args, data);
 	else if (!ft_strcmp(token->str, "exit"))
 		exit_cmd(EXIT_SUCCESS, data, NULL);
 	else if (!ft_strcmp(token->str, "cd"))
-		ft_cd(data);
+		ft_cd(args, data);
 	else if (!ft_strcmp(token->str, "pwd"))
-		ft_pwd(data);
+		ft_pwd(args, data);
 	else if (!ft_strcmp(token->str, "unset"))
-		ft_unset(data);
+		ft_unset(args, data);
 	else if (!ft_strcmp(token->str, "export"))
-		ft_export(data);
+		ft_export(args, data);
 	else if (!ft_strcmp(token->str, "echo"))
-		ft_echo(data);
+		ft_echo(args, data);
 }
 
 void	exec_cmd(t_list	*tokens, t_data *data)
