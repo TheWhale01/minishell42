@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/30 14:47:14 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:58:44 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data
 int		get_quote(char *str);
 int		is_builtin(char *str);
 int		check_quotes(char *str);
+int		ft_len_double(char **tab);
 int		only_spaces(char *str, int len);
 
 void	exec(t_data *data);
@@ -92,11 +93,11 @@ char	**list_to_tab(t_list *lst);
 
 // -----------------------------BUILTINS-----------------------------
 
-int		ft_cd(t_data *data);
+int		ft_cd(t_data *data, char **arg);
 int		ft_pwd(t_data *data);
-int		ft_echo(t_data *data);
-int		ft_unset(t_data *data);
-int		ft_export(t_data *data);
+int		ft_echo(t_data *data, char **arg);
+int		ft_unset(t_data *data, char **arg);
+int		ft_export(t_data *data, char **arg);
 int		ft_lstexport(t_list **lst, char *str);
 
 void	ft_env(t_data *data);
