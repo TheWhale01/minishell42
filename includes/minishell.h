@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/25 20:51:00 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:02:10 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_list	*search_token(t_list *tokens, int search);
 
 size_t	tablen(char **ptr);
 
+char	**get_args(t_list *tokens);
 char	**get_path_env(char **env);
 char	**list_to_tab(t_list *lst);
 

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 20:58:52 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:07:32 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,22 @@ void	exec_builtin(t_list	*cmd, t_data *data)
 
 void	exec_cmd(t_list	*tokens, t_data *data)
 {
+	int		pid;
 	char	*path;
 	char	**env;
+	char	**args;
 
-	env = list_to_tab(data->envp);
-	path = get_path_cmd(((t_token *)tokens->content)->str, data->path);
-	printf("%s\n", path);
-	if (execve(path, args, env) == -1)
-		perror(args[0]);
-	free(env);
+	pid = fork();
+	if (!pid)
+	{
+		env = list_to_tab(data->envp);
+		path = get_path_cmd(((t_token *)tokens->content)->str, data->path);
+		args = get_args(tokens);
+		if (execve(path, args, env) == -1)
+			perror(args[0]);
+		free(env);
+		free(args);
+	}
 }
 
 void	exec(t_data *data)
