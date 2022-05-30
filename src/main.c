@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 12:09:03 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:51:47 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	init(t_data *data)
 	data->fd_in = STDIN;
 	data->fd_out = STDOUT;
 	data->rtn_val = 0;
+	data->heredocs = 0;
 	data->line = NULL;
 	data->path = NULL;
 	data->envp = NULL;

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/30 11:45:12 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:47:14 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	int		fd_in;
 	int		fd_out;
 	int		rtn_val;
+	int		heredocs;
 	char	*line;
 	char	**path;
 	char	*pwd;
@@ -63,9 +64,11 @@ int		only_spaces(char *str, int len);
 void	exec(t_data *data);
 void	expander(t_data *data);
 void	free_list(t_list *list);
+void	rm_heredoc(t_data *data);
 void	make_redirs(t_data *data);
 void	free_tokens(t_list *tokens);
 void	restore_redirs(t_data *data);
+void	heredoc(t_data *data, char *eof);
 void	tokenize(t_data *data, t_list *lst);
 
 void	*free_tab(char	**tab);
