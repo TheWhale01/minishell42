@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/30 10:02:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:11:06 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**list_to_tab(t_list *lst);
 
 int		ft_cd(t_data *data);
 int		ft_pwd(t_data *data);
-int		ft_echo(t_list *tokens, t_data *data);
+int		ft_echo(t_data *data);
 int		ft_unset(t_data *data);
 int		ft_export(t_data *data);
 int		ft_lstexport(t_list **lst, char *str);

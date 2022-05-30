@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 10:07:32 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:15:14 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	exec_builtin(t_list	*cmd, t_data *data)
 		ft_unset(data);
 	else if (!ft_strcmp(token->str, "export"))
 		ft_export(data);
+	else if (!ft_strcmp(token->str, "echo"))
+		ft_echo(data);
 }
 
 void	exec_cmd(t_list	*tokens, t_data *data)
@@ -67,6 +69,7 @@ void	exec_cmd(t_list	*tokens, t_data *data)
 			perror(args[0]);
 		free(env);
 		free(args);
+		exit(EXIT_SUCCESS);
 	}
 }
 
