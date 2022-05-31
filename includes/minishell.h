@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/30 18:58:44 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/31 11:58:53 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int		only_spaces(char *str, int len);
 
 void	exec(t_data *data);
 void	expander(t_data *data);
-void	free_list(t_list *list);
 void	rm_heredoc(t_data *data);
 void	make_redirs(t_data *data);
 void	free_tokens(t_list *tokens);

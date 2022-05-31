@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 11:01:32 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/31 11:51:55 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	exec_cmd(t_list	*tokens, t_data *data)
 		args = get_args(tokens);
 		if (!path)
 		{
-			perror(args[0]);
-			exit(EXIT_FAILURE);
+			ft_putstr_fd(args[0], STDERR);
+			ft_putstr_fd(": command not found\n", STDERR);
 		}
-		if (execve(path, args, env) == -1)
+		else if (execve(path, args, env) == -1)
 			perror(args[0]);
 		free(env);
 		free(args);

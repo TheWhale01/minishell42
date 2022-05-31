@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:58:04 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/30 18:59:47 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/31 13:59:26 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	ft_unset(t_data *data, char **arg)
 	i = 1;
 	while (arg[i])
 	{
-
 		if (ft_verif_unset(arg[i]))
 		{
 			ft_putstr_fd("bash: unset: `", 2);
@@ -70,7 +69,8 @@ int	ft_unset(t_data *data, char **arg)
 		else
 			ft_lstunset(&data->envp, arg[i]);
 		i++;
+		free_tab(data->path);
+		data->path = get_path_env(list_to_tab(data->envp));
 	}
 	return (0);
 }
-

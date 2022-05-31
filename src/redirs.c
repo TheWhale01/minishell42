@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 16:00:41 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 10:16:49 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	redir_in(t_data *data, t_list *file, int mode)
 
 	if (!file)
 		exit_cmd(EXIT_FAILURE, data, "Syntax Error: invalid redirection.");
+	restore_redirs(data);
 	filename = ((t_token *)file->content)->str;
 	data->fd_in = dup(STDIN);
 	if (mode == D_REDIR_IN)
