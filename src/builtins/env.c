@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/30 18:43:25 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/31 14:02:47 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*search_env(char *str, t_data *data)
+{
+	int		strlen;
+	int		envlen;
+	t_list	*tmp;
+
+	if (*str == '$' && *(str + 1) != '_' && *(str + 1) != '?'
+		&& !ft_isalnum(*(str + 1)))
+		return ("$");
+	else if (*str == '$')
+		str++;
+	if (*str == '?')
+		return (ft_itoa(data->rtn_val));
+	else if (ft_isdigit(*str))
+		return (NULL);
+	tmp = data->envp;
+	while (tmp)
+	{
+		envlen = ft_strlclen(tmp->content, "=");
+		strlen = ft_strlen(str);
+		if (envlen == strlen && !ft_strncmp(str, (char *)tmp->content, envlen))
+			return (ft_strchr(tmp->content, '=') + 1);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 
 t_list	*create_list(char **envp)
 {
@@ -20,7 +47,7 @@ t_list	*create_list(char **envp)
 	int		i;
 
 	i = 1;
-	if (!*envp || !(**envp))
+	if (!envp || !*envp || !(**envp))
 	{
 		list = ft_lstnew(NULL);
 		return (list);
@@ -51,19 +78,4 @@ void	ft_env(t_data *data)
 			tmp = tmp->next;
 		}
 	}
-}
-
-void	free_list(t_list *list)
-{
-	t_list	*tmp;
-	t_list	*v;
-
-	tmp = list;
-	while (tmp)
-	{
-		v = tmp->next;
-		free(tmp);
-		tmp = v;
-	}
-	list = NULL;
 }

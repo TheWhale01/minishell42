@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 20:53:27 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 11:47:52 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,6 @@ char	*skip_spaces(char *str)
 	while (str[i] && str[i] == ' ')
 		i++;
 	return (&str[i]);
-}
-
-char	*search_env(char *str, t_data *data)
-{
-	int		len;
-	t_list	*tmp;
-
-	if (*str == '$' && *(str + 1) != '_' && *(str + 1) != '?'
-		&& !ft_isalnum(*(str + 1)))
-		return ("$");
-	else if (*str == '$')
-		str++;
-	if (*str == '?')
-		return (ft_itoa(data->rtn_val));
-	else if (ft_isdigit(*str))
-		return (NULL);
-	tmp = data->envp;
-	while (tmp)
-	{
-		len = 0;
-		while (((char *)tmp->content)[len]
-			&& ((char *)tmp->content)[len] != '=')
-			len++;
-		if (!ft_strncmp(str, (char *)tmp->content, len))
-			return (ft_strchr(tmp->content, '=') + 1);
-		tmp = tmp->next;
-	}
-	return (NULL);
 }
 
 t_list	*search_token(t_list *tokens, int search)
@@ -71,7 +43,7 @@ char	**get_path_env(char **env)
 	int		i;
 	char	**path;
 
-	while (*env)
+	while (env && *env)
 	{
 		if (!ft_strncmp(*env, "PATH", 4))
 		{
