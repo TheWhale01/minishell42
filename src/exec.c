@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 19:04:28 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/31 11:01:32 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,24 @@ char	*get_path_cmd(char *cmd, char **env)
 void	exec_builtin(t_list	*cmd, t_data *data)
 {
 	t_token	*token;
+	char	**args;
 
 	token = (t_token *)cmd->content;
+	args = get_args(cmd);
 	if (!ft_strcmp(token->str, "env"))
 		ft_env(data);
 	else if (!ft_strcmp(token->str, "exit"))
 		exit_cmd(EXIT_SUCCESS, data, NULL);
 	else if (!ft_strcmp(token->str, "cd"))
-		ft_cd(data);
+		ft_cd(data, args);
 	else if (!ft_strcmp(token->str, "pwd"))
 		ft_pwd(data);
 	else if (!ft_strcmp(token->str, "unset"))
-		ft_unset(data);
+		ft_unset(data, args);
 	else if (!ft_strcmp(token->str, "export"))
-		ft_export(data);
+		ft_export(data, args);
 	else if (!ft_strcmp(token->str, "echo"))
-		ft_echo(data);
+		ft_echo(data, args);
 }
 
 void	exec_cmd(t_list	*tokens, t_data *data)
