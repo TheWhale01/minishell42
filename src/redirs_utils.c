@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:49:30 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 16:03:13 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 10:37:56 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	heredoc(t_data *data, char *eof)
 	{
 		ft_putstr_fd("> ", STDIN);
 		line = get_next_line(STDIN);
-		if (!ft_strncmp(line, eof, ft_strlen(eof)) || !line)
+		if (!line || !ft_strncmp(line, eof, ft_strlen(eof)))
 		{
 			free(line);
 			break ;
