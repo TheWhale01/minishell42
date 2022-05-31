@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/30 14:47:14 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:58:38 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 enum	e_token
 {
 	CMD,
-	VAR,
 	PIPE,
 	WORD,
 	REDIR_IN,
@@ -104,5 +103,7 @@ void	ft_list_sort(t_list *list);
 void	exit_cmd(int exit_code, t_data *data, char *str);
 
 t_list	*create_list(char **envp);
+
+void	print_tokens(t_list *tokens);
 
 #endif

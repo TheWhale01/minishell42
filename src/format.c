@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:41:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 15:46:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:58:29 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,9 @@ int	get_sep(char *str)
 {
 	int	i;
 
-	if (!ft_strncmp(str, "||", 2) || !ft_strncmp(str, "<<", 2)
-		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2)
-		|| !ft_strncmp(str, "$?", 2))
+	if (!ft_strncmp(str, "<<", 2) || !ft_strncmp(str, ">>", 2))
 		return (2);
-	else if (*str == '|' || *str == '>' || *str == '<' || *str == '&'
-		|| *str == '(' || *str == ')')
+	else if (*str == '|' || *str == '>' || *str == '<')
 		return (1);
 	else
 	{
@@ -94,7 +91,7 @@ char	*cut_word(char *str, int *quote)
 
 	if (!*str)
 		return (NULL);
-	len = wordlen(str, " |<>$&", quote);
+	len = wordlen(str, " |<>", quote);
 	if (!len)
 		len += get_sep(&str[len]);
 	word = malloc(sizeof(char) * (len + 1));

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/31 12:11:57 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 15:09:44 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 char	*search_env(char *str, t_data *data)
 {
-	int		strlen;
-	int		envlen;
-	t_list	*tmp;
+	int			strlen;
+	int			envlen;
+	t_list		*tmp;
 
 	if (*str == '$' && *(str + 1) != '_' && *(str + 1) != '?'
 		&& !ft_isalnum(*(str + 1)))
-		return ("$");
+		return (ft_strdup("$"));
 	else if (*str == '$')
 		str++;
 	if (*str == '?')

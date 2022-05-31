@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 11:47:52 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:00:10 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,17 @@ char	**list_to_tab(t_list *lst)
 	return (tab);
 }
 
-void	print_tab(char **tab)
+void	print_tokens(t_list *tokens)
 {
-	int	i;
+	t_list	*tmp;
+	t_token	*token;
 
-	i = -1;
-	while (tab[++i])
-		printf("%s\n", tab[i]);
+	tmp = tokens;
+	while (tmp)
+	{
+		token = (t_token *)tmp->content;
+		printf("%s ", token->str);
+		tmp = tmp->next;
+	}
+	printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:54:50 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/30 10:05:57 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:45:00 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	get_nb_args(t_list *tokens)
 	nb_tokens = 0;
 	tmp = tokens;
 	token = (t_token *)tmp->content;
-	while (tmp && (token->token == CMD
-			|| token->token == VAR || token->token == WORD))
+	while (tmp && (token->token == CMD || token->token == WORD))
 	{
 		nb_tokens++;
 		tmp = tmp->next;
@@ -45,8 +44,7 @@ char	**get_args(t_list *tokens)
 	i = 0;
 	tmp = tokens;
 	token = (t_token *)tmp->content;
-	while (tmp && (token->token == CMD
-			|| token->token == VAR || token->token == WORD))
+	while (tmp && (token->token == CMD || token->token == WORD))
 	{
 		args[i++] = token->str;
 		tmp = tmp->next;

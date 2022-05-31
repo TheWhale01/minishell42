@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 19:37:37 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:57:54 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,8 @@ int	is_builtin(char *str)
 
 int	is_op(char *str)
 {
-	if (!ft_strncmp(str, "||", 2) || !ft_strncmp(str, "<<", 2)
-		|| !ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "&&", 2))
-		return (1);
-	else if (*str == '|' || *str == '>' || *str == '<'
-		|| *str == '*' || *str == '&' || *str == '('
-		|| *str == ')')
+	if (!ft_strncmp(str, "<<", 2) || !ft_strncmp(str, ">>", 2)
+		|| *str == '|' || *str == '>' || *str == '<')
 		return (1);
 	return (0);
 }
@@ -81,9 +77,6 @@ t_list	*choose_token(t_list *node, char **path)
 		token->token = CMD;
 	else if (is_op(node->content))
 		choose_op(token, node->content);
-	else if (*(char *)(node->content) == '$'
-		|| !ft_strncmp(node->content, "\"$", 2))
-		token->token = VAR;
 	else
 		token->token = WORD;
 	new = ft_lstnew(token);
