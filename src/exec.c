@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 11:51:55 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:52:38 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	exec_builtin(t_list	*cmd, t_data *data)
 	if (!ft_strcmp(token->str, "env"))
 		ft_env(data);
 	else if (!ft_strcmp(token->str, "exit"))
+	{
+		free(args);
 		exit_cmd(EXIT_SUCCESS, data, NULL);
+	}
 	else if (!ft_strcmp(token->str, "cd"))
 		ft_cd(data, args);
 	else if (!ft_strcmp(token->str, "pwd"))
@@ -52,6 +55,7 @@ void	exec_builtin(t_list	*cmd, t_data *data)
 		ft_export(data, args);
 	else if (!ft_strcmp(token->str, "echo"))
 		ft_echo(data, args);
+	free(args);
 }
 
 void	exec_cmd(t_list	*tokens, t_data *data)

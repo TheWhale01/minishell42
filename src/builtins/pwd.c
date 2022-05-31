@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 07:40:34 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/30 18:44:18 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/31 14:57:24 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	ft_pwd(t_data *data)
 		printf("%s\n", data->pwd);
 		return (1);
 	}
+	free(data->pwd);
 	data->pwd = pwd;
 	printf("%s\n", data->pwd);
 	return (0);
