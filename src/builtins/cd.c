@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/31 14:55:25 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:13:17 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,21 @@ int	ft_cd(t_data *data, char **arg)
 	if (ft_path_cd(arg, &path, data))
 		return (1);
 	str = ft_strjoin_free_s2("OLDPWD=", data->pwd);
-	if (!ft_lstexport(&data->envp, str))
-		ft_lstadd_back(&data->envp, ft_lstnew(str));
-	free(str);
 	if (!chdir(path))
 	{
+		if (!ft_lstexport(&data->envp, str))
+			ft_lstadd_back(&data->envp, ft_lstnew(str));
+		free(str);
 		str = ft_strjoin_free_s2("PWD=", getcwd(NULL, 0));
 		if (!ft_lstexport(&data->envp, str))
 			ft_lstadd_back(&data->envp, ft_lstnew(str));
 		free(str);
 	}
 	else
+	{
+		free(str);
 		perror("cd");
+	}
 	data->pwd = getcwd(NULL, 0);
 	return (0);
 }
