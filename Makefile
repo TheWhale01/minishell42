@@ -6,7 +6,7 @@ CFLAGS=-Wall -Wextra -Werror -I $(INCLUDES)
 NAME=minishell
 HEADER= includes/minishell.h
 
-CFILES=$(addprefix $(SRC_DIR), exec.c exec_utils.c expander.c format.c lexer.c main.c redirs_utils.c \
+CFILES=$(addprefix $(SRC_DIR), exec.c exec_utils.c expander.c format.c lexer.c main.c prompt.c redirs_utils.c \
 	redirs.c token.c utils.c builtins/exit.c builtins/export.c builtins/env.c builtins/aff_export.c \
 	builtins/cd.c builtins/echo.c builtins/pwd.c builtins/unset.c)
 OBJS=$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(CFILES))

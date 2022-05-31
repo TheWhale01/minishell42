@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/31 13:58:38 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:00:30 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ typedef struct s_data
 int		get_quote(char *str);
 int		is_builtin(char *str);
 int		check_quotes(char *str);
+int		ft_len_double(char **tab);
 int		only_spaces(char *str, int len);
 
 void	exec(t_data *data);
 void	expander(t_data *data);
-void	free_list(t_list *list);
 void	rm_heredoc(t_data *data);
 void	make_redirs(t_data *data);
 void	free_tokens(t_list *tokens);
@@ -73,6 +73,7 @@ void	tokenize(t_data *data, t_list *lst);
 void	*free_tab(char	**tab);
 
 char	*skip_spaces(char *str);
+char	*ft_prompt(t_data *data);
 char	*remove_quotes(char *str);
 char	*cut_word(char *str, int *quote);
 char	*search_env(char *str, t_data *data);
@@ -86,16 +87,16 @@ t_list	*search_token(t_list *tokens, int search);
 size_t	tablen(char **ptr);
 
 char	**get_args(t_list *tokens);
-char	**get_path_env(char **env);
 char	**list_to_tab(t_list *lst);
+char	**get_path_env(char *path);
 
 // -----------------------------BUILTINS-----------------------------
 
-int		ft_cd(t_data *data);
+int		ft_cd(t_data *data, char **arg);
 int		ft_pwd(t_data *data);
-int		ft_echo(t_data *data);
-int		ft_unset(t_data *data);
-int		ft_export(t_data *data);
+int		ft_echo(t_data *data, char **arg);
+int		ft_unset(t_data *data, char **arg);
+int		ft_export(t_data *data, char **arg);
 int		ft_lstexport(t_list **lst, char *str);
 
 void	ft_env(t_data *data);

@@ -6,33 +6,11 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 14:32:39 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:57:30 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_prompt(t_data *data)
-{
-	char	*dir;
-	char	*line;
-	char	*prompt;
-
-	dir = ft_rstrstr(data->pwd, search_env("HOME", data));
-	if (!dir)
-		dir = data->pwd;
-	else
-		dir = ft_strjoin("~", dir);
-	prompt = ft_strjoin(search_env("USER", data), "@minishell:");
-	if (!ft_strchr(dir, '~'))
-		prompt = ft_strjoin_free_s1(prompt, dir);
-	else
-		prompt = ft_strjoin_free_s1_s2(prompt, dir);
-	prompt = ft_strjoin_free_s1(prompt, "$ ");
-	line = readline(prompt);
-	free(prompt);
-	return (line);
-}
 
 void	init(t_data *data)
 {
@@ -56,7 +34,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	init(&data);
 	data.envp = create_list(envp);
-	data.path = get_path_env(envp);
+	data.path = get_path_env(search_env("PATH", &data));
 	while (1)
 	{
 		data.line = ft_prompt(&data);

@@ -6,38 +6,47 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/31 14:44:48 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:28:13 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_path_cd(t_list *tmp, char **path, t_data *data)
+int	ft_len_double(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab)
+		while (tab[i])
+			i++;
+	return (i);
+}
+
+int	ft_path_cd(char **arg, char **path, t_data *data)
 {
 	char		*paths;
 
-	if (ft_lstsize(tmp) == 1)
+	if (ft_len_double(arg) == 1)
 	{
 		paths = search_env("HOME", data);
 		if (paths == NULL)
 			return (1);
 	}
-	else if (ft_lstsize(tmp) == 2)
-		paths = ((t_token *)tmp->next->content)->str;
+	else if (ft_len_double(arg) == 2)
+		paths = ft_strdup(arg[1]);
 	else
 		return (printf("cd: too many arugment\n"), 1);
 	*path = paths;
 	return (0);
 }
 
-int	ft_cd(t_data *data)
+int	ft_cd(t_data *data, char **arg)
 {
 	char	*str;
 	char	*path;
-	t_list	*tmp;
 
-	tmp = data->tokens;
-	if (ft_path_cd(tmp, &path, data))
+	if (ft_path_cd(arg, &path, data))
 		return (1);
 	str = ft_strjoin_free_s2("OLDPWD=", data->pwd);
 	if (!ft_lstexport(&data->envp, str))
@@ -49,9 +58,10 @@ int	ft_cd(t_data *data)
 		if (!ft_lstexport(&data->envp, str))
 			ft_lstadd_back(&data->envp, ft_lstnew(str));
 		free(str);
-		data->pwd = getcwd(NULL, 0);
 	}
 	else
 		perror("cd");
+	free(path);
+	data->pwd = getcwd(NULL, 0);
 	return (0);
 }

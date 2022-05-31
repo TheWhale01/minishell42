@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 14:12:46 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/21 00:19:41 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/05/31 17:01:36 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,28 @@ int	ft_verif(char *str)
 	return (0);
 }
 
-int	ft_export(t_data *data)
+int	ft_export(t_data *data, char **arg)
 {
-	t_list	*tmp;
-	t_token	*token;
+	int	i;
 
 	if (!data->envp)
 		return (0);
-	tmp = data->tokens;
-	token = (t_token *)tmp->content;
-	if (ft_lstsize(tmp) == 1)
+	if (ft_len_double(arg) == 1)
 		return (ft_list_sort(data->envp), 0);
-	tmp = tmp->next;
-	while (tmp)
+	i = 1;
+	while (arg[i])
 	{
-		token = (t_token *)tmp->content;
-		if (ft_verif(token->str))
+		if (ft_verif(arg[i]))
 		{
 			ft_putstr_fd("bash: export: `", 2);
-			ft_putstr_fd(token->str, 2);
+			ft_putstr_fd(arg[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 		}
-		else if (!ft_lstexport(&data->envp, token->str))
-			ft_lstadd_back(&data->envp, ft_lstnew(ft_strdup(token->str)));
-		tmp = tmp->next;
+		else if (!ft_lstexport(&data->envp, arg[i]))
+			ft_lstadd_back(&data->envp, ft_lstnew(ft_strdup(arg[i])));
+		free_tab(data->path);
+		data->path = get_path_env(search_env("PATH", data));
+		i++;
 	}
 	return (0);
 }

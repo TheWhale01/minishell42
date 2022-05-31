@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:58:04 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/25 15:29:03 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:01:22 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,26 @@ int	ft_lstunset(t_list **lst, char *str)
 	return (0);
 }
 
-int	ft_unset(t_data *data)
+int	ft_unset(t_data *data, char **arg)
 {
-	t_list	*tmp;
-	t_token	*token;
+	int	i;
 
-	tmp = data->tokens;
-	token = (t_token *)tmp->content;
-	if (ft_lstsize(tmp) == 1)
+	if (ft_len_double(arg) == 1)
 		return (0);
-	tmp = tmp->next;
-	while (tmp)
+	i = 1;
+	while (arg[i])
 	{
-		token = (t_token *)tmp->content;
-		if (ft_verif_unset(token->str))
+		if (ft_verif_unset(arg[i]))
 		{
 			ft_putstr_fd("bash: unset: `", 2);
-			ft_putstr_fd(token->str, 2);
+			ft_putstr_fd(arg[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 		}
 		else
-			ft_lstunset(&data->envp, token->str);
-		tmp = tmp->next;
+			ft_lstunset(&data->envp, arg[i]);
+		i++;
+		free_tab(data->path);
+		data->path = get_path_env(search_env("PATH", data));
 	}
 	return (0);
 }
-

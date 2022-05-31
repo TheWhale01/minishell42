@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 14:00:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:00:09 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,17 @@ t_list	*search_token(t_list *tokens, int search)
 	return (NULL);
 }
 
-char	**get_path_env(char **env)
+char	**get_path_env(char *path)
 {
 	int		i;
-	char	**path;
+	char	**new;
 
-	while (env && *env)
-	{
-		if (!ft_strncmp(*env, "PATH", 4))
-		{
-			i = -1;
-			path = ft_split(&((*env)[5]), ':');
-			while (path[++i])
-				path[i] = ft_strjoin_free_s1(path[i], "/");
-			return (path);
-		}
-		env++;
-	}
-	return (NULL);
+	i = -1;
+	new = ft_split(&path[5], ':');
+	while (new[++i])
+		new[i] = ft_strjoin_free_s1(new[i], "/");
+	free(path);
+	return (new);
 }
 
 char	**list_to_tab(t_list *lst)

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 09:58:18 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:29:11 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_path_cmd(char *cmd, char **env)
 	while (env && *env)
 	{
 		tmp = ft_strdup(*env);
-		path_cmd = ft_strjoin(tmp, cmd);
+		path_cmd = ft_strjoin_free_s1(tmp, cmd);
 		if (!access(path_cmd, F_OK))
 			return (path_cmd);
 		free(path_cmd);
@@ -34,22 +34,28 @@ char	*get_path_cmd(char *cmd, char **env)
 void	exec_builtin(t_list	*cmd, t_data *data)
 {
 	t_token	*token;
+	char	**args;
 
 	token = (t_token *)cmd->content;
+	args = get_args(cmd);
 	if (!ft_strcmp(token->str, "env"))
 		ft_env(data);
 	else if (!ft_strcmp(token->str, "exit"))
+	{
+		free(args);
 		exit_cmd(EXIT_SUCCESS, data, NULL);
+	}
 	else if (!ft_strcmp(token->str, "cd"))
-		ft_cd(data);
+		ft_cd(data, args);
 	else if (!ft_strcmp(token->str, "pwd"))
 		ft_pwd(data);
 	else if (!ft_strcmp(token->str, "unset"))
-		ft_unset(data);
+		ft_unset(data, args);
 	else if (!ft_strcmp(token->str, "export"))
-		ft_export(data);
+		ft_export(data, args);
 	else if (!ft_strcmp(token->str, "echo"))
-		ft_echo(data);
+		ft_echo(data, args);
+	free(args);
 }
 
 void	exec_cmd(t_list	*tokens, t_data *data)
