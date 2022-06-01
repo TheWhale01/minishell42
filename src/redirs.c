@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 10:16:49 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 10:16:36 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,13 @@ void	restore_redirs(t_data *data)
 {
 	rm_heredoc(data);
 	if (data->fd_in != STDIN)
+	{
 		dup2(data->fd_in, STDIN);
+		close(data->fd_in);
+	}
 	if (data->fd_out != STDOUT)
+	{
 		dup2(data->fd_out, STDOUT);
+		close(data->fd_out);
+	}
 }

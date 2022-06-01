@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 16:29:11 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 09:51:16 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	exec_builtin(t_list	*cmd, t_data *data)
 	else if (!ft_strcmp(token->str, "exit"))
 	{
 		free(args);
-		exit_cmd(EXIT_SUCCESS, data, NULL);
+		exit_cmd(EXIT_SUCCESS, data, "exit");
 	}
 	else if (!ft_strcmp(token->str, "cd"))
 		ft_cd(data, args);
