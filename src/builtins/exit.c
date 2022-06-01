@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 15:37:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:29:19 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	exit_cmd(int exit_code, t_data *data, char *str)
 	free_tab(data->path);
 	free_tokens(data->tokens);
 	free(data->pwd);
+	free(data->childs);
 	exit(exit_code);
 }

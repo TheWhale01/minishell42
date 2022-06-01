@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/05/31 17:00:30 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:14:19 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ typedef struct s_token
 	char	*str;
 }	t_token;
 
+typedef struct s_subp
+{
+	int		fd[2];
+	int		nb_pipes;
+	pid_t	pid;
+}	t_subp;
+
 typedef struct s_data
 {
 	int		fd_in;
@@ -53,6 +60,7 @@ typedef struct s_data
 	char	*pwd;
 	t_list	*envp;
 	t_list	*tokens;
+	t_subp	*childs;
 }	t_data;
 
 int		get_quote(char *str);
@@ -65,6 +73,7 @@ void	exec(t_data *data);
 void	expander(t_data *data);
 void	rm_heredoc(t_data *data);
 void	make_redirs(t_data *data);
+void	exec_pipeline(t_data *data);
 void	free_tokens(t_list *tokens);
 void	restore_redirs(t_data *data);
 void	heredoc(t_data *data, char *eof);

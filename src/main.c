@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 16:57:30 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:15:10 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init(t_data *data)
 	data->path = NULL;
 	data->envp = NULL;
 	data->tokens = NULL;
+	data->childs = NULL;
 	data->pwd = getcwd(NULL, 0);
 }
 
