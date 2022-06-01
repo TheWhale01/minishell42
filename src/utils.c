@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/01 10:57:09 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:43:40 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,6 @@ t_list	*search_token(t_list *tokens, int search)
 	return (NULL);
 }
 
-char	**get_path_env(char *path)
-{
-	int		i;
-	char	**new;
-
-	i = -1;
-	new = ft_split(&path[5], ':');
-	while (new[++i])
-		new[i] = ft_strjoin_free_s1(new[i], "/");
-	free(path);
-	return (new);
-}
-
 char	**list_to_tab(t_list *lst)
 {
 	int		i;
@@ -69,19 +56,4 @@ char	**list_to_tab(t_list *lst)
 	}
 	tab[i] = NULL;
 	return (tab);
-}
-
-void	print_tokens(t_list *tokens)
-{
-	t_list	*tmp;
-	t_token	*token;
-
-	tmp = tokens;
-	while (tmp)
-	{
-		token = (t_token *)tmp->content;
-		printf("%s ", token->str);
-		tmp = tmp->next;
-	}
-	printf("\n");
 }

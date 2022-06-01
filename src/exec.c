@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/01 09:51:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:55:46 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,9 @@ void	exec(t_data *data)
 			return (restore_redirs(data));
 		start_token = (t_token *)start->content;
 	}
-	if (is_builtin(((t_token *)start->content)->str))
+	if (search_token(data->tokens, PIPE))
+		exec_pipeline(data);
+	else if (is_builtin(((t_token *)start->content)->str))
 		exec_builtin(start, data);
 	else
 		exec_cmd(start, data);
