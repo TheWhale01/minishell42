@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/06/01 10:57:03 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:10:05 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,11 @@ int	ft_cd(t_data *data, char **arg)
 		str = ft_strjoin_free_s2("PWD=", getcwd(NULL, 0));
 		if (!ft_lstexport(&data->envp, str))
 			ft_lstadd_back(&data->envp, ft_lstnew(str));
-		free(str);
 	}
 	else
-	{
-		free(str);
 		perror("cd");
-	}
+	free(path);
 	data->pwd = getcwd(NULL, 0);
+	free(str);
 	return (0);
 }
