@@ -1,56 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 09:54:50 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 10:44:42 by hubretec         ###   ########.fr       */
+/*   Created: 2022/06/01 20:25:12 by hubretec          #+#    #+#             */
+/*   Updated: 2022/06/02 11:19:00 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_nb_args(t_list *tokens)
+int	get_nb_pipes(t_list	*tokens)
 {
-	int		nb_tokens;
+	int		pipes;
 	t_list	*tmp;
 	t_token	*token;
 
-	nb_tokens = 0;
+	pipes = 0;
 	tmp = tokens;
-	token = (t_token *)tmp->content;
-	while (tmp && (token->token == CMD || token->token == WORD))
+	while (tmp)
 	{
-		nb_tokens++;
+		token = (t_token *)tmp->content;
+		if (token->token == PIPE)
+			pipes++;
 		tmp = tmp->next;
-		if (tmp)
-			token = (t_token *)tmp->content;
 	}
-	return (nb_tokens);
+	return (pipes);
 }
 
-char	**get_args(t_list *tokens)
+char	**get_pipe_args(t_list *tokens, int pos)
 {
 	int		i;
-	char	**args;
 	t_list	*tmp;
 	t_token	*token;
 
-	args = malloc(sizeof(char *) * (get_nb_args(tokens) + 1));
-	if (!args)
-		return (NULL);
 	i = 0;
 	tmp = tokens;
-	token = (t_token *)tmp->content;
-	while (tmp && (token->token == CMD || token->token == WORD))
+	while (tmp && i < pos)
 	{
-		args[i++] = token->str;
+		token = (t_token *)tmp->content;
+		if (token->token == PIPE)
+			i++;
 		tmp = tmp->next;
-		if (tmp)
-			token = (t_token *)tmp->content;
 	}
-	args[i] = NULL;
-	return (args);
+	return (get_args(tmp));
 }

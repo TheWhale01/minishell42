@@ -6,13 +6,26 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/06/01 15:54:49 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:11:06 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    *search_env(char *str, t_data *data)
+char	**get_path_env(char *path)
+{
+	int		i;
+	char	**new;
+
+	i = -1;
+	new = ft_split(&path[5], ':');
+	while (new[++i])
+		new[i] = ft_strjoin_free_s1(new[i], "/");
+	free(path);
+	return (new);
+}
+
+char	*search_env(char *str, t_data *data)
 {
 	int		strlen;
 	int		envlen;
