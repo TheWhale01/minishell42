@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 11:37:03 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:46:37 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	exec_builtin(char **args, t_data *data)
 	if (!ft_strcmp(args[0], "env"))
 		ft_env(data);
 	else if (!ft_strcmp(args[0], "exit"))
+	{
+		free(args);
 		exit_cmd(EXIT_SUCCESS, data, "exit");
+	}
 	else if (!ft_strcmp(args[0], "cd"))
 		ft_cd(data, args);
 	else if (!ft_strcmp(args[0], "pwd"))
@@ -47,6 +50,7 @@ void	exec_builtin(char **args, t_data *data)
 		ft_export(data, args);
 	else if (!ft_strcmp(args[0], "echo"))
 		ft_echo(data, args);
+	free(args);
 }
 
 void	exec_cmd(char **args, t_data *data)
@@ -91,6 +95,7 @@ void	exec(t_data *data)
 		}
 		else
 			waitpid(pid, NULL, 0);
+		free(args);
 	}
 	restore_redirs(data);
 }
