@@ -6,11 +6,17 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:49:30 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 14:46:23 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:17:59 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_redir(char *str)
+{
+	return (!ft_strncmp(str, ">>", 2) || !ft_strncmp(str, "<<", 2)
+		|| *str == '>' || *str == '<');
+}
 
 void	rm_heredoc(t_data *data)
 {

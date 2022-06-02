@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/01 15:14:19 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:25:05 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,25 @@ typedef struct s_data
 	t_subp	*childs;
 }	t_data;
 
+int		is_redir(char *str);
 int		get_quote(char *str);
 int		is_builtin(char *str);
 int		check_quotes(char *str);
 int		ft_len_double(char **tab);
+int		get_nb_pipes(t_list	*tokens);
 int		only_spaces(char *str, int len);
 
 void	exec(t_data *data);
 void	expander(t_data *data);
 void	rm_heredoc(t_data *data);
 void	make_redirs(t_data *data);
-void	exec_pipeline(t_data *data);
 void	free_tokens(t_list *tokens);
+void	init_pipeline(t_data *data);
 void	restore_redirs(t_data *data);
 void	heredoc(t_data *data, char *eof);
 void	tokenize(t_data *data, t_list *lst);
+void	exec_cmd(char **args, t_data *data);
+void	exec_builtin(char **args, t_data *data);
 
 void	*free_tab(char	**tab);
 
@@ -98,6 +102,7 @@ size_t	tablen(char **ptr);
 char	**get_args(t_list *tokens);
 char	**list_to_tab(t_list *lst);
 char	**get_path_env(char *path);
+char	**get_pipe_args(t_list *tokens, int pos);
 
 // -----------------------------BUILTINS-----------------------------
 

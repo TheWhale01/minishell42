@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/01 11:55:46 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:37:03 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,83 +31,66 @@ char	*get_path_cmd(char *cmd, char **env)
 	return (NULL);
 }
 
-void	exec_builtin(t_list	*cmd, t_data *data)
+void	exec_builtin(char **args, t_data *data)
 {
-	t_token	*token;
-	char	**args;
-
-	token = (t_token *)cmd->content;
-	args = get_args(cmd);
-	if (!ft_strcmp(token->str, "env"))
+	if (!ft_strcmp(args[0], "env"))
 		ft_env(data);
-	else if (!ft_strcmp(token->str, "exit"))
-	{
-		free(args);
+	else if (!ft_strcmp(args[0], "exit"))
 		exit_cmd(EXIT_SUCCESS, data, "exit");
-	}
-	else if (!ft_strcmp(token->str, "cd"))
+	else if (!ft_strcmp(args[0], "cd"))
 		ft_cd(data, args);
-	else if (!ft_strcmp(token->str, "pwd"))
+	else if (!ft_strcmp(args[0], "pwd"))
 		ft_pwd(data);
-	else if (!ft_strcmp(token->str, "unset"))
+	else if (!ft_strcmp(args[0], "unset"))
 		ft_unset(data, args);
-	else if (!ft_strcmp(token->str, "export"))
+	else if (!ft_strcmp(args[0], "export"))
 		ft_export(data, args);
-	else if (!ft_strcmp(token->str, "echo"))
+	else if (!ft_strcmp(args[0], "echo"))
 		ft_echo(data, args);
-	free(args);
 }
 
-void	exec_cmd(t_list	*tokens, t_data *data)
+void	exec_cmd(char **args, t_data *data)
 {
-	int		pid;
 	char	*path;
 	char	**env;
-	char	**args;
 
-	pid = fork();
-	if (!pid)
+	env = list_to_tab(data->envp);
+	path = get_path_cmd(args[0], data->path);
+	if (!path)
 	{
-		env = list_to_tab(data->envp);
-		path = get_path_cmd(((t_token *)tokens->content)->str, data->path);
-		args = get_args(tokens);
-		if (!path)
-		{
-			ft_putstr_fd(args[0], STDERR);
-			ft_putstr_fd(": command not found\n", STDERR);
-		}
-		else if (execve(path, args, env) == -1)
-			perror(args[0]);
-		free(env);
-		free(args);
+		ft_putstr_fd(args[0], STDERR);
+		ft_putstr_fd(": command not found\n", STDERR);
 	}
-	waitpid(pid, NULL, 0);
+	else if (execve(path, args, env) == -1)
+		perror(args[0]);
+	free(env);
+	free(args);
 }
 
 void	exec(t_data *data)
 {
-	t_list	*start;
-	t_token	*start_token;
+	int		pid;
+	char	**args;
 
-	start = data->tokens;
-	if (!start)
-		return ;
-	start_token = (t_token *)start->content;
-	make_redirs(data);
-	while (start_token->token == REDIR_IN || start_token->token == REDIR_OUT
-		|| start_token->token == D_REDIR_IN
-		|| start_token->token == D_REDIR_OUT)
-	{
-		start = skip_redirs(start);
-		if (!start)
-			return (restore_redirs(data));
-		start_token = (t_token *)start->content;
-	}
 	if (search_token(data->tokens, PIPE))
-		exec_pipeline(data);
-	else if (is_builtin(((t_token *)start->content)->str))
-		exec_builtin(start, data);
+	{
+		init_pipeline(data);
+		return ;
+	}
+	args = get_args(data->tokens);
+	make_redirs(data);
+	if (is_builtin(args[0]))
+		exec_builtin(args, data);
 	else
-		exec_cmd(start, data);
+	{
+		pid = fork();
+		if (!pid)
+		{
+			exec_cmd(args, data);
+			exit_cmd(data->rtn_val, data, NULL);
+		}
+		else
+			waitpid(pid, NULL, 0);
+	}
 	restore_redirs(data);
 }
