@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 17:55:35 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:24:03 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 #  define BUFFER_SIZE 128
 # endif
 
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
 # define MAX_FD 256
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648

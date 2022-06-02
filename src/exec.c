@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 11:46:37 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:49:32 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	exec_cmd(char **args, t_data *data)
 	path = get_path_cmd(args[0], data->path);
 	if (!path)
 	{
-		ft_putstr_fd(args[0], STDERR);
-		ft_putstr_fd(": command not found\n", STDERR);
+		ft_putstr_fd(args[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	}
 	else if (execve(path, args, env) == -1)
 		perror(args[0]);
@@ -81,8 +81,8 @@ void	exec(t_data *data)
 		init_pipeline(data);
 		return ;
 	}
-	args = get_args(data->tokens);
-	make_redirs(data);
+	args = get_args(skip_redirs(data->tokens));
+	make_redirs(data, data->tokens);
 	if (is_builtin(args[0]))
 		exec_builtin(args, data);
 	else
