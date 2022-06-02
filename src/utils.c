@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/01 10:57:09 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:56:41 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	**get_path_env(char *path)
 	char	**new;
 
 	i = -1;
+	if (path == NULL)
+		return (NULL);
 	new = ft_split(&path[5], ':');
 	while (new[++i])
 		new[i] = ft_strjoin_free_s1(new[i], "/");

@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/31 15:47:06 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:54:49 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*search_env(char *str, t_data *data)
+char    *search_env(char *str, t_data *data)
 {
-	int			strlen;
-	int			envlen;
-	t_list		*tmp;
+	int		strlen;
+	int		envlen;
+	char	*found;
+	t_list	*tmp;
 
 	if (*str == '$' && *(str + 1) != '_' && *(str + 1) != '?'
 		&& !ft_isalnum(*(str + 1)))
@@ -31,9 +32,14 @@ char	*search_env(char *str, t_data *data)
 	while (tmp)
 	{
 		envlen = ft_strlclen(tmp->content, "=");
-		strlen = ft_strlen(str);
+		strlen = ft_strlclen(str, "=");
 		if (envlen == strlen && !ft_strncmp(str, (char *)tmp->content, envlen))
-			return (ft_strdup(ft_strchr(tmp->content, '=') + 1));
+		{
+			found = ft_strchr(tmp->content, '=');
+			if (!found)
+				return (NULL);
+			return (ft_strdup(found + 1));
+		}
 		tmp = tmp->next;
 	}
 	return (NULL);
