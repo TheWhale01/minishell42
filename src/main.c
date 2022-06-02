@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/01 16:15:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:53:02 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ int	main(int ac, char **av, char **envp)
 		data.line = ft_prompt(&data);
 		add_history(data.line);
 		if (!check_quotes(data.line))
-			exit_cmd(EXIT_FAILURE, &data,
-				"Syntax Error: mismatched opening and closing quotes.");
+			ft_exit(&data,
+				"Syntax Error: mismatched opening and closing quotes.",
+				EXIT_FAILURE, NULL);
 		lst = format(data.line);
 		tokenize(&data, lst);
 		expander(&data);

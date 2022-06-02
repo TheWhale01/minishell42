@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/02 12:11:40 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/02 16:36:02 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ t_list	*skip_redirs(t_list	*tokens);
 t_list	*choose_token(t_list *node, char **path);
 t_list	*search_token(t_list *tokens, int search);
 
-size_t	tablen(char **ptr);
-
 char	**get_args(t_list *tokens);
 char	**list_to_tab(t_list *lst);
 char	**get_path_env(char *path);
@@ -112,10 +110,11 @@ int		ft_echo(t_data *data, char **arg);
 int		ft_unset(t_data *data, char **arg);
 int		ft_export(t_data *data, char **arg);
 int		ft_lstexport(t_data *data, char *str);
+int		ft_exit(t_data *data, char *str, int exit_code, char **args);
 
 void	ft_env(t_data *data);
 void	ft_list_sort(t_list *list);
-void	exit_cmd(int exit_code, t_data *data, char *str);
+void	exit_cmd(int exit_code, t_data *data, char *str, char **args);
 
 t_list	*create_list(char **envp);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/01 10:16:36 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 16:06:37 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	redir_in(t_data *data, t_list *file, int mode)
 	char	*filename;
 
 	if (!file)
-		exit_cmd(EXIT_FAILURE, data, "Syntax Error: invalid redirection.");
+		ft_exit(data, "Syntax Error: invalid redirection.", EXIT_FAILURE,
+			NULL);
 	restore_redirs(data);
 	filename = ((t_token *)file->content)->str;
 	data->fd_in = dup(STDIN);
@@ -49,7 +50,8 @@ void	redir_out(t_data *data, t_list *file, int mode)
 	char	*filename;
 
 	if (!file)
-		exit_cmd(EXIT_FAILURE, data, "Syntax Error: invalid redirection.");
+		ft_exit(data, "Syntax Error: invalid redirection.", EXIT_FAILURE,
+			NULL);
 	filename = ((t_token *)file->content)->str;
 	data->fd_out = dup(STDOUT);
 	if (mode == D_REDIR_OUT)

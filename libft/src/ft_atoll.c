@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 21:19:51 by hubretec          #+#    #+#             */
-/*   Updated: 2021/12/19 21:22:04 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 16:30:24 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ long long	ft_atoll(const char *nptr)
 
 	nb = 0;
 	minus = 1;
+	if (!nptr)
+		return (0);
 	while ((*nptr >= 9 && *nptr <= 13) || *nptr == 32)
 		nptr++;
 	if (*nptr == '-')
