@@ -6,28 +6,47 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/01 16:42:07 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:21:11 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_nb_pipes(t_list	*tokens)
+void	exec_pipeline(t_data *data, char **args)
 {
-	int		pipes;
-	t_list	*tmp;
-	t_token	*token;
+	int	i;
 
-	pipes = 0;
-	tmp = tokens;
-	while (tmp)
+	i = 0;
+	if (is_builtin(args[i]))
+		exec_builtin(&args[i], data);
+	else
+		exec_cmd(args, data);
+}
+
+void	launch_pipe(t_data *data, int pipe_index)
+{
+	char	**args;
+
+	args = get_pipe_args(data->tokens, pipe_index);
+	exec_pipeline(data, args);
+	free(args);
+	exit(EXIT_SUCCESS);
+}
+
+void	create_childs(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->childs->nb_pipes + 1)
 	{
-		token = (t_token *)tmp->content;
-		if (token->token == PIPE)
-			pipes++;
-		tmp = tmp->next;
+		if (!i || data->childs[i - 1].pid)
+			data->childs[i].pid = fork();
+		if (!data->childs[i].pid)
+			launch_pipe(data, i);
+		else
+			waitpid(data->childs[i].pid, NULL, 0);
 	}
-	return (pipes);
 }
 
 void	init_pipeline(t_data *data)
@@ -50,94 +69,5 @@ void	init_pipeline(t_data *data)
 	}
 	data->childs[i].fd[0] = -1;
 	data->childs[i].fd[1] = -1;
-}
-
-void	connect_first(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (++i < data->childs->nb_pipes)
-	{
-		close(data->childs[i].fd[0]);
-		close(data->childs[i].fd[1]);
-	}
-	data->fd_out = dup(STDOUT);
-	close(data->childs[0].fd[1]);
-	dup2(data->childs[0].fd[0], STDOUT);
-	close(data->childs[0].fd[0]);
-}
-
-void	connect_last(t_data *data)
-{
-	int	i;
-
-	i = -1;
-	while (++i < data->childs->nb_pipes - 1)
-	{
-		close(data->childs[i].fd[0]);
-		close(data->childs[i].fd[1]);
-	}
-	data->fd_in = dup(STDIN);
-	close(data->childs[i].fd[0]);
-	dup2(data->childs[i].fd[1], STDIN);
-	close(data->childs[i].fd[1]);
-}
-
-void	connect_pipe(t_data *data, int index)
-{
-	if (!index)
-		connect_first(data);
-	else if (index == data->childs->nb_pipes)
-		connect_last(data);
-	else
-	{
-		close(data->childs[index].fd[0]);
-		close(data->childs[index + 1].fd[1]);
-		data->fd_in = dup(STDIN);
-		data->fd_out = dup(STDOUT);
-		dup2(data->childs[index].fd[1], STDIN);
-		dup2(data->childs[index + 1].fd[0], STDOUT);
-		close(data->childs[index + 1].fd[0]);
-		close(data->childs[index].fd[1]);
-	}
-}
-
-void	launch_pipe(t_data *data, int pipe_index)
-{
-	(void)data;
-	(void)pipe_index;
-	exit_cmd(EXIT_SUCCESS, data, "exit fork");
-}
-
-void	create_childs(t_data *data)
-{
-	int	i;
-
-	i = -1;
-	while (++i < data->childs->nb_pipes + 1)
-	{
-		if (!i || data->childs[i - 1].pid)
-		{
-			if (!i)
-				data->childs[i].pid = fork();
-			else
-				data->childs[i].pid = fork();
-		}
-		if (!data->childs[i].pid)
-		{
-			printf("FORK\n");
-			connect_pipe(data, i);
-			launch_pipe(data, i + 1);
-		}
-		else
-			waitpid(data->childs[i].pid, NULL, 0);
-	}
-}
-
-void	exec_pipeline(t_data *data)
-{
-	init_pipeline(data);
 	create_childs(data);
-	return ;
 }

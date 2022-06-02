@@ -1,74 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 11:40:22 by hubretec         ###   ########.fr       */
+/*   Created: 2022/06/01 20:25:12 by hubretec          #+#    #+#             */
+/*   Updated: 2022/06/02 11:19:00 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*skip_spaces(char *str)
+int	get_nb_pipes(t_list	*tokens)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] == ' ')
-		i++;
-	return (&str[i]);
-}
-
-t_list	*search_token(t_list *tokens, int search)
-{
+	int		pipes;
 	t_list	*tmp;
 	t_token	*token;
 
+	pipes = 0;
 	tmp = tokens;
 	while (tmp)
 	{
 		token = (t_token *)tmp->content;
-		if (token->token == search)
-			return (tmp);
+		if (token->token == PIPE)
+			pipes++;
 		tmp = tmp->next;
 	}
-	return (NULL);
+	return (pipes);
 }
 
-char	**list_to_tab(t_list *lst)
+char	**get_pipe_args(t_list *tokens, int pos)
 {
 	int		i;
-	char	**tab;
-	t_list	*tmp;
-
-	tab = malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
-	if (!tab)
-		return (NULL);
-	i = 0;
-	tmp = lst;
-	while (tmp)
-	{
-		tab[i++] = (char *)tmp->content;
-		tmp = tmp->next;
-	}
-	tab[i] = NULL;
-	return (tab);
-}
-
-void	print_tokens(t_list	*tokens)
-{
 	t_list	*tmp;
 	t_token	*token;
 
+	i = 0;
 	tmp = tokens;
-	while (tmp)
+	while (tmp && i < pos)
 	{
 		token = (t_token *)tmp->content;
-		printf("%s ", token->str);
+		if (token->token == PIPE)
+			i++;
 		tmp = tmp->next;
 	}
-	printf("\n");
+	return (get_args(tmp));
 }
