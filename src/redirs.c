@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 14:48:47 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:03:04 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 t_list	*skip_redirs(t_list	*tokens)
 {
 	t_token	*token;
+	t_list	*tmp;
 
-	token = (t_token *)tokens->content;
-	if (token->token == REDIR_IN || token->token == REDIR_OUT
-		|| token->token == D_REDIR_IN || token->token == D_REDIR_OUT)
-		return (tokens->next->next);
-	return (tokens);
+	tmp = tokens;
+	token = (t_token *)tmp->content;
+	while (tmp && (token->token == REDIR_IN || token->token == REDIR_OUT
+			|| token->token == D_REDIR_IN || token->token == D_REDIR_OUT))
+	{
+		tmp = tmp->next->next;
+		token = (t_token *)tmp->content;
+	}
+	return (tmp);
 }
 
 void	redir_in(t_data *data, t_list *file, int mode)

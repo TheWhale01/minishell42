@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:14:55 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/20 19:07:25 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/06/01 10:56:12 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*ft_strjoin_free_s1_s2(char const *s1, char const *s2)
 		str[i] = s1[i];
 		i++;
 	}
-	while (s2[i - s1len])
+	while (s2 && s2[i - s1len])
 	{
 		str[i] = s2[i - s1len];
 		i++;
