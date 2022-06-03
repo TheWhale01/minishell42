@@ -6,18 +6,35 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 15:58:00 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:13:21 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_pipes(t_data *data, t_pipeline *pipeline)
+{
+	int	i;
+
+	i = -1;
+	pipeline->pipes = malloc(sizeof(int *) * pipeline->nb_pipes);
+	if (!pipeline->pipes)
+		exit_cmd(EXIT_FAILURE, data, "Memory allocation error.");
+	while (++i < pipeline->nb_pipes)
+	{
+		pipeline->pipes[i] = malloc(sizeof(int) * 2);
+		if (!pipeline->pipes[i])
+			exit_cmd(EXIT_FAILURE, data, "Memory allocation error");
+	}
+}
 
 void	launch_pipe(t_data *data, int pipe_index)
 {
 	char	**args;
 	t_list	*start;
 
-	waitpid(pipe_index, NULL, 0);
+	if (pipe_index)
+		waitpid(data->pipeline.children[pipe_index - 1], NULL, 0);
 	start = skip_pipes(data->tokens, pipe_index);
 	make_redirs(data, start);
 	args = get_args(skip_redirs(start));
@@ -36,9 +53,7 @@ void	init_pipeline(t_data *data)
 	i = -1;
 	data->pipeline.nb_pipes = get_nb_pipes(data->tokens);
 	data->pipeline.nb_children = data->pipeline.nb_pipes + 1;
-	data->pipeline.pipes = malloc(sizeof(int *) * data->pipeline.nb_pipes);
-	if (!data->pipeline.pipes)
-		exit_cmd(EXIT_FAILURE, data, "Memory allocation error.");
+	init_pipes(data, &data->pipeline);
 	data->pipeline.children = malloc(sizeof(pid_t)
 			* data->pipeline.nb_children);
 	if (!data->pipeline.children)
