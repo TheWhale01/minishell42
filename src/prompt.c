@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 15:54:40 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 10:36:49 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:49:05 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ char	*ft_prompt(t_data *data)
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
-		exit_cmd(EXIT_SUCCESS, data, "");
+		exit_cmd(EXIT_SUCCESS, data, "", NULL);
 	return (line);
 }

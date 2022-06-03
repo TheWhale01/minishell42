@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 11:55:36 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:48:46 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	launch_pipe(t_data *data, int pipe_index)
 	args = get_args(skip_redirs(start));
 	exec_pipeline(data, args);
 	restore_redirs(data);
-	exit_cmd(data->rtn_val, data, NULL);
+	exit_cmd(data->rtn_val, data, NULL, NULL);
 }
 
 void	init_pipeline(t_data *data)
