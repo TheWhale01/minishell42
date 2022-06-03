@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 21:19:51 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 16:30:24 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:56:20 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,22 @@ long long	ft_atoll(const char *nptr)
 	while (*nptr >= '0' && *nptr <= '9')
 		nb = nb * 10 + (*(nptr++) - '0');
 	return (nb * minus);
+}
+
+int	ft_atoll_ul(const char *nptr)
+{
+	unsigned long long	nb;
+
+	nb = 0;
+	if (!nptr)
+		return (1);
+	while ((*nptr >= 9 && *nptr <= 13) || *nptr == 32)
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+		nptr++;
+	while (*nptr >= '0' && *nptr <= '9')
+		nb = nb * 10 + (*(nptr++) - '0');
+	if (nb > 9223372036854775807)
+		return (1);
+	return (0);
 }

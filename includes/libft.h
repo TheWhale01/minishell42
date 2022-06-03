@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/25 17:55:35 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:31:03 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			ft_whitespace(int c);
 int			ft_lstsize(t_list *lst);
 int			ft_atoi(const char *nptr);
 int			ft_putchar_fd(char c, int fd);
+int			ft_atoll_ul(const char *nptr);
 int			ft_printf(const char *s, ...);
 int			ft_is_in(char c, char *charset);
 int			count_words(char const *s, char c);
