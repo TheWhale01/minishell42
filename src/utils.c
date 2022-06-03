@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 08:24:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 12:11:29 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:43:57 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,40 @@ char	**list_to_tab(t_list *lst)
 	return (tab);
 }
 
-void	print_tokens(t_list	*tokens)
+int	vnb(char *s)
 {
-	t_list	*tmp;
-	t_token	*token;
+	char	*str;
+	int		i;
 
-	tmp = tokens;
-	while (tmp)
+	i = 0;
+	while (s[i] == ' ')
+		i++;
+	str = ft_strdup(s + i);
+	if ((str[0] == '-' || str[0] == '+') && ft_strlen(str) > 20)
 	{
-		token = (t_token *)tmp->content;
-		printf("%s ", token->str);
-		tmp = tmp->next;
+		free(str);
+		return (0);
 	}
-	printf("\n");
+	else if (ft_strlen(str) > 19 && str[0] != '-' && str[0] != '+')
+	{
+		free(str);
+		return (0);
+	}
+	if (ft_atoll_ul(str))
+	{
+		free(str);
+		return (0);
+	}
+	free(str);
+	return (1);
+}
+
+void	ft_numeric(int exit_code, t_data *data, char *str, char **args)
+{
+	char	*str2;
+
+	str2 = ft_strdup(args[1]);
+	exit_cmd(exit_code, data, str, args);
+	printf("bash: exit: %s: numeric argument required\n", str2);
+	free(str2);
 }

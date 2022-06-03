@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/02 16:36:02 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:43:08 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ char	**get_pipe_args(t_list *tokens, int pos);
 
 // -----------------------------BUILTINS-----------------------------
 
+int		vnb(char *s);
 int		ft_cd(t_data *data, char **arg);
 int		ft_pwd(t_data *data);
 int		ft_echo(t_data *data, char **arg);
@@ -115,6 +116,7 @@ int		ft_exit(t_data *data, char *str, int exit_code, char **args);
 void	ft_env(t_data *data);
 void	ft_list_sort(t_list *list);
 void	exit_cmd(int exit_code, t_data *data, char *str, char **args);
+void	ft_numeric(int exit_code, t_data *data, char *str, char **args);
 
 t_list	*create_list(char **envp);
 

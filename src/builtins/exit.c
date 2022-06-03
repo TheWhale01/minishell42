@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 15:25:00 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:44:26 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	exit_cmd(int exit_code, t_data *data, char *str, char **args)
 		free(args);
 }
 
-size_t	ft_verif_exit(char *str) //return 1 si c est un nombre et 0 si pas un nombre
+size_t	vexit(char *str)
 {
 	size_t	i;
 
@@ -71,39 +71,9 @@ size_t	ft_verif_exit(char *str) //return 1 si c est un nombre et 0 si pas un nom
 	return (0);
 }
 
-int	ft_nb_verif(char *s)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	while (s[i] == ' ')
-		i++;
-	str = ft_strdup(s + i);
-	if ((str[0] == '-' || str[0] == '+') && ft_strlen(str) > 20)
-	{
-		free(str);
-		return (0);
-	}
-	else if (ft_strlen(str) > 19 && str[0] != '-' && str[0] != '+')
-	{
-		free(str);
-		return (0);
-	}
-	if (ft_atoll_ul(str))
-	{
-		free(str);
-		return (0);
-	}
-	free(str);
-	return (1);
-}
-
-
 int	ft_exit(t_data *data, char *str, int exit_code, char **args)
 {
 	long long	val;
-	char		*str2;
 
 	if (!args)
 		exit_cmd(exit_code, data, str, NULL);
@@ -111,22 +81,15 @@ int	ft_exit(t_data *data, char *str, int exit_code, char **args)
 		exit_cmd(exit_code, data, str, args);
 	else
 	{
-		if (ft_len_double(args) == 2 && ft_verif_exit(args[1])
-			&& ft_nb_verif(args[1]))
+		if (ft_len_double(args) == 2 && vexit(args[1]) && vnb(args[1]))
 		{
 			val = ft_atoll_ul(args[1]);
 			exit_cmd(exit_code, data, str, args);
 			exit(val);
 		}
-		else if (!ft_verif_exit(args[1]) || !ft_nb_verif(args[1]))
-		{
-			str2 = ft_strdup(args[1]);
-			exit_cmd(exit_code, data, str, args);
-			printf("bash: exit: %s: numeric argument required\n", str2);
-			free(str2);
-		}
-		else if (ft_len_double(args) > 2 && ft_verif_exit(args[1])
-			&& ft_nb_verif(args[1]))
+		else if (!vexit(args[1]) || !vnb(args[1]))
+			ft_numeric(exit_code, data, str, args);
+		else if (ft_len_double(args) > 2 && vexit(args[1]) && vnb(args[1]))
 		{
 			printf("exit\nbash: exit: too many arguments\n");
 			data->rtn_val = 1;
