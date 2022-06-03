@@ -6,61 +6,83 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 11:55:36 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:58:00 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exec_pipeline(t_data *data, char **args)
-{
-	if (is_builtin(*args))
-		exec_builtin(args, data);
-	else
-		exec_cmd(args, data);
-}
 
 void	launch_pipe(t_data *data, int pipe_index)
 {
 	char	**args;
 	t_list	*start;
 
+	waitpid(pipe_index, NULL, 0);
 	start = skip_pipes(data->tokens, pipe_index);
 	make_redirs(data, start);
 	args = get_args(skip_redirs(start));
-	exec_pipeline(data, args);
+	if (is_builtin(*args))
+		exec_builtin(args, data);
+	else
+		exec_cmd(args, data);
 	restore_redirs(data);
 	exit_cmd(data->rtn_val, data, NULL);
 }
 
 void	init_pipeline(t_data *data)
 {
-	int		fd[2];
-	pid_t	pid1;
-	pid_t	pid2;
+	int	i;
 
-	pipe(fd);
-	pid1 = fork();
-	if (!pid1)
+	i = -1;
+	data->pipeline.nb_pipes = get_nb_pipes(data->tokens);
+	data->pipeline.nb_children = data->pipeline.nb_pipes + 1;
+	data->pipeline.pipes = malloc(sizeof(int *) * data->pipeline.nb_pipes);
+	if (!data->pipeline.pipes)
+		exit_cmd(EXIT_FAILURE, data, "Memory allocation error.");
+	data->pipeline.children = malloc(sizeof(pid_t)
+			* data->pipeline.nb_children);
+	if (!data->pipeline.children)
+		exit_cmd(EXIT_FAILURE, data, "Memory allocation error.");
+	while (++i < data->pipeline.nb_children)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		launch_pipe(data, 0);
+		data->pipeline.children[i] = fork();
+		if (!data->pipeline.children[i])
+			launch_pipe(data, i);
 	}
-	pid2 = fork();
-	if (!pid2)
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		launch_pipe(data, 1);
-	}
-	else
-	{
-		close(fd[0]);
-		close(fd[1]);
-		waitpid(pid1, NULL, 0);
-		waitpid(pid2, NULL, 0);
-	}
+	i = -1;
+	while (++i < data->pipeline.nb_children)
+		waitpid(data->pipeline.children[i], NULL, 0);
 }
+
+// void	init_pipeline(t_data *data)
+// {
+// 	int		fd[2];
+// 	pid_t	pid1;
+// 	pid_t	pid2;
+
+// 	pipe(fd);
+// 	pid1 = fork();
+// 	if (pid1)
+// 		pid2 = fork();
+// 	if (!pid1)
+// 	{
+// 		close(fd[0]);
+// 		dup2(fd[1], STDOUT_FILENO);
+// 		close(fd[1]);
+// 		launch_pipe(data, 0);
+// 	}
+// 	else if (!pid2)
+// 	{
+// 		close(fd[1]);
+// 		dup2(fd[0], STDIN_FILENO);
+// 		close(fd[0]);
+// 		launch_pipe(data, 1);
+// 	}
+// 	else
+// 	{
+// 		close(fd[0]);
+// 		close(fd[1]);
+// 		waitpid(pid1, NULL, 0);
+// 		waitpid(pid2, NULL, 0);
+// 	}
+// }

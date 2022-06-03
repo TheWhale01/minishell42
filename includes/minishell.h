@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/02 15:52:22 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:38:49 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,26 @@ typedef struct s_token
 	char	*str;
 }	t_token;
 
-typedef struct s_subp
+typedef struct s_pipeline
 {
-	int		fd[2];
 	int		nb_pipes;
-	pid_t	pid;
-}	t_subp;
+	int		nb_children;
+	int		**pipes;
+	pid_t	*children;
+}	t_pipeline;
 
 typedef struct s_data
 {
-	int		fd_in;
-	int		fd_out;
-	int		rtn_val;
-	int		heredocs;
-	char	*line;
-	char	**path;
-	char	*pwd;
-	t_list	*envp;
-	t_list	*tokens;
-	t_subp	*childs;
+	int			fd_in;
+	int			fd_out;
+	int			rtn_val;
+	int			heredocs;
+	char		*line;
+	char		**path;
+	char		*pwd;
+	t_list		*envp;
+	t_list		*tokens;
+	t_pipeline	pipeline;
 }	t_data;
 
 int		is_redir(char *str);
@@ -97,8 +98,6 @@ t_list	*skip_redirs(t_list	*tokens);
 t_list	*skip_pipes(t_list *tokens, int pos);
 t_list	*choose_token(t_list *node, char **path);
 t_list	*search_token(t_list *tokens, int search);
-
-size_t	tablen(char **ptr);
 
 char	**get_args(t_list *tokens);
 char	**list_to_tab(t_list *lst);
