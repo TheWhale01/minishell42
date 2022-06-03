@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 20:25:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 11:19:00 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:42:39 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,16 @@ int	get_nb_pipes(t_list	*tokens)
 	return (pipes);
 }
 
-char	**get_pipe_args(t_list *tokens, int pos)
+t_list	*skip_pipes(t_list *tokens, int pos)
 {
-	int		i;
 	t_list	*tmp;
-	t_token	*token;
 
-	i = 0;
 	tmp = tokens;
-	while (tmp && i < pos)
-	{
-		token = (t_token *)tmp->content;
-		if (token->token == PIPE)
-			i++;
+	if (!pos)
+		return (tmp);
+	while (tmp && ((t_token *)tmp->content)->token != PIPE)
 		tmp = tmp->next;
-	}
-	return (get_args(tmp));
+	if (tmp)
+		tmp = tmp->next;
+	return (tmp);
 }

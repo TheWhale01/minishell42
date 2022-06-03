@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 16:12:52 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:46:16 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ void	exec_cmd(char **args, t_data *data)
 	path = get_path_cmd(args[0], data->path);
 	if (!path)
 	{
-		ft_putstr_fd(args[0], STDERR);
-		ft_putstr_fd(": command not found\n", STDERR);
+		ft_putstr_fd(args[0], STDERR_FILENO);
+		free(env);
+		exit_cmd(EXIT_FAILURE, data, ": command not found");
 	}
-	else if (execve(path, args, env) == -1)
+	if (path && execve(path, args, env) == -1)
 		perror(args[0]);
 	free(env);
 }
@@ -77,8 +78,8 @@ void	exec(t_data *data)
 		init_pipeline(data);
 		return ;
 	}
-	args = get_args(data->tokens);
-	make_redirs(data);
+	args = get_args(skip_redirs(data->tokens));
+	make_redirs(data, data->tokens);
 	if (is_builtin(args[0]))
 		exec_builtin(args, data);
 	else

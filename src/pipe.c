@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 11:21:11 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:55:36 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void	exec_pipeline(t_data *data, char **args)
 {
-	int	i;
-
-	i = 0;
-	if (is_builtin(args[i]))
-		exec_builtin(&args[i], data);
+	if (is_builtin(*args))
+		exec_builtin(args, data);
 	else
 		exec_cmd(args, data);
 }
@@ -26,48 +23,44 @@ void	exec_pipeline(t_data *data, char **args)
 void	launch_pipe(t_data *data, int pipe_index)
 {
 	char	**args;
+	t_list	*start;
 
-	args = get_pipe_args(data->tokens, pipe_index);
+	start = skip_pipes(data->tokens, pipe_index);
+	make_redirs(data, start);
+	args = get_args(skip_redirs(start));
 	exec_pipeline(data, args);
-	free(args);
-	exit(EXIT_SUCCESS);
-}
-
-void	create_childs(t_data *data)
-{
-	int	i;
-
-	i = -1;
-	while (++i < data->childs->nb_pipes + 1)
-	{
-		if (!i || data->childs[i - 1].pid)
-			data->childs[i].pid = fork();
-		if (!data->childs[i].pid)
-			launch_pipe(data, i);
-		else
-			waitpid(data->childs[i].pid, NULL, 0);
-	}
+	restore_redirs(data);
+	exit_cmd(data->rtn_val, data, NULL);
 }
 
 void	init_pipeline(t_data *data)
 {
-	int	i;
-	int	nb_pipes;
+	int		fd[2];
+	pid_t	pid1;
+	pid_t	pid2;
 
-	nb_pipes = get_nb_pipes(data->tokens);
-	data->childs = malloc(sizeof(t_subp) * (nb_pipes + 1));
-	if (!data->childs)
-		return ;
-	i = -1;
-	while (data->childs && ++i < nb_pipes)
+	pipe(fd);
+	pid1 = fork();
+	if (!pid1)
 	{
-		data->childs[i].pid = 1;
-		data->childs[i].nb_pipes = nb_pipes;
-		pipe(data->childs[i].fd);
-		close(data->childs[i].fd[0]);
-		close(data->childs[i].fd[1]);
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		launch_pipe(data, 0);
 	}
-	data->childs[i].fd[0] = -1;
-	data->childs[i].fd[1] = -1;
-	create_childs(data);
+	pid2 = fork();
+	if (!pid2)
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		launch_pipe(data, 1);
+	}
+	else
+	{
+		close(fd[0]);
+		close(fd[1]);
+		waitpid(pid1, NULL, 0);
+		waitpid(pid2, NULL, 0);
+	}
 }

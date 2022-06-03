@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 12:18:58 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 14:31:03 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:46:21 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 #  define BUFFER_SIZE 128
 # endif
 
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
 # define MAX_FD 256
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648

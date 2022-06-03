@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:49:30 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/01 21:17:59 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:29:51 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	heredoc(t_data *data, char *eof)
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	while (1)
 	{
-		ft_putstr_fd("> ", STDIN);
-		line = get_next_line(STDIN);
+		ft_putstr_fd("> ", STDIN_FILENO);
+		line = get_next_line(STDIN_FILENO);
 		if (!line || !ft_strncmp(line, eof, ft_strlen(eof)))
 		{
 			free(line);
