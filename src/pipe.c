@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 09:46:56 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 10:15:10 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,20 @@ void	init_pipes(t_data *data, t_pipeline *pipeline)
 		pipeline->pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipeline->pipes[i])
 			exit_cmd(EXIT_FAILURE, data, "Memory allocation error");
+		pipe(data->pipeline.pipes[i]);
 	}
 }
 
-void	launch_pipe(t_data *data, int pipe_index)
+void	launch_pipe(t_data *data, int child_index)
 {
 	char	**args;
 	t_list	*start;
 
-	if (pipe_index)
-		waitpid(data->pipeline.children[pipe_index - 1], NULL, 0);
-	start = skip_pipes(data->tokens, pipe_index);
+	start = skip_pipes(data->tokens, child_index);
+	if (child_index)
+		dup2(data->pipeline.pipes[child_index - 1][0], STDIN_FILENO);
+	if (child_index < data->pipeline.nb_children - 1)
+		dup2(data->pipeline.pipes[child_index][1], STDOUT_FILENO);
 	make_redirs(data, start);
 	args = get_args(skip_redirs(start));
 	if (is_builtin(*args))
@@ -64,7 +67,14 @@ void	init_pipeline(t_data *data)
 		if (!data->pipeline.children[i])
 			launch_pipe(data, i);
 		else
+		{
 			waitpid(data->pipeline.children[i], NULL, 0);
+			if (i < data->pipeline.nb_pipes)
+			{
+				close(data->pipeline.pipes[i][0]);
+				close(data->pipeline.pipes[i][1]);
+			}
+		}
 	}
 }
 
