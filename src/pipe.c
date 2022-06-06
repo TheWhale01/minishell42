@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 16:13:21 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 09:46:56 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,9 @@ void	init_pipeline(t_data *data)
 		data->pipeline.children[i] = fork();
 		if (!data->pipeline.children[i])
 			launch_pipe(data, i);
+		else
+			waitpid(data->pipeline.children[i], NULL, 0);
 	}
-	i = -1;
-	while (++i < data->pipeline.nb_children)
-		waitpid(data->pipeline.children[i], NULL, 0);
 }
 
 // void	init_pipeline(t_data *data)
