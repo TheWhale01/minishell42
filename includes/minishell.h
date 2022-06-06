@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/06 14:31:55 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:16:20 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ void	ft_numeric(int exit_code, t_data *data, char *str, char **args);
 t_list	*create_list(char **envp);
 
 void	print_tokens(t_list *tokens);
+void	print_str_tokens(t_list *tokens);
 
 #endif
