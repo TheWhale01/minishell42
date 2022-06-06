@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/06 15:16:20 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:14:55 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	*search_env(char *str, t_data *data);
 char	*replace_var(t_data *data, t_list *token, char *str);
 
 t_list	*format(char *str);
+t_list	*cut_token(char *str);
 t_list	*skip_redirs(t_list	*tokens);
 t_list	*skip_pipes(t_list *tokens, int pos);
 t_list	*choose_token(t_list *node, char **path);

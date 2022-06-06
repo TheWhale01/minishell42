@@ -6,29 +6,17 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 17:09:01 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:17:23 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_quote(char *str, char *start_var)
+int	get_quote(char *str)
 {
-	int	quote;
-
-	quote = 0;
-	while (str != start_var)
-	{
-		if (*str == '\'' || *str == '\"')
-		{
-			quote = *str;
-			while (*str != quote && str != start_var)
-				str++;
-			if (*str == quote)
-				quote = 0;
-		}
-	}
-	return (!quote);
+	while (*str && *str != '\'' && *str != '\"')
+		str++;
+	return (*str);
 }
 
 char	*remove_quotes(char *str)
@@ -95,11 +83,11 @@ char	*replace_var(t_data *data, t_list *token, char *str)
 
 	found = search_env(str, data);
 	found = ft_strjoin_free_s1_s2(copy_chars_before(
-				((t_token *)token->content)->str, str), found);
+				token->content, str), found);
 	start = ft_strdup(found);
 	found = ft_strjoin_free_s1_s2(found, copy_chars_after(str));
-	free(((t_token *)token->content)->str);
-	((t_token *)token->content)->str = found;
+	free(token->content);
+	token->content = found;
 	str = ft_rstrstr(found, start);
 	free(start);
 	return (str);

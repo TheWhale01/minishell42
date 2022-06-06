@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 17:13:06 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:15:39 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,25 +79,50 @@ void	tokenize(t_data *data, t_list *lst)
 
 void	expander(t_data *data)
 {
-	int		quote;
 	char	*str;
 	t_list	*tmp;
+	t_list	*cut;
 
 	tmp = data->tokens;
 	while (tmp)
 	{
-		((t_token *)tmp->content)->str
-			= remove_quotes(((t_token *)tmp->content)->str);
-		str = ((t_token *)tmp->content)->str;
-		while (*str && ft_strchr(str, '$'))
+		cut = cut_token(((t_token *)tmp->content)->str);
+		while (cut)
 		{
-			while (*str && (*str != '$' || (*str == '$' && *(str + 1)
-						&& *(str + 1) != '_' && *(str + 1) != '?'
-						&& !ft_isalnum(*(str + 1)))))
-				str++;
-			if (*str)
-				str = replace_var(data, tmp, str);
+			str = cut->content;
+			while (*str && ft_strchr(str, '$') && get_quote(str) != '\'')
+			{
+				while (*str && (*str != '$' || (*str == '$' && *(str + 1)
+							&& *(str + 1) != '_' && *(str + 1) != '?'
+							&& !ft_isalnum(*(str + 1)))))
+					str++;
+				if (*str)
+					str = replace_var(data, cut, str);
+			}
+			cut = cut->next;
 		}
 		tmp = tmp->next;
 	}
 }
+
+// void	expander(t_data *data)
+// {
+// 	char	*str;
+// 	t_list	*tmp;
+
+// 	tmp = data->tokens;
+// 	while (tmp)
+// 	{
+// 		str = ((t_token *)tmp->content)->str;
+// 		while (*str && ft_strchr(str, '$'))
+// 		{
+// 			while (*str && (*str != '$' || (*str == '$' && *(str + 1)
+// 						&& *(str + 1) != '_' && *(str + 1) != '?'
+// 						&& !ft_isalnum(*(str + 1)))))
+// 				str++;
+// 			if (*str)
+// 				str = replace_var(data, tmp, str);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
