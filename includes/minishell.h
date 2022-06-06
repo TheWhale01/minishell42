@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/03 17:46:25 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/06/06 14:31:55 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,29 @@ typedef struct s_token
 	char	*str;
 }	t_token;
 
-typedef struct s_subp
+typedef struct s_pipeline
 {
-	int		fd[2];
 	int		nb_pipes;
-	pid_t	pid;
-}	t_subp;
+	int		nb_children;
+	int		**pipes;
+	pid_t	*children;
+}	t_pipeline;
 
 typedef struct s_data
 {
-	int		fd_in;
-	int		fd_out;
-	int		rtn_val;
-	int		heredocs;
-	char	*line;
-	char	**path;
-	char	*pwd;
-	t_list	*envp;
-	t_list	*tokens;
-	t_subp	*childs;
+	int			fd_in;
+	int			fd_out;
+	int			rtn_val;
+	int			heredocs;
+	char		*line;
+	char		**path;
+	char		*pwd;
+	t_list		*envp;
+	t_list		*tokens;
+	t_pipeline	pipeline;
 }	t_data;
 
+int		varlen(char *str);
 int		is_redir(char *str);
 int		get_quote(char *str);
 int		is_builtin(char *str);
@@ -74,6 +76,7 @@ int		only_spaces(char *str, int len);
 void	exec(t_data *data);
 void	expander(t_data *data);
 void	rm_heredoc(t_data *data);
+void	check_syntax(t_data *data);
 void	free_tokens(t_list *tokens);
 void	init_pipeline(t_data *data);
 void	restore_redirs(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 20:25:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 14:42:39 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:53:40 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ t_list	*skip_pipes(t_list *tokens, int pos)
 	tmp = tokens;
 	if (!pos)
 		return (tmp);
-	while (tmp && ((t_token *)tmp->content)->token != PIPE)
+	while (tmp && pos)
+	{
+		if (((t_token *)tmp->content)->token == PIPE)
+			pos--;
 		tmp = tmp->next;
-	if (tmp)
-		tmp = tmp->next;
+	}
 	return (tmp);
 }

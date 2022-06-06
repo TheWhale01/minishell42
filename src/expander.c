@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 15:41:59 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:20:47 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char	*replace_var(t_data *data, t_list *token, char *str)
 	char	*start;
 
 	found = search_env(str, data);
+	printf("found : %s\n", found);
 	found = ft_strjoin_free_s1_s2(copy_chars_before(
 				((t_token *)token->content)->str, str), found);
 	start = ft_strdup(found);

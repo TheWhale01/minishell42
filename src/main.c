@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 17:46:34 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/06/06 14:38:41 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	init(t_data *data)
 	data->path = NULL;
 	data->envp = NULL;
 	data->tokens = NULL;
-	data->childs = NULL;
 	data->pwd = getcwd(NULL, 0);
 }
 
@@ -46,6 +45,7 @@ int	main(int ac, char **av, char **envp)
 				EXIT_FAILURE, NULL);
 		lst = format(data.line);
 		tokenize(&data, lst);
+		check_syntax(&data);
 		expander(&data);
 		if (data.tokens)
 			exec(&data);

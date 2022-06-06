@@ -6,11 +6,26 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 14:31:22 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:38:29 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	varlen(char *str)
+{
+	int	i;
+
+	i = -1;
+	if (*str == '?')
+		return (1);
+	else if (!ft_isalpha(*str) && *str != '_')
+		return (0);
+	while (str[++i])
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			break ;
+	return (i);
+}
 
 t_list	*format(char *str)
 {

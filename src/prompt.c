@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 15:54:40 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 17:49:05 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/06/06 13:36:24 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ char	*get_home(t_data *data)
 	char	*start;
 
 	start = search_env("HOME", data);
-	if (!start)
-		return (NULL);
 	home = ft_rstrstr(data->pwd, start);
 	if (!home)
 		home = data->pwd;
-	else
-		home = ft_strjoin("~", home);
+	else if (start)
+	{
+		if (start[ft_strlen(start) - 1] == '/')
+			home = ft_strjoin("~/", home);
+		else
+			home = ft_strjoin("~", home);
+	}
 	free(start);
 	return (home);
 }
