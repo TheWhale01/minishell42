@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 17:48:20 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/06/06 16:01:26 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	exec_cmd(char **args, t_data *data)
 	if (!path)
 	{
 		ft_putstr_fd(args[0], STDERR_FILENO);
-		free(env);
-		exit_cmd(EXIT_FAILURE, data, ": command not found", NULL);
+		exit_cmd(EXIT_FAILURE, data, ": command not found", env);
+		exit(EXIT_FAILURE);
 	}
 	if (path && execve(path, args, env) == -1)
 		perror(args[0]);

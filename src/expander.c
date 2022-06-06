@@ -6,17 +6,29 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:34:31 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 15:13:49 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 17:09:01 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_quote(char *str)
+int	get_quote(char *str, char *start_var)
 {
-	while (*str && *str != '\'' && *str != '\"')
-		str++;
-	return (*str);
+	int	quote;
+
+	quote = 0;
+	while (str != start_var)
+	{
+		if (*str == '\'' || *str == '\"')
+		{
+			quote = *str;
+			while (*str != quote && str != start_var)
+				str++;
+			if (*str == quote)
+				quote = 0;
+		}
+	}
+	return (!quote);
 }
 
 char	*remove_quotes(char *str)
@@ -81,7 +93,6 @@ char	*replace_var(t_data *data, t_list *token, char *str)
 	char	*found;
 	char	*start;
 
-	printf("str : %s\n", str);
 	found = search_env(str, data);
 	found = ft_strjoin_free_s1_s2(copy_chars_before(
 				((t_token *)token->content)->str, str), found);
