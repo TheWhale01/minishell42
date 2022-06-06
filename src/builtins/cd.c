@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/06/02 13:22:21 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:41:10 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,16 @@ int	ft_path_cd(char **arg, char **path, t_data *data)
 	{
 		paths = search_env("HOME", data);
 		if (paths == NULL)
-			return (printf("bash: cd: HOME not set\n"), 1);
+			return (ft_putstr_fd("bash: cd: HOME not set\n", 2), 1);
 	}
 	else if (ft_len_double(arg) == 2)
+	{
+		if (((char *)arg[1])[0] == '\0')
+			return (1);
 		paths = ft_strdup(arg[1]);
+	}
 	else
-		return (printf("cd: too many arugment\n"), 1);
+		return (ft_putstr_fd("bash: cd: too many arugments\n", 2), 1);
 	*path = paths;
 	return (0);
 }
@@ -59,7 +63,11 @@ int	ft_cd(t_data *data, char **arg)
 			ft_lstadd_back(&data->envp, ft_lstnew(ft_strdup(str)));
 	}
 	else
-		perror("cd");
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(arg[1], 2);
+		perror(" ");
+	}
 	free(path);
 	free(str);
 	data->pwd = getcwd(NULL, 0);
