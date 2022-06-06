@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/06/02 12:11:06 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:34:36 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*search_env(char *str, t_data *data)
 {
 	int		strlen;
 	int		envlen;
-	char	*found;
 	t_list	*tmp;
 
 	if (*str == '$' && *(str + 1) != '_' && *(str + 1) != '?'
@@ -45,14 +44,9 @@ char	*search_env(char *str, t_data *data)
 	while (tmp)
 	{
 		envlen = ft_strlclen(tmp->content, "=");
-		strlen = ft_strlclen(str, "=");
+		strlen = varlen(str);
 		if (envlen == strlen && !ft_strncmp(str, (char *)tmp->content, envlen))
-		{
-			found = ft_strchr(tmp->content, '=');
-			if (!found)
-				return (NULL);
-			return (ft_strdup(found + 1));
-		}
+			return (ft_strdup(ft_strchr(tmp->content, '=') + 1));
 		tmp = tmp->next;
 	}
 	return (NULL);

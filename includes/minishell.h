@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/06 13:55:33 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:31:55 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_data
 	t_pipeline	pipeline;
 }	t_data;
 
+int		varlen(char *str);
 int		is_redir(char *str);
 int		get_quote(char *str);
 int		is_builtin(char *str);
