@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 14:51:27 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:40:12 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_tokens(t_list *tokens)
 	ft_lstclear(&tokens, free);
 }
 
-void	exit_cmd(int exit_code, t_data *data, char *str)
+void	exit_cmd(int exit_code, t_data *data, char *str, char **args)
 {
 	restore_redirs(data);
 	if (exit_code == EXIT_FAILURE && str)
@@ -48,5 +48,52 @@ void	exit_cmd(int exit_code, t_data *data, char *str)
 	free_tab(data->path);
 	free_tokens(data->tokens);
 	free(data->pwd);
+	if (args)
+		free(args);
+}
+
+size_t	vexit(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str && str[i] && str[i] == ' ')
+		i++;
+	if (str && (str[i] == '+' || str[i] == '-'))
+		i++;
+	if (str && str[i] == '\0')
+		return (0);
+	while (str && str[i] && ft_isdigit(str[i]))
+		i++;
+	if (ft_strlen(str) == i)
+		return (1);
+	return (0);
+}
+
+int	ft_exit(t_data *data, char *str, int exit_code, char **args)
+{
+	long long	val;
+
+	if (!args)
+		exit_cmd(exit_code, data, str, NULL);
+	else if (ft_len_double(args) == 1)
+		exit_cmd(exit_code, data, str, args);
+	else
+	{
+		if (ft_len_double(args) == 2 && vexit(args[1]) && vnb(args[1]))
+		{
+			val = ft_atoll_ul(args[1]);
+			exit_cmd(exit_code, data, str, args);
+			exit(val);
+		}
+		else if (!vexit(args[1]) || !vnb(args[1]))
+			ft_numeric(exit_code, data, str, args);
+		else if (ft_len_double(args) > 2 && vexit(args[1]) && vnb(args[1]))
+		{
+			printf("exit\nbash: exit: too many arguments\n");
+			data->rtn_val = 1;
+			return (0);
+		}
+	}
 	exit(exit_code);
 }

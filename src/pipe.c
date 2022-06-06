@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 10:15:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:39:16 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	init_pipes(t_data *data, t_pipeline *pipeline)
 	i = -1;
 	pipeline->pipes = malloc(sizeof(int *) * pipeline->nb_pipes);
 	if (!pipeline->pipes)
-		exit_cmd(EXIT_FAILURE, data, "Memory allocation error.");
+		exit_cmd(EXIT_FAILURE, data, "Memory allocation error.", NULL);
 	while (++i < pipeline->nb_pipes)
 	{
 		pipeline->pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipeline->pipes[i])
-			exit_cmd(EXIT_FAILURE, data, "Memory allocation error");
+			exit_cmd(EXIT_FAILURE, data, "Memory allocation error", NULL);
 		pipe(data->pipeline.pipes[i]);
 	}
 }
@@ -46,7 +46,7 @@ void	launch_pipe(t_data *data, int child_index)
 	else
 		exec_cmd(args, data);
 	restore_redirs(data);
-	exit_cmd(data->rtn_val, data, NULL);
+	exit_cmd(data->rtn_val, data, NULL, NULL);
 }
 
 void	init_pipeline(t_data *data)
@@ -60,7 +60,7 @@ void	init_pipeline(t_data *data)
 	data->pipeline.children = malloc(sizeof(pid_t)
 			* data->pipeline.nb_children);
 	if (!data->pipeline.children)
-		exit_cmd(EXIT_FAILURE, data, "Memory allocation error.");
+		exit_cmd(EXIT_FAILURE, data, "Memory allocation error.", NULL);
 	while (++i < data->pipeline.nb_children)
 	{
 		data->pipeline.children[i] = fork();

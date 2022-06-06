@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 14:50:39 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:56:38 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ int	main(int ac, char **av, char **envp)
 		data.line = ft_prompt(&data);
 		add_history(data.line);
 		if (!check_quotes(data.line))
-			exit_cmd(EXIT_FAILURE, &data,
-				"Syntax Error: mismatched opening and closing quotes.");
+			ft_exit(&data,
+				"Syntax Error: mismatched opening and closing quotes.",
+				EXIT_FAILURE, NULL);
 		lst = format(data.line);
 		tokenize(&data, lst);
+		check_syntax(&data);
 		expander(&data);
 		if (data.tokens)
 			exec(&data);

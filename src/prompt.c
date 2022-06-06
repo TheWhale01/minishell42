@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 15:54:40 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 16:32:27 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:36:24 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ char	*ft_prompt(t_data *data)
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
-		exit_cmd(EXIT_SUCCESS, data, "");
+		exit_cmd(EXIT_SUCCESS, data, "", NULL);
 	return (line);
 }

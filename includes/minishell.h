@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/03 15:38:49 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:55:33 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		only_spaces(char *str, int len);
 void	exec(t_data *data);
 void	expander(t_data *data);
 void	rm_heredoc(t_data *data);
+void	check_syntax(t_data *data);
 void	free_tokens(t_list *tokens);
 void	init_pipeline(t_data *data);
 void	restore_redirs(t_data *data);
@@ -105,16 +106,19 @@ char	**get_path_env(char *path);
 
 // -----------------------------BUILTINS-----------------------------
 
+int		vnb(char *s);
 int		ft_cd(t_data *data, char **arg);
 int		ft_pwd(t_data *data);
 int		ft_echo(t_data *data, char **arg);
 int		ft_unset(t_data *data, char **arg);
 int		ft_export(t_data *data, char **arg);
 int		ft_lstexport(t_data *data, char *str);
+int		ft_exit(t_data *data, char *str, int exit_code, char **args);
 
 void	ft_env(t_data *data);
 void	ft_list_sort(t_list *list);
-void	exit_cmd(int exit_code, t_data *data, char *str);
+void	exit_cmd(int exit_code, t_data *data, char *str, char **args);
+void	ft_numeric(int exit_code, t_data *data, char *str, char **args);
 
 t_list	*create_list(char **envp);
 

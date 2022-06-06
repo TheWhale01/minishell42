@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/06/02 11:15:31 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:22:21 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_path_cd(char **arg, char **path, t_data *data)
 	{
 		paths = search_env("HOME", data);
 		if (paths == NULL)
-			return (1);
+			return (printf("bash: cd: HOME not set\n"), 1);
 	}
 	else if (ft_len_double(arg) == 2)
 		paths = ft_strdup(arg[1]);

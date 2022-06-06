@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 11:54:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:48:20 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void	exec_builtin(char **args, t_data *data)
 	if (!ft_strcmp(args[0], "env"))
 		ft_env(data);
 	else if (!ft_strcmp(args[0], "exit"))
-	{
-		free(args);
-		exit_cmd(EXIT_SUCCESS, data, "exit");
-	}
+		ft_exit(data, "exit", EXIT_SUCCESS, args);
 	else if (!ft_strcmp(args[0], "cd"))
 		ft_cd(data, args);
 	else if (!ft_strcmp(args[0], "pwd"))
@@ -64,7 +61,7 @@ void	exec_cmd(char **args, t_data *data)
 	{
 		ft_putstr_fd(args[0], STDERR_FILENO);
 		free(env);
-		exit_cmd(EXIT_FAILURE, data, ": command not found");
+		exit_cmd(EXIT_FAILURE, data, ": command not found", NULL);
 	}
 	if (path && execve(path, args, env) == -1)
 		perror(args[0]);
@@ -91,7 +88,7 @@ void	exec(t_data *data)
 		if (!pid)
 		{
 			exec_cmd(args, data);
-			exit_cmd(data->rtn_val, data, NULL);
+			ft_exit(data, NULL, 4, args);
 		}
 		else
 			waitpid(pid, NULL, 0);
