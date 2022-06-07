@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 13:39:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:45:00 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	launch_pipe(t_data *data, int child_index)
 		exec_builtin(args, data);
 	else
 		exec_cmd(args, data);
-	restore_redirs(data);
+	restore_redirs(data, 0);
 	exit_cmd(data->rtn_val, data, NULL, NULL);
 }
 
