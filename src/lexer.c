@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 15:39:38 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 09:15:52 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,6 @@ int	varlen(char *str)
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			break ;
 	return (i);
-}
-
-char	*skip_quotes(char *str)
-{
-	int		quote;
-	char	*start_str;
-
-	quote = 0;
-	start_str = str;
-	if (*str == '\'' || *str == '\"')
-		quote = *str;
-	while (quote && *str != quote)
-		str++;
-	if (!*str)
-		return (start_str);
-	return (str);
 }
 
 t_list	*format(char *str)
@@ -95,24 +79,37 @@ void	tokenize(t_data *data, t_list *lst)
 
 void	expander(t_data *data)
 {
-	char	*str;
 	t_list	*tmp;
+	t_list	*cut;
 
 	tmp = data->tokens;
 	while (tmp)
 	{
-		((t_token *)tmp->content)->str
-			= remove_quotes(skip_quotes(((t_token *)tmp->content)->str));
-		str = ((t_token *)tmp->content)->str;
-		while (*str && ft_strchr(str, '$'))
-		{
-			while (*str && (*str != '$' || (*str == '$' && *(str + 1)
-						&& *(str + 1) != '_' && *(str + 1) != '?'
-						&& !ft_isalnum(*(str + 1)))))
-				str++;
-			if (*str)
-				str = replace_var(data, tmp, str);
-		}
+		cut = cut_token(((t_token *)tmp->content)->str);
+		replace_token(data, cut);
+		join_token(tmp, cut);
 		tmp = tmp->next;
 	}
 }
+
+// void	expander(t_data *data)
+// {
+// 	char	*str;
+// 	t_list	*tmp;
+
+// 	tmp = data->tokens;
+// 	while (tmp)
+// 	{
+// 		str = ((t_token *)tmp->content)->str;
+// 		while (*str && ft_strchr(str, '$'))
+// 		{
+// 			while (*str && (*str != '$' || (*str == '$' && *(str + 1)
+// 						&& *(str + 1) != '_' && *(str + 1) != '?'
+// 						&& !ft_isalnum(*(str + 1)))))
+// 				str++;
+// 			if (*str)
+// 				str = replace_var(data, tmp, str);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
