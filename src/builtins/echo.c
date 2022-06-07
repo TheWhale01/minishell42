@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 16:55:11 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/05/30 19:00:51 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/06/07 12:05:36 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_echo(t_data *data, char **arg)
 	{
 		printf("%s", arg[i]);
 		i++;
-		if (arg[i])
+		if (arg[i] && ((char *)arg[i])[0] != '\0')
 			printf(" ");
 	}
 	if (var == 0)
