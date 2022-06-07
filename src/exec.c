@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/07 14:08:18 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:31:42 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	exec_cmd(char **args, t_data *data)
 	if (!path)
 	{
 		ft_putstr_fd(args[0], STDERR_FILENO);
-		exit_cmd(EXIT_FAILURE, data, ": command not found", env);
+		exit_cmd(EXIT_FAILURE, data, ": command not found", args);
+		free(env);
 		exit(EXIT_FAILURE);
 	}
 	if (path && execve(path, args, env) == -1)
