@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:00:29 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/07 09:17:16 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 09:41:17 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,34 @@ void	join_token(t_list *token, t_list *cut)
 		str = ft_strjoin_free_s1_s2(str, tmp->content);
 		tmp = tmp->next;
 	}
+	ft_lstclear(&cut, NULL);
 	free(((t_token *)token->content)->str);
 	((t_token *)token->content)->str = str;
 }
 
-t_list	*replace_token(t_data *data, t_list *cut)
+void	replace_token(t_data *data, t_list *cut)
 {
+	int		quote;
 	char	*str;
 	t_list	*tmp;
 
 	tmp = cut;
 	while (tmp)
 	{
+		quote = get_quote(tmp->content);
+		tmp->content = remove_quotes(tmp->content);
 		str = tmp->content;
-		while (*str && ft_strchr(str, '$') && get_quote(str) != '\'')
+		while (*str && ft_strchr(str, '$') && quote != '\'')
 		{
 			while (*str && (*str != '$' || (*str == '$' && *(str + 1)
 						&& *(str + 1) != '_' && *(str + 1) != '?'
 						&& !ft_isalnum(*(str + 1)))))
 				str++;
 			if (*str)
-				replace_var(data, tmp, str);
+				str = replace_var(data, tmp, str);
 		}
 		tmp = tmp->next;
 	}
-	return (cut);
 }
 
 t_list	*cut_token(char *str)
