@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 13:40:12 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:43:35 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_exit(t_data *data, char *str, int exit_code, char **args)
 			ft_numeric(exit_code, data, str, args);
 		else if (ft_len_double(args) > 2 && vexit(args[1]) && vnb(args[1]))
 		{
-			printf("exit\nbash: exit: too many arguments\n");
+			ft_putstr_fd("exit\nbash: exit: too many arguments\n", 2);
 			data->rtn_val = 1;
 			return (0);
 		}
