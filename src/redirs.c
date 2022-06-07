@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/03 17:46:39 by teambersaw       ###   ########.fr       */
+/*   Updated: 2022/06/07 14:07:20 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ void	redir_in(t_data *data, t_list *file, int mode)
 	int		file_fd;
 	char	*filename;
 
-	if (!file)
-		ft_exit(data, "Syntax Error: invalid redirection.", EXIT_FAILURE,
-			NULL);
-	restore_redirs(data);
+	restore_redirs(data, 0);
 	filename = ((t_token *)file->content)->str;
 	data->fd_in = dup(STDIN_FILENO);
 	if (mode == D_REDIR_IN)
@@ -44,6 +41,12 @@ void	redir_in(t_data *data, t_list *file, int mode)
 	else
 	{
 		file_fd = open(filename, O_RDONLY, 0644);
+		if (file_fd == -1)
+		{
+			data->fd_in = -1;
+			data->wrong_file = filename;
+			return ;
+		}
 		dup2(file_fd, STDIN_FILENO);
 		close(file_fd);
 	}
@@ -54,15 +57,17 @@ void	redir_out(t_data *data, t_list *file, int mode)
 	int		file_fd;
 	char	*filename;
 
-	if (!file)
-		ft_exit(data, "Syntax Error: invalid redirection.", EXIT_FAILURE,
-			NULL);
 	filename = ((t_token *)file->content)->str;
 	data->fd_out = dup(STDOUT_FILENO);
 	if (mode == D_REDIR_OUT)
 		file_fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else
 		file_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (file_fd == -1)
+	{
+		data->fd_out = -1;
+		data->wrong_file = filename;
+	}
 	dup2(file_fd, STDOUT_FILENO);
 	close(file_fd);
 }
@@ -84,15 +89,27 @@ void	make_redirs(t_data *data, t_list *start)
 	}
 }
 
-void	restore_redirs(t_data *data)
+void	restore_redirs(t_data *data, int msg)
 {
 	rm_heredoc(data);
-	if (data->fd_in != STDIN_FILENO)
+	if (data->fd_in == -1)
+	{
+		if (msg)
+			perror(data->wrong_file);
+		data->fd_in = STDIN_FILENO;
+	}
+	else if (data->fd_in != STDIN_FILENO)
 	{
 		dup2(data->fd_in, STDIN_FILENO);
 		close(data->fd_in);
 	}
-	if (data->fd_out != STDOUT_FILENO)
+	if (data->fd_out == -1)
+	{
+		if (msg)
+			perror(data->wrong_file);
+		data->fd_in = STDOUT_FILENO;
+	}
+	else if (data->fd_out != STDOUT_FILENO)
 	{
 		dup2(data->fd_out, STDOUT_FILENO);
 		close(data->fd_out);

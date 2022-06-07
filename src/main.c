@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/07 11:44:36 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:18:01 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init(t_data *data)
 	data->line = NULL;
 	data->path = NULL;
 	data->envp = NULL;
+	data->wrong_file = NULL;
 	data->tokens = NULL;
 	data->pwd = getcwd(NULL, 0);
 }
