@@ -6,11 +6,19 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 13:44:17 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/06/06 14:41:10 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/07 13:33:01 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_perror(char *join)
+{
+	ft_putstr_fd(join, 2);
+	ft_putstr_fd(": ", 2);
+	perror("\0");
+	free(join);
+}
 
 int	ft_len_double(char **tab)
 {
@@ -47,6 +55,7 @@ int	ft_path_cd(char **arg, char **path, t_data *data)
 
 int	ft_cd(t_data *data, char **arg)
 {
+	char	*join;
 	char	*str;
 	char	*path;
 
@@ -64,9 +73,8 @@ int	ft_cd(t_data *data, char **arg)
 	}
 	else
 	{
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(arg[1], 2);
-		perror(" ");
+		join = ft_strjoin("bash: cd: ", arg[1]);
+		ft_perror(join);
 	}
 	free(path);
 	free(str);
