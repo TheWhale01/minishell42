@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/07 14:07:20 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:46:42 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	redir_in(t_data *data, t_list *file, int mode)
 		if (file_fd == -1)
 		{
 			data->fd_in = -1;
-			data->wrong_file = filename;
+			if (!data->wrong_file)
+				data->wrong_file = filename;
 			return ;
 		}
 		dup2(file_fd, STDIN_FILENO);
@@ -66,7 +67,8 @@ void	redir_out(t_data *data, t_list *file, int mode)
 	if (file_fd == -1)
 	{
 		data->fd_out = -1;
-		data->wrong_file = filename;
+		if (!data->wrong_file)
+			data->wrong_file = filename;
 	}
 	dup2(file_fd, STDOUT_FILENO);
 	close(file_fd);
@@ -114,4 +116,5 @@ void	restore_redirs(t_data *data, int msg)
 		dup2(data->fd_out, STDOUT_FILENO);
 		close(data->fd_out);
 	}
+	data->wrong_file = NULL;
 }
