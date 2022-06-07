@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:00:29 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 19:43:59 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 09:17:16 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,45 @@ int	tokenlen(char *str)
 	if (quote && str[i] == quote)
 		i++;
 	return (i);
+}
+
+void	join_token(t_list *token, t_list *cut)
+{
+	t_list	*tmp;
+	char	*str;
+
+	tmp = cut;
+	str = NULL;
+	while (tmp)
+	{
+		str = ft_strjoin_free_s1_s2(str, tmp->content);
+		tmp = tmp->next;
+	}
+	free(((t_token *)token->content)->str);
+	((t_token *)token->content)->str = str;
+}
+
+t_list	*replace_token(t_data *data, t_list *cut)
+{
+	char	*str;
+	t_list	*tmp;
+
+	tmp = cut;
+	while (tmp)
+	{
+		str = tmp->content;
+		while (*str && ft_strchr(str, '$') && get_quote(str) != '\'')
+		{
+			while (*str && (*str != '$' || (*str == '$' && *(str + 1)
+						&& *(str + 1) != '_' && *(str + 1) != '?'
+						&& !ft_isalnum(*(str + 1)))))
+				str++;
+			if (*str)
+				replace_var(data, tmp, str);
+		}
+		tmp = tmp->next;
+	}
+	return (cut);
 }
 
 t_list	*cut_token(char *str)

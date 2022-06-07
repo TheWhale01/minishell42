@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/06 19:14:55 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 09:14:50 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	restore_redirs(t_data *data);
 void	heredoc(t_data *data, char *eof);
 void	tokenize(t_data *data, t_list *lst);
 void	exec_cmd(char **args, t_data *data);
+void	join_token(t_list *token, t_list *cut);
 void	exec_builtin(char **args, t_data *data);
 void	make_redirs(t_data *data, t_list *start);
 
@@ -101,6 +102,7 @@ t_list	*skip_redirs(t_list	*tokens);
 t_list	*skip_pipes(t_list *tokens, int pos);
 t_list	*choose_token(t_list *node, char **path);
 t_list	*search_token(t_list *tokens, int search);
+t_list	*replace_token(t_data *data, t_list *cut);
 
 char	**get_args(t_list *tokens);
 char	**list_to_tab(t_list *lst);

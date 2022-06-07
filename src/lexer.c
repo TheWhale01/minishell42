@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:07:07 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 20:15:39 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/07 09:15:52 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	tokenize(t_data *data, t_list *lst)
 
 void	expander(t_data *data)
 {
-	char	*str;
 	t_list	*tmp;
 	t_list	*cut;
 
@@ -87,20 +86,8 @@ void	expander(t_data *data)
 	while (tmp)
 	{
 		cut = cut_token(((t_token *)tmp->content)->str);
-		while (cut)
-		{
-			str = cut->content;
-			while (*str && ft_strchr(str, '$') && get_quote(str) != '\'')
-			{
-				while (*str && (*str != '$' || (*str == '$' && *(str + 1)
-							&& *(str + 1) != '_' && *(str + 1) != '?'
-							&& !ft_isalnum(*(str + 1)))))
-					str++;
-				if (*str)
-					str = replace_var(data, cut, str);
-			}
-			cut = cut->next;
-		}
+		replace_token(data, cut);
+		join_token(tmp, cut);
 		tmp = tmp->next;
 	}
 }
