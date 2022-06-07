@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/07 14:43:35 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:51:27 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_tokens(t_list *tokens)
 
 void	exit_cmd(int exit_code, t_data *data, char *str, char **args)
 {
-	restore_redirs(data);
+	restore_redirs(data, 0);
 	if (exit_code == EXIT_FAILURE && str)
 		ft_putendl_fd(str, STDERR_FILENO);
 	else if (exit_code == EXIT_SUCCESS && str)
