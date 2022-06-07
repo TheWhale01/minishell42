@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 21:33:00 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 15:16:34 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:06:05 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	main(int ac, char **av, char **envp)
 		lst = format(data.line);
 		tokenize(&data, lst);
 		check_syntax(&data);
-		print_tokens(data.tokens);
-		print_str_tokens(data.tokens);
 		expander(&data);
 		if (data.tokens)
 			exec(&data);
