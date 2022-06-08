@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/07 15:31:42 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/08 11:16:08 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,8 @@ char	*get_path_cmd(char *cmd, char **env)
 
 void	exec_builtin(char **args, t_data *data)
 {
-	if (data->fd_in == -1 || data->fd_out == -1)
-	{
-		restore_redirs(data, 1);
+	if (data->wrong_file)
 		return ;
-	}
 	if (!ft_strcmp(args[0], "env"))
 		ft_env(data);
 	else if (!ft_strcmp(args[0], "exit"))
@@ -60,11 +57,8 @@ void	exec_cmd(char **args, t_data *data)
 	char	*path;
 	char	**env;
 
-	if (data->fd_in == -1 || data->fd_out == -1)
-	{
-		restore_redirs(data, 1);
+	if (data->wrong_file)
 		return ;
-	}
 	env = list_to_tab(data->envp);
 	path = get_path_cmd(args[0], data->path);
 	if (!path)
@@ -91,9 +85,9 @@ void	exec(t_data *data)
 	}
 	args = get_args(skip_redirs(data->tokens));
 	make_redirs(data, data->tokens);
-	if (is_builtin(args[0]))
+	if (args && is_builtin(args[0]))
 		exec_builtin(args, data);
-	else
+	else if (args)
 	{
 		pid = fork();
 		if (!pid)
@@ -105,5 +99,6 @@ void	exec(t_data *data)
 			waitpid(pid, NULL, 0);
 		free(args);
 	}
-	restore_redirs(data, 0);
+	data->wrong_file = NULL;
+	restore_redirs(data);
 }
