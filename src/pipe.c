@@ -6,11 +6,34 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/08 10:55:22 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:05:42 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	connect_pipes(t_data *data, int child_index)
+{
+	if (!child_index)
+	{
+		close(data->pipeline.pipes[0][0]);
+		dup2(data->pipeline.pipes[0][1], STDOUT_FILENO);
+		close(data->pipeline.pipes[0][1]);
+	}
+	else if (child_index == data->pipeline.nb_children - 1)
+	{
+		close(data->pipeline.pipes[child_index - 1][1]);
+		dup2(data->pipeline.pipes[child_index - 1][0], STDIN_FILENO);
+		close(data->pipeline.pipes[child_index - 1][0]);
+	}
+	else
+	{
+		dup2(data->pipeline.pipes[child_index - 1][0], STDIN_FILENO);
+		dup2(data->pipeline.pipes[child_index][1], STDOUT_FILENO);
+		close(data->pipeline.pipes[child_index - 1][1]);
+		close(data->pipeline.pipes[child_index - 1][0]);
+	}
+}
 
 void	init_pipes(t_data *data, t_pipeline *pipeline)
 {
@@ -34,11 +57,10 @@ void	launch_pipe(t_data *data, int child_index)
 	char	**args;
 	t_list	*start;
 
-	start = skip_pipes(data->tokens, child_index);
 	if (child_index)
-		dup2(data->pipeline.pipes[child_index - 1][0], STDIN_FILENO);
-	if (child_index < data->pipeline.nb_children - 1)
-		dup2(data->pipeline.pipes[child_index][1], STDOUT_FILENO);
+		waitpid(data->pipeline.children[child_index - 1], NULL, 0);
+	start = skip_pipes(data->tokens, child_index);
+	connect_pipes(data, child_index);
 	make_redirs(data, start);
 	args = get_args(skip_redirs(start));
 	if (is_builtin(*args))
@@ -46,7 +68,7 @@ void	launch_pipe(t_data *data, int child_index)
 	else
 		exec_cmd(args, data);
 	restore_redirs(data);
-	exit_cmd(data->rtn_val, data, NULL, NULL);
+	exit(EXIT_SUCCESS);
 }
 
 void	init_pipeline(t_data *data)
@@ -68,12 +90,12 @@ void	init_pipeline(t_data *data)
 			launch_pipe(data, i);
 		else
 		{
-			waitpid(data->pipeline.children[i], NULL, 0);
 			if (i < data->pipeline.nb_pipes)
 			{
 				close(data->pipeline.pipes[i][0]);
 				close(data->pipeline.pipes[i][1]);
 			}
+			waitpid(data->pipeline.children[i], NULL, 0);
 		}
 	}
 }
