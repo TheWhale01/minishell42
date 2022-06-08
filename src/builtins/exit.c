@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/07 14:51:27 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:15:42 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	*free_tab(char	**tab)
 	int	i;
 
 	i = -1;
-	while (tab[++i])
+	while (tab && tab[++i])
 		free(tab[i]);
-	free(tab);
+	if (tab)
+		free(tab);
 	return (NULL);
 }
 

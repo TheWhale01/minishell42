@@ -6,7 +6,7 @@
 /*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:58:04 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/02 12:11:20 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:00:02 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,16 @@ int	ft_unset(t_data *data, char **arg)
 			ft_putstr_fd("': not a valid identifier\n", 2);
 		}
 		else
+		{
+			if (!strncmp(arg[i], "PATH", 4) && ft_strlclen(arg[i], "=") == 4)
+			{
+				if (data->path)
+					free_tab(data->path);
+				data->path = NULL;
+			}
 			ft_lstunset(&data->envp, arg[i]);
+		}
 		i++;
-		free_tab(data->path);
-		data->path = get_path_env(search_env("PATH", data));
 	}
 	return (0);
 }
