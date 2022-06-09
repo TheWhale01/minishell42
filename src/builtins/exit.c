@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 11:33:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/08 17:15:42 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:18:12 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_tokens(t_list *tokens)
 
 void	exit_cmd(int exit_code, t_data *data, char *str, char **args)
 {
-	restore_redirs(data, 0);
+	restore_redirs(data);
 	if (exit_code == EXIT_FAILURE && str)
 		ft_putendl_fd(str, STDERR_FILENO);
 	else if (exit_code == EXIT_SUCCESS && str)

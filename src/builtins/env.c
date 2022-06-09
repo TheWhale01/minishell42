@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/06/08 16:48:02 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:18:50 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	**get_path_env(char *path)
 	i = -1;
 	if (!path)
 		return (NULL);
-	//printf("---%d---    %s\n", *(path + 1), path);
 	new = ft_split(path, ':');
 	while (new[++i])
 		new[i] = ft_strjoin_free_s1(new[i], "/");

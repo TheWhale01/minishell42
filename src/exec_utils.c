@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:54:50 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/02 10:44:42 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/08 11:06:15 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	**get_args(t_list *tokens)
 	t_list	*tmp;
 	t_token	*token;
 
+	if (!tokens)
+		return (NULL);
 	args = malloc(sizeof(char *) * (get_nb_args(tokens) + 1));
 	if (!args)
 		return (NULL);
