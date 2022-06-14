@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/08 10:54:00 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:22:10 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int		ft_lstexport(t_data *data, char *str);
 int		ft_exit(t_data *data, char *str, int exit_code, char **args);
 
 void	ft_env(t_data *data);
+void	free_pipes(t_data *data);
 void	ft_list_sort(t_list *list);
 void	exit_cmd(int exit_code, t_data *data, char *str, char **args);
 void	ft_numeric(int exit_code, t_data *data, char *str, char **args);
