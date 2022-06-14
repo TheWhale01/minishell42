@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 15:54:40 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/06 13:36:24 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:11:56 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ char	*get_home(t_data *data)
 	return (home);
 }
 
+void	free_d(t_data *data)
+{
+	ft_lstclear(&data->envp, free);
+	free_tab(data->path);
+	free(data->pwd);
+}
+
 char	*ft_prompt(t_data *data)
 {
 	char	*dir;
@@ -48,6 +55,9 @@ char	*ft_prompt(t_data *data)
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
-		exit_cmd(EXIT_SUCCESS, data, "", NULL);
+	{
+		free_d(data);
+		exit(0);
+	}
 	return (line);
 }

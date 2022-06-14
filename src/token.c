@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:28:57 by hubretec          #+#    #+#             */
-/*   Updated: 2022/05/31 13:57:54 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:21:50 by jrossett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	is_cmd(char *cmd, char **path)
 	stat(cmd, &path_stat);
 	if (!access(cmd, X_OK) && !S_ISDIR(path_stat.st_mode))
 		return (1);
-	while (*path)
+	while (path && *path)
 	{
 		str = ft_strjoin(*(path++), cmd);
 		stat(str, &path_stat);

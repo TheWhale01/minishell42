@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrossett <jrossett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 14:12:46 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/01 16:30:02 by jrossett         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:05:52 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int	ft_export(t_data *data, char **arg)
 		}
 		else if (!ft_lstexport(data, arg[i]))
 			ft_lstadd_back(&data->envp, ft_lstnew(ft_strdup(arg[i])));
-		free_tab(data->path);
+		if (data->path)
+			free_tab(data->path);
 		data->path = get_path_env(search_env("PATH", data));
 		i++;
 	}

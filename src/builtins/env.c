@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 21:06:23 by teambersaw        #+#    #+#             */
-/*   Updated: 2022/06/06 14:34:36 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:18:50 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ char	**get_path_env(char *path)
 	char	**new;
 
 	i = -1;
-	new = ft_split(&path[5], ':');
+	if (!path)
+		return (NULL);
+	new = ft_split(path, ':');
 	while (new[++i])
 		new[i] = ft_strjoin_free_s1(new[i], "/");
 	free(path);
@@ -27,6 +29,7 @@ char	**get_path_env(char *path)
 
 char	*search_env(char *str, t_data *data)
 {
+	char	*found;
 	int		strlen;
 	int		envlen;
 	t_list	*tmp;
@@ -46,7 +49,12 @@ char	*search_env(char *str, t_data *data)
 		envlen = ft_strlclen(tmp->content, "=");
 		strlen = varlen(str);
 		if (envlen == strlen && !ft_strncmp(str, (char *)tmp->content, envlen))
-			return (ft_strdup(ft_strchr(tmp->content, '=') + 1));
+		{
+			found = ft_strchr(tmp->content, '=');
+			if (!found)
+				return (NULL);
+			return (ft_strdup(found + 1));
+		}
 		tmp = tmp->next;
 	}
 	return (NULL);

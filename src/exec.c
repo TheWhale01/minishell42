@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
+/*   By: teambersaw <teambersaw@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/08 11:16:08 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:18:18 by teambersaw       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*get_path_cmd(char *cmd, char **env)
 	char	*tmp;
 	char	*path_cmd;
 
+	if (!env)
+		return (NULL);
 	if (!access(cmd, F_OK))
 		return (cmd);
 	while (env && *env)
