@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/08 16:05:42 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/14 12:58:48 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	launch_pipe(t_data *data, int child_index)
 
 	if (child_index)
 		waitpid(data->pipeline.children[child_index - 1], NULL, 0);
-	start = skip_pipes(data->tokens, child_index);
 	connect_pipes(data, child_index);
+	start = skip_pipes(data->tokens, child_index);
 	make_redirs(data, start);
 	args = get_args(skip_redirs(start));
 	if (is_builtin(*args))

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:56:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/08 11:54:39 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/14 13:30:23 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ void	redir_in(t_data *data, t_list *file, int mode)
 	else
 	{
 		file_fd = open(filename, O_RDONLY, 0644);
-		if (file_fd == -1 && !data->wrong_file)
+		if (file_fd == -1)
 		{
-			data->wrong_file = filename;
+			if (!data->wrong_file)
+				data->wrong_file = filename;
 			return ;
 		}
 		dup2(file_fd, STDIN_FILENO);
@@ -61,6 +62,7 @@ void	redir_out(t_data *data, t_list *file, int mode)
 	int		file_fd;
 	char	*filename;
 
+	file_fd = -1;
 	if (data->fd_out != STDOUT_FILENO)
 	{
 		dup2(data->fd_out, STDOUT_FILENO);
@@ -70,11 +72,12 @@ void	redir_out(t_data *data, t_list *file, int mode)
 	data->fd_out = dup(STDOUT_FILENO);
 	if (mode == D_REDIR_OUT)
 		file_fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	else
+	else if (mode == REDIR_OUT && !data->wrong_file)
 		file_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (file_fd == -1 && !data->wrong_file)
 	{
-		data->wrong_file = filename;
+		if (!data->wrong_file)
+			data->wrong_file = filename;
 		return ;
 	}
 	dup2(file_fd, STDOUT_FILENO);
