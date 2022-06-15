@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 04:29:14 by jrossett          #+#    #+#             */
-/*   Updated: 2022/06/14 14:22:10 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:55:30 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ int		get_quote(char *str);
 int		is_builtin(char *str);
 int		check_quotes(char *str);
 int		ft_len_double(char **tab);
+int		check_syntax(t_data *data);
 int		get_nb_pipes(t_list	*tokens);
 
 void	exec(t_data *data);
 void	expander(t_data *data);
 void	rm_heredoc(t_data *data);
-void	check_syntax(t_data *data);
 void	free_tokens(t_list *tokens);
 void	init_pipeline(t_data *data);
 void	restore_redirs(t_data *data);
@@ -121,6 +121,7 @@ int		ft_exit(t_data *data, char *str, int exit_code, char **args);
 
 void	ft_env(t_data *data);
 void	free_pipes(t_data *data);
+void	close_pipes(t_data *data);
 void	ft_list_sort(t_list *list);
 void	exit_cmd(int exit_code, t_data *data, char *str, char **args);
 void	ft_numeric(int exit_code, t_data *data, char *str, char **args);

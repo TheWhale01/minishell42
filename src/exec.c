@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:12:05 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/14 14:52:02 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:57:05 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	exec(t_data *data)
 	int		pid;
 	char	**args;
 
+	if (!data->tokens)
+		return ;
 	if (search_token(data->tokens, PIPE))
 	{
 		init_pipeline(data);

@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 20:25:12 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/14 14:21:55 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:40:43 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_list	*skip_pipes(t_list *tokens, int pos)
 	return (tmp);
 }
 
-void	free_pipes(t_data *data)
+void	close_pipes(t_data *data)
 {
 	int	i;
 
@@ -55,7 +55,15 @@ void	free_pipes(t_data *data)
 	{
 		close(data->pipeline.pipes[i][0]);
 		close(data->pipeline.pipes[i][1]);
-		free(data->pipeline.pipes[i]);
 	}
+}
+
+void	free_pipes(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->pipeline.nb_pipes)
+		free(data->pipeline.pipes[i]);
 	free(data->pipeline.pipes);
 }

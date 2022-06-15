@@ -6,7 +6,7 @@
 /*   By: hubretec <hubretec@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:09:59 by hubretec          #+#    #+#             */
-/*   Updated: 2022/06/14 14:50:34 by hubretec         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:39:43 by hubretec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 void	connect_pipes(t_data *data, int child_index)
 {
 	if (!child_index)
+	{
+		close(data->pipeline.pipes[0][0]);
 		dup2(data->pipeline.pipes[0][1], STDOUT_FILENO);
+		close(data->pipeline.pipes[0][1]);
+	}
 	else if (child_index == data->pipeline.nb_pipes)
+	{
+		close(data->pipeline.pipes[child_index - 1][1]);
 		dup2(data->pipeline.pipes[child_index - 1][0], STDIN_FILENO);
+		close(data->pipeline.pipes[child_index - 1][0]);
+	}
 	else
 	{
 		dup2(data->pipeline.pipes[child_index - 1][0], STDIN_FILENO);
@@ -55,9 +63,9 @@ void	launch_pipe(t_data *data, int child_index)
 		exec_builtin(args, data);
 	else
 		exec_cmd(args, data);
-	restore_redirs(data);
 	free_pipes(data);
 	free(data->pipeline.children);
+	restore_redirs(data);
 	exit_cmd(EXIT_SUCCESS, data, NULL, NULL);
 	exit(EXIT_SUCCESS);
 }
@@ -82,6 +90,7 @@ void	init_pipeline(t_data *data)
 		else
 			waitpid(data->pipeline.children[i], NULL, 0);
 	}
+	close_pipes(data);
 	free_pipes(data);
 	free(data->pipeline.children);
 }
